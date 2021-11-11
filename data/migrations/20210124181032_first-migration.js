@@ -9,7 +9,7 @@ exports.up = async (knex) => {
       users.string('role', 200);
       users.timestamps(false, true);
     })
-    .createTable('products', (product) => {
+    .createTable('courses', (product) => {
       product.increments('id');
       product.string('title', 50).notNullable();
       product.string('category', 50);
@@ -22,5 +22,5 @@ exports.up = async (knex) => {
 // ==============================================
 
 exports.down = async (knex) => {
-  await knex.schema.dropTableIfExists('products').dropTableIfExists('users');
+  await knex.schema.dropTableIfExists('courses').dropTableIfExists('users');
 };

@@ -3,35 +3,35 @@ const db = require('../../data/db-config');
 // ==============================================
 
 function find() {
-  return db('products');
+  return db('courses');
 }
 
 // ==============================================
 
 function findById(id) {
-  return db('products')
+  return db('courses')
     .where({ id: Number(id) })
     .first();
 }
 
 // ==============================================
 
-function insert(product) {
-  return db('products')
-    .insert(product)
+function insert(course) {
+  return db('courses')
+    .insert(course)
     .then((ids) => ({ id: ids[0] }));
 }
 
 // ==============================================
 
-function update(id, product) {
-  return db('products').where('id', Number(id)).update(product);
+function update(id, course) {
+  return db('courses').where('id', Number(id)).update(course);
 }
 
 // ==============================================
 
 function remove(id) {
-  return db('products').where('id', Number(id)).del();
+  return db('courses').where('id', Number(id)).del();
 }
 
 // ==============================================
