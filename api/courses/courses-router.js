@@ -6,21 +6,21 @@ const coursesController = require('./courses-controller');
 
 // | N   | Method | Endpoint                | Description                                                                                                                     |
 // | --- | ------ | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-// | 1   | GET    | /api/products              | Returns **an array of all the product objects** contained in the database                                                          |
-// | 2   | GET    | /api/products/:id          | Returns **the product object with the specified id**                                                                               |
+// | 1   | GET    | /api/courses              | Returns **an array of all the course objects** contained in the database                                                          |
+// | 2   | GET    | /api/courses/:id          | Returns **the course object with the specified id**                                                                               |
 // | 3   | POST   | /api/products              | Creates a product using the information sent inside the request body and returns **the newly created product object**                 |
 // | 4   | PUT    | /api/products/:id          | Updates the product with the specified id using data from the request body and **returns the modified document**, not the original |
-// | 5   | DELETE | /api/products/:id          | Removes the product with the specified id and returns the **deleted product object**                                                  |
+// | 5   | DELETE | /api/courses/:id          | Removes the course with the specified id and returns the **deleted product object**                                                  |
 
 // ==============================================
 
-// (1) [GET]  /api/products
-router.get('/', coursesController.getProducts);
+// (1) [GET]  /api/courses
+router.get('/', coursesController.getCourses);
 
 // ==============================================
 
-// (2) [GET]  /api/products/:id
-router.get('/:id', coursesController.getProductById);
+// (2) [GET]  /api/courses/:id
+router.get('/:id', coursesController.getCourseById);
 
 // ==============================================
 
