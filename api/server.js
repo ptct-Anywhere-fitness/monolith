@@ -1,7 +1,6 @@
-// ==============================================
-
-// -invoke .config mehtod on object returned.
+// -invoke .config method on object returned.
 // -We want the resulting side effects of this!
+// -It injects the env-vars into our app.
 require('dotenv').config();
 const path = require('path');
 
@@ -15,9 +14,9 @@ server.use(express.json()); // parse request body as JSON
 
 // -Redirect to HTTPS version on Heroku when user
 //  enters URL as:
-//  AmazonTulsa.com
+//  x.com
 // -Works without this if user explicity enters:
-//  https://www.AmazonTulsa.com
+//  https://www.x.com
 // -Heroku article explaining how to
 //  "use https for all requests":
 //  https://help.heroku.com/J2R1S4T8/can-heroku-force-an-application-to-use-ssl-tls
@@ -39,28 +38,13 @@ if (process.env.NODE_ENV === 'development') {
   // on Heroku machine, an env variable is called "NODE_ENV" -> "production" or "development"
   const cors = require('cors');
   server.use(cors());
-}
-
+} // else {
 // server.use(require('helmet')());
 // -It is possible for middlewars to
 //  modify conflicting headers.
 // -Whichever middleware that
 //  comes last wins!
-
-// ==============================================
-
-server.get('/api/hello', (req, res) => {
-  res.json({ message: 'hello from backend!' });
-});
-
-// ==============================================
-
-// server.get('/api/users', (req, res) => {
-//   res.status(200).json([
-//     { id: 0, name: 'josh', password: 'password 1' },
-//     { id: 1, name: 'bosh', password: 'password 2' },
-//   ]);
-// });
+// }
 
 // ==============================================
 
