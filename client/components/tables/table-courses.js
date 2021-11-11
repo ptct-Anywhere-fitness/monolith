@@ -6,13 +6,13 @@ function createData(title, price, quantity, category, details) {
 
 // ==============================================
 
-export default function TableProducts({ products }) {
-  const rows = products.map((product) => {
+export default function TableCourses({ courses }) {
+  const rows = courses.map((course) => {
     return createData(
-      product.title,
-      (product.price / 100).toFixed(2),
-      product.quantity_in_stock,
-      product.category
+      course.title,
+      (course.price / 100).toFixed(2),
+      course.quantity_in_stock,
+      course.category
     );
   }, []);
 
@@ -29,7 +29,7 @@ export default function TableProducts({ products }) {
       >
         <tr>
           <th></th>
-          <th>Product Title</th>
+          <th>Course Title</th>
           <th>Price ($)</th>
           <th>Quantity</th>
           <th>Details</th>

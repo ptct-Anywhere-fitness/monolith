@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 
 import { format } from 'date-fns';
 
-import TableProducts from '../components/tables/table-products';
+import TableCourses from '../components/tables/table-courses';
 import TableUsers from '../components/tables/table-users';
 
 import { AuthContext } from '../context/auth-context';
@@ -12,7 +12,7 @@ import { AuthContext } from '../context/auth-context';
 export default function DashboardPage() {
   // --------------------------------------------
 
-  const [products, setProducts] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [users, setUsers] = useState([]);
 
   // --------------------------------------------
@@ -48,9 +48,9 @@ export default function DashboardPage() {
     //  from local storage.
     if (token) {
       (async () => {
-        const p = await getData('/products', token);
-        console.log('products: ', p);
-        setProducts(p);
+        const p = await getData('/courses', token);
+        console.log('courses: ', p);
+        setCourses(p);
       })();
 
       (async () => {
@@ -69,7 +69,7 @@ export default function DashboardPage() {
 
       <h6>{format(new Date(), 'MMMM do Y')}</h6>
 
-      {products && (
+      {courses && (
         <div
           style={{
             background: '#cfe8fc',
@@ -79,8 +79,8 @@ export default function DashboardPage() {
           }}
         >
           {' '}
-          <h6>Products</h6>
-          <TableProducts products={products} />
+          <h6>Courses</h6>
+          <TableCourses courses={courses} />
         </div>
       )}
 
