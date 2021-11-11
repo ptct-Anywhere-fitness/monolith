@@ -69,6 +69,10 @@ export default function DashboardPage() {
 
       <h6>{format(new Date(), 'MMMM do Y')}</h6>
 
+      <hr />
+
+      <hr />
+
       {courses && (
         <div
           style={{
