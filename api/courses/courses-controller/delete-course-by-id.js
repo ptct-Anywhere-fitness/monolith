@@ -1,3 +1,4 @@
+const HttpError = require('../../helpers/http-error');
 const Courses = require('../courses-model');
 
 // ==============================================
@@ -18,26 +19,30 @@ const Courses = require('../courses-model');
 // ==============================================
 
 // (5) [DELETE]  /api/courses/:id
-const deleteCourseById = (req, res) => {
+const deleteCourseById = (req, res, next) => {
   const id = req.params.id;
   console.log(`[DELETE]  /api/courses/${id}`);
 
   Courses.remove(id)
-    .then((returned_id) => {
-      console.log('returned_id: ', returned_id);
+    .then((deleted_course) => {
+      console.log('deleted_course: ', deleted_course);
 
-      if (!returned_id) {
+      if (!deleted_course) {
         // - The _course_ with the specified `id` is not found:
-        return res.status(404).json({
-          message: 'The course with the specified ID does not exist',
-        });
+        // return res.status(404).json({
+        //   message: 'The course with the specified ID does not exist',
+        // });
+        return next(
+          new HttpError('The course with the specified ID does not exist', 404)
+        );
       }
 
-      res.status(201).json({ fuck: returned_id });
+      res.status(201).json({ deleted_course });
     })
     .catch(() => {
       // - There's an error in removing the _course_ from the database:
-      res.status(500).json({ message: 'The course could not be removed' });
+      // res.status(500).json({ message: 'The course could not be removed' });
+      next(new HttpError('The course could not be removed', 500));
     });
 };
 

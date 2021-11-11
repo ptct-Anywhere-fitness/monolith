@@ -21,6 +21,7 @@ import fetchData from '../helpers/fetch-data';
 export default function AdminDashboarPage() {
   // --------------------------------------------
 
+  const [deleted_course, setDeletedCourse] = useState();
   const [put_course, setPutCourse] = useState();
   const [posted_course, setPostedCourse] = useState();
   const [course_by_id, setCourseById] = useState();
@@ -29,6 +30,8 @@ export default function AdminDashboarPage() {
 
   // --------------------------------------------
 
+  const [delete_course_id, setDeleteCourseId] = useState('');
+  const [delete_course_title, setDeleteCourseTitle] = useState('');
   const [put_course_id, setPutCourseId] = useState('');
   const [put_course_title, setPutCourseTitle] = useState('');
   const [post_course_title, setPostCourseTitle] = useState('');
@@ -60,7 +63,7 @@ export default function AdminDashboarPage() {
         setUsers(u);
       })();
     }
-  }, [put_course, posted_course, authCtx.token]);
+  }, [deleted_course, put_course, posted_course, authCtx.token]);
 
   // --------------------------------------------
 
@@ -170,6 +173,7 @@ export default function AdminDashboarPage() {
             <div>
               Posted Course:
               <p>Title: {posted_course.title}</p>
+              <p>Title: {posted_course.id}</p>
             </div>
           )}
         </Col>
@@ -249,6 +253,73 @@ export default function AdminDashboarPage() {
               Updated Course:
               <p>Title: {put_course.title}</p>
               <p>ID: {put_course.id}</p>
+            </div>
+          )}
+        </Col>
+      </Row>
+
+      <hr />
+
+      <Row>
+        <Col>
+          <h6>Delete Course</h6>
+
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+
+              console.log('DELETE course handler');
+
+              try {
+                loadingCtx.setIsLoading(true);
+                const response = await fetchData(
+                  `/courses/${delete_course_id}`,
+                  'DELETE'
+                );
+
+                const data = await response.json();
+
+                // -4xx / 5xx status code does NOT throw error.
+                // -data.ok is true with a 2xx status code
+                if (!response.ok) {
+                  // -data.message comes from the .message property
+                  //  sent from the backend.
+                  throw new Error(data.message);
+                }
+
+                console.log('data: ', data);
+
+                setDeletedCourse(data);
+                loadingCtx.setIsLoading(false);
+              } catch (err) {
+                console.log(
+                  'Error in dashboard-admin --> deleteCourseHandler() -- err: ',
+                  err
+                );
+                loadingCtx.setIsLoading(false);
+                // setError(
+                //   err.message || // This message comes from the backend!
+                //     'Error in onLoginHandler()'
+                // );
+              }
+            }}
+          >
+            <label>
+              ID:
+              <input
+                value={delete_course_id}
+                onChange={(e) => setDeleteCourseId(e.target.value)}
+              ></input>
+            </label>
+
+            <Button type='submit'>Delete Course</Button>
+          </form>
+
+          {deleted_course && (
+            <div>
+              Deleted Course:
+              <p>Title: {deleted_course.title}</p>
+              <p>ID: {deleted_course.id}</p>
             </div>
           )}
         </Col>

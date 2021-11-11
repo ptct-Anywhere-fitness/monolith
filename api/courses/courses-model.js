@@ -32,8 +32,12 @@ function update(id, course) {
 
 // ==============================================
 
-function remove(id) {
-  return db('courses').where('id', Number(id)).del();
+async function remove(id) {
+  console.log('remove');
+  const to_be_deleted = await findById(id);
+  console.log('courses-model --> to_be_deleted: ', to_be_deleted);
+  await db('courses').where('id', Number(id)).del();
+  return to_be_deleted;
 }
 
 // ==============================================

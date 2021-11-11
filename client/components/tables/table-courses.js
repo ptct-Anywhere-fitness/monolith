@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-function createData(title, price, quantity, category, details) {
-  return { title, price, quantity, category, details };
+function createData(title, id, price, quantity, category, details) {
+  return { title, id, price, quantity, category, details };
 }
 
 // ==============================================
@@ -10,6 +10,7 @@ export default function TableCourses({ courses }) {
   const rows = courses.map((course) => {
     return createData(
       course.title,
+      course.id,
       (course.price / 100).toFixed(2),
       course.quantity_in_stock,
       course.category
@@ -29,22 +30,25 @@ export default function TableCourses({ courses }) {
       >
         <tr>
           <th></th>
+          <th>id</th>
           <th>Course Title</th>
           <th>Price ($)</th>
           <th>Quantity</th>
-          <th>Details</th>
+          <th>Category</th>
         </tr>
         {rows &&
-          rows.map((row, idx) => (
-            <tr key={idx}>
-              <td>+</td>
-              <td>{row?.title}</td>
-              <td>{row?.price}</td>
-              <td>{row?.quantity}</td>
-              <td>{row?.category}</td>
-              <td>{row?.details}</td>
-            </tr>
-          ))}
+          rows.map((row, idx) => {
+            return (
+              <tr key={idx}>
+                <td>+</td>
+                <td>{row?.id}</td>
+                <td>{row?.title}</td>
+                <td>{row?.price}</td>
+                <td>{row?.quantity}</td>
+                <td>{row?.category}</td>
+              </tr>
+            );
+          })}
       </table>
     </>
   );
