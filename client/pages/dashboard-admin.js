@@ -2,6 +2,8 @@ import { useState, useEffect, useContext } from 'react';
 
 import { format } from 'date-fns';
 
+import Button from 'react-bootstrap/Button';
+
 import TableCourses from '../components/tables/table-courses';
 import TableUsers from '../components/tables/table-users';
 
@@ -70,6 +72,10 @@ export default function DashboardPage() {
       <h6>{format(new Date(), 'MMMM do Y')}</h6>
 
       <hr />
+
+      <h6>Create Courses</h6>
+
+      <Button>Create Course</Button>
 
       <hr />
 

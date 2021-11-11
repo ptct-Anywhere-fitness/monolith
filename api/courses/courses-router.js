@@ -39,7 +39,7 @@ router.delete('/:id', coursesController.deleteCourseById);
 
 // ==============================================
 
-// -Error handling middleware (c-router)
+// -Error handling middleware (courses-router)
 router.use((err, req, res, next) /* eslint-disable-line */ => {
   console.log(
     `
