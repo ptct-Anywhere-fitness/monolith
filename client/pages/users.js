@@ -2,6 +2,8 @@ import { useState, useContext } from 'react';
 
 import { AuthContext } from '../context/auth-context';
 
+import getData from '../helpers/get-data';
+
 // ==============================================
 
 export default function Users() {
@@ -15,27 +17,8 @@ export default function Users() {
 
   // --------------------------------------------
 
-  async function getData(endpoint = '') {
-    // Default options are marked with *
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}${endpoint}`;
-    // const url = `http://localhost:9000/api${endpoint}`;
-    try {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          Authorization: authCtx.token,
-        },
-      });
-      return response.json(); // parses JSON response into native JavaScript objects
-    } catch (err) {
-      console.log('error: ', err);
-    }
-  }
-
-  // --------------------------------------------
-
   const getUsersHandler = async () => {
-    setUsers(await getData('/users'));
+    setUsers(await getData('/users', authCtx.token));
     console.log('users: ', users);
   };
 
