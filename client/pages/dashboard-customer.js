@@ -1,10 +1,10 @@
-import Classes from '../components/classes';
+import Courses from '../components/courses';
 import Cart from '../components/cart';
 
 export default function CustomerDashboardPage() {
   return (
     <>
-      <Classes />
+      <Courses />
       <Cart />
     </>
   );

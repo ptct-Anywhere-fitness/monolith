@@ -55,7 +55,7 @@ server.use('/api/auth', authRouter);
 const usersRouter = require('./users/users-router');
 server.use('/api/users', usersRouter);
 
-const productsRouter = require('./products/products-router');
+const productsRouter = require('./products/courses-router');
 server.use('/api/products', productsRouter);
 
 const checkoutRouter = require('./checkout/checkout-router');

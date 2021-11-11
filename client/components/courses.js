@@ -13,12 +13,12 @@ import { CartContext } from '../context/cart-context';
 
 // ==============================================
 
-export default function Classes() {
+export default function Courses() {
   // --------------------------------------------
 
   const cartCtx = useContext(CartContext);
 
-  const [classes, setClasses] = useState([]);
+  const [courses, setCourses] = useState([]);
 
   // --------------------------------------------
 
@@ -44,9 +44,9 @@ export default function Classes() {
   useEffect(() => {
     (async () => {
       // TODO: Change route to /classes
-      const returned_classes = await getData('/products');
-      console.log('returned_classes: ', returned_classes);
-      setClasses(returned_classes);
+      const returned_courses = await getData('/products');
+      console.log('returned_courses: ', returned_courses);
+      setCourses(returned_courses);
     })();
   }, []);
 
@@ -54,10 +54,10 @@ export default function Classes() {
 
   return (
     <Row>
-      {classes &&
-        classes.map((_class) => {
+      {courses &&
+        courses.map((course) => {
           return (
-            <Col key={_class.id} xs={3}>
+            <Col key={course.id} xs={3}>
               <Card>
                 <Card.Img
                   variant='top'
@@ -65,12 +65,12 @@ export default function Classes() {
                   style={{ width: '200px' }}
                 />
                 <Card.Body>
-                  <Card.Title>{_class.title}</Card.Title>
-                  <Card.Text>{`$${(_class.price / 100).toFixed(2)}`}</Card.Text>
+                  <Card.Title>{course.title}</Card.Title>
+                  <Card.Text>{`$${(course.price / 100).toFixed(2)}`}</Card.Text>
                   <Button
                     variant='primary'
                     onClick={() => {
-                      cartCtx.addToCart(_class);
+                      cartCtx.addToCart(course);
                     }}
                   >
                     Join Class
