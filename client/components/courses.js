@@ -8,7 +8,6 @@ import Button from 'react-bootstrap/Button';
 // import Product from './product';
 
 import { CartContext } from '../context/cart-context';
-
 // import styles from '../styles/products.module.css'
 
 // ==============================================
@@ -43,7 +42,6 @@ export default function Courses() {
 
   useEffect(() => {
     (async () => {
-      // TODO: Change route to /classes
       const returned_courses = await getData('/courses');
       console.log('returned_courses: ', returned_courses);
       setCourses(returned_courses);

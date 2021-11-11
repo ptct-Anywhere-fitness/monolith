@@ -18,9 +18,9 @@ const Products = require('../courses-model');
 // ==============================================
 
 // (5) [DELETE]  /api/products/:id
-const deleteProductById = (req, res) => {
+const deleteCourseById = (req, res) => {
   const id = req.params.id;
-  console.log(`[DELETE]  /api/products/${id}`);
+  console.log(`[DELETE]  /api/courses/${id}`);
 
   Products.remove(id)
     .then((returned_id) => {
@@ -47,4 +47,4 @@ const deleteProductById = (req, res) => {
 
 // ==============================================
 
-module.exports = deleteProductById;
+module.exports = deleteCourseById;

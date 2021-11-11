@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const productsController = require('./courses-controller');
+const coursesController = require('./courses-controller');
 
 // ==============================================
 
@@ -15,27 +15,27 @@ const productsController = require('./courses-controller');
 // ==============================================
 
 // (1) [GET]  /api/products
-router.get('/', productsController.getProducts);
+router.get('/', coursesController.getProducts);
 
 // ==============================================
 
 // (2) [GET]  /api/products/:id
-router.get('/:id', productsController.getProductById);
+router.get('/:id', coursesController.getProductById);
 
 // ==============================================
 
 // (3) [POST]  /api/products
-router.post('/', productsController.postProduct);
+router.post('/', coursesController.postProduct);
 
 // ==============================================
 
 // (4) [PUT]   /api/products/:id
-router.put('/:id', productsController.putProductById);
+router.put('/:id', coursesController.putProductById);
 
 // ==============================================
 
 // (5) [DELETE] /api/products/:id
-router.delete('/:id', productsController.deleteProductById);
+router.delete('/:id', coursesController.deleteCourseById);
 
 // ==============================================
 
@@ -44,7 +44,7 @@ router.use((err, req, res, next) /* eslint-disable-line */ => {
   console.log(
     `
       ******************************************************
-      *****Error-Handling Middleware (products-router)******
+      *****Error-Handling Middleware (courses-router)******
       ******************************************************
     `
   );
