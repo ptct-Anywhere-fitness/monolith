@@ -73,26 +73,16 @@ export default function Cart() {
       <h6>Total: ${(cartCtx.cart_total / 100).toFixed(2)}</h6>
 
       <Button
+        // NOTE: empty arrays are truthy!?!
+        variant={cartCtx.cart?.length > 0 ? 'primary' : 'secondary'}
+        disabled={cartCtx.cart?.length === 0}
         onClick={() => {
-          if (authCtx.isLoggedIn) {
-            console.log('cartCtx.cart: ', cartCtx.cart);
+          console.log('cart: ', cartCtx.cart);
+          console.log(cartCtx.cart?.length > 0 ? 'primary' : 'secondary');
 
-            // const items = [
-            //   {
-            //     product_id: cartCtx.cart[0].product_id,
-            //     quantity: cartCtx.cart[0].quantity,
-            //   },
-            //   {
-            //     product_id: cartCtx.cart[1].product_id,
-            //     quantity: cartCtx.cart[1].quantity,
-            //   },
-            // ];
-
-            loadingCtx.setIsLoading(true);
-            placeOrder(cartCtx.cart);
-          } else {
-            router.push('/auth');
-          }
+          console.log('cartCtx.cart: ', cartCtx.cart);
+          loadingCtx.setIsLoading(true);
+          placeOrder(cartCtx.cart);
         }}
       >
         Place order
