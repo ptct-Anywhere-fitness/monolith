@@ -37,7 +37,7 @@ const deleteCourseById = (req, res, next) => {
         );
       }
 
-      res.status(201).json({ deleted_course });
+      res.status(201).json(deleted_course);
     })
     .catch(() => {
       // - There's an error in removing the _course_ from the database:

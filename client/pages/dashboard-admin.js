@@ -31,7 +31,6 @@ export default function AdminDashboarPage() {
   // --------------------------------------------
 
   const [delete_course_id, setDeleteCourseId] = useState('');
-  const [delete_course_title, setDeleteCourseTitle] = useState('');
   const [put_course_id, setPutCourseId] = useState('');
   const [put_course_title, setPutCourseTitle] = useState('');
   const [post_course_title, setPostCourseTitle] = useState('');
