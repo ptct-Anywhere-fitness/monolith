@@ -1,4 +1,4 @@
-const Products = require('../products-model');
+const Products = require('../courses-model');
 
 // ==============================================
 
@@ -55,11 +55,9 @@ const putProductById = (req, res) => {
         // - If the _product_ with the specified `id` is not found:
         //   - return HTTP status code `404` (Not Found).
         //   - return the following JSON: `{ message: "The product with the specified ID does not exist" }`.
-        res
-          .status(404)
-          .json({
-            message: 'The product with the specified ID does not exist',
-          });
+        res.status(404).json({
+          message: 'The product with the specified ID does not exist',
+        });
       }
     })
     .catch((err) => {

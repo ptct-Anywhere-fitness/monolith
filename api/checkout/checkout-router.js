@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const productsModel = require('../products/products-model');
+const productsModel = require('../courses/courses-model');
 
 // ==============================================
 

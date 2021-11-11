@@ -1,5 +1,5 @@
 const HttpError = require('../../helpers/http-error');
-const Products = require('../products-model');
+const Products = require('../courses-model');
 
 // ==============================================
 

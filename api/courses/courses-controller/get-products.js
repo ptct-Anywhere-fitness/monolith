@@ -1,4 +1,4 @@
-const Products = require('../products-model');
+const Products = require('../courses-model');
 
 // ==============================================
 
