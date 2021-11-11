@@ -89,7 +89,7 @@ export const useAuth = () => {
       localStorage.removeItem('userData');
     }
 
-    // setIsLoggedIn(false);
+    setUser({});
     setToken(null);
     setTokenExpirationDate(null);
     router.push('/');

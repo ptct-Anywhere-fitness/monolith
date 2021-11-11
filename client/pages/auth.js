@@ -11,7 +11,7 @@ import Form from 'react-bootstrap/Form';
 import { AuthContext } from '../context/auth-context';
 import { LoadingContext } from '../context/loading-context';
 
-import fetchData from '../helpers/post-data';
+import fetchData from '../helpers/fetch-data';
 
 // import styles from '../styles/Auth.module.css'
 

@@ -8,12 +8,15 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+import { AuthContext } from '../context/auth-context';
+
 // ==============================================
 
 export default function Layout(props) {
   // --------------------------------------------
 
   const router = useRouter();
+  const autCtx = useContext(AuthContext);
 
   // --------------------------------------------
 
@@ -32,14 +35,16 @@ export default function Layout(props) {
         <Container>
           <Navbar.Brand href='/'>Anywhere Fitness</Navbar.Brand>
 
-          <Navbar.Collapse className='justify-content-center'>
-            <Navbar.Text>
-              Signed in as:{' '}
-              <h6
-                style={{ display: 'inline' }}
-              >{`${props.user.username} | ${props.user.role}`}</h6>
-            </Navbar.Text>
-          </Navbar.Collapse>
+          {autCtx.isLoggedIn && (
+            <Navbar.Collapse className='justify-content-center'>
+              <Navbar.Text>
+                Signed in as:{' '}
+                <h6
+                  style={{ display: 'inline' }}
+                >{`${props.user.username} | ${props.user.role}`}</h6>
+              </Navbar.Text>
+            </Navbar.Collapse>
+          )}
 
           <div style={{ color: 'white' }}>
             {props.token && (
