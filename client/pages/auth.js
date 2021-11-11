@@ -11,7 +11,7 @@ import Form from 'react-bootstrap/Form';
 import { AuthContext } from '../context/auth-context';
 import { LoadingContext } from '../context/loading-context';
 
-import postData from '../helpers/post-data';
+import fetchData from '../helpers/post-data';
 
 // import styles from '../styles/Auth.module.css'
 
@@ -47,13 +47,23 @@ export default function AuthPage() {
       //  and not batch updates.
       loadingCtx.setIsLoading(true);
 
-      const data = await postData('/auth/register', {
+      const response = await fetchData('/auth/register', 'POST', {
         username,
         password,
         role,
         first_name,
         last_name,
       });
+
+      // -4xx / 5xx status code does NOT throw error.
+      // -data.ok is true with a 2xx status code
+      if (!response.ok) {
+        // -This comes from the .message property
+        //  sent from the backend.
+        throw new Error(data.message);
+      }
+
+      const data = await response.json();
       console.log('data: ', data);
       if (data) {
         // TODO: Do proper error checking to ensure the
@@ -85,7 +95,10 @@ export default function AuthPage() {
 
     try {
       loadingCtx.setIsLoading(true);
-      const response = await postData('/auth/login', { username, password });
+      const response = await fetchData('/auth/login', 'POST', {
+        username,
+        password,
+      });
 
       // -4xx / 5xx status code does NOT throw error.
       // -data.ok is true with a 2xx status code

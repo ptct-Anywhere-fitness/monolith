@@ -10,6 +10,8 @@ import Button from 'react-bootstrap/Button';
 import { CartContext } from '../context/cart-context';
 // import styles from '../styles/products.module.css'
 
+import getData from '../helpers/get-data';
+
 // ==============================================
 
 export default function Courses() {
@@ -18,25 +20,6 @@ export default function Courses() {
   const cartCtx = useContext(CartContext);
 
   const [courses, setCourses] = useState([]);
-
-  // --------------------------------------------
-
-  async function getData(endpoint = '') {
-    // Default options are marked with *
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}${endpoint}`;
-    // const url = `http://localhost:9000/api${endpoint}`;
-    try {
-      const response = await fetch(url, {
-        method: 'GET',
-        // headers: {
-        //   Authorization: authCtx.token,
-        // },
-      });
-      return response.json(); // parses JSON response into native JavaScript objects
-    } catch (err) {
-      console.log('error: ', err);
-    }
-  }
 
   // --------------------------------------------
 
