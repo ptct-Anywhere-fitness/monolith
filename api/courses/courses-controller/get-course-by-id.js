@@ -7,11 +7,6 @@ const Courses = require('../courses-model');
 // | --- | ------ | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 // | 2   | GET    | /api/courses/:id          | Returns **the course object with the specified id**                                                                               |
 //
-//
-// - If there's an error in retrieving the _course_ from the database:
-//   - respond with HTTP status code `500`.
-//   - return the following JSON: `{ message: "The course information could not be retrieved" }`.
-//
 // ==============================================
 
 // (2) [GET]  /api/courses/:id
@@ -41,10 +36,12 @@ const getCourseById = (req, res, next) => {
       res.status(201).json({ course });
     })
     .catch((e) => {
-      // There's an error in retrieving the _course_ from the database:
-      const error = new Error('The course information could not be retrieved.');
-      error.status = 500;
-      next(error);
+      // -There's an error in retrieving the _course_ from the database:
+      // const error = new Error('The course information could not be retrieved.');
+      // error.status = 500;
+      next(
+        new HttpError('The course information could not be retrieved.', 500)
+      );
     });
 
   console.log(`[GET]  /api/courses/${id}`);

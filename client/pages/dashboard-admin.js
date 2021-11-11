@@ -18,6 +18,7 @@ import fetchData from '../helpers/fetch-data';
 export default function AdminDashboarPage() {
   // --------------------------------------------
 
+  const [posted_course, setPostedCourse] = useState();
   const [course_by_id, setCourseById] = useState();
   const [courses, setCourses] = useState();
   const [users, setUsers] = useState();
@@ -74,6 +75,7 @@ export default function AdminDashboarPage() {
             // TODO: Proper error handling
             if (data.course) {
               setCourseById(data.course);
+              loadingCtx.setIsLoading(false);
             }
           } catch (err) {
             console.log(
@@ -92,6 +94,54 @@ export default function AdminDashboarPage() {
       {course_by_id && (
         <div>
           <p>Title: {course_by_id.title}</p>
+        </div>
+      )}
+
+      <hr />
+
+      <h6>Post Course</h6>
+
+      <Button
+        onClick={async () => {
+          try {
+            loadingCtx.setIsLoading(true);
+            const response = await fetchData('/courses', 'POST', {
+              title: 'test title',
+            });
+
+            const data = await response.json();
+
+            // -4xx / 5xx status code does NOT throw error.
+            // -data.ok is true with a 2xx status code
+            if (!response.ok) {
+              // -data.message comes from the .message property
+              //  sent from the backend.
+              throw new Error(data.message);
+            }
+
+            console.log('data: ', data);
+
+            setPostedCourse(data);
+            loadingCtx.setIsLoading(false);
+          } catch (err) {
+            console.log(
+              'Error in dashboard-admin --> postCourseHandler() -- err: ',
+              err
+            );
+            loadingCtx.setIsLoading(false);
+            // setError(
+            //   err.message || // This message comes from the backend!
+            //     'Error in onLoginHandler()'
+            // );
+          }
+        }}
+      >
+        Post Course
+      </Button>
+      {posted_course && (
+        <div>
+          Posted Course:
+          <p>Title: {posted_course.title}</p>
         </div>
       )}
 

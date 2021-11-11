@@ -1,3 +1,4 @@
+const HttpError = require('../../helpers/http-error');
 const Courses = require('../courses-model');
 
 // ==============================================
@@ -10,27 +11,29 @@ const Courses = require('../courses-model');
 
 // (3) [POST]  /api/courses
 const postCourse = (req, res) => {
-  const { title, contents } = req.body;
+  const { title } = req.body;
   console.log('[POST]  /api/courses');
 
-  if (title && contents) {
-    Courses.insert({ title, contents })
-      .then((p) => {
-        console.log('Successful addition of past to DB!');
-        res.status(201).json(p);
+  if (title) {
+    Courses.insert({ title })
+      .then((course) => {
+        console.log('Successful addition of course to DB! - course: ', course);
+        res.status(201).json(course);
       })
       .catch((err) => {
-        // - There's an error while saving the _course_
+        // -There's an error while saving the _course_
         console.log('err: ', err);
-        res.status(500).json({
-          message: 'There was an error while saving the course to the database',
-        });
+        next(
+          new HttpError(
+            'There was an error while saving the course to the database',
+            500
+          )
+        );
       });
   } else {
-    // - The request body is missing the `title` or `contents` property
-    res
-      .status(400)
-      .json({ message: 'Please provide title and contents for the course' });
+    // -The request body is missing the `title` property
+    // res.status(400).json({ message: 'Please provide title for the course' });
+    next(new HttpError('Please provide title for the course', 400));
   }
 };
 

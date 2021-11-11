@@ -99,6 +99,10 @@ export default function AuthPage() {
         username,
         password,
       });
+      console.clear();
+      console.log('response.message: ', response.message);
+
+      const data = await response.json();
 
       // -4xx / 5xx status code does NOT throw error.
       // -data.ok is true with a 2xx status code
@@ -107,8 +111,6 @@ export default function AuthPage() {
         //  sent from the backend.
         throw new Error(data.message);
       }
-
-      const data = await response.json();
 
       // -Don't want to set isLoading state
       //  after we change the context,
