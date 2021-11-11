@@ -24,8 +24,8 @@ router.get('/:id', coursesController.getCourseById);
 
 // ==============================================
 
-// (3) [POST]  /api/products
-router.post('/', coursesController.postProduct);
+// (3) [POST]  /api/courses
+router.post('/', coursesController.postCourse);
 
 // ==============================================
 
