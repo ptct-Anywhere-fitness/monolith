@@ -1,1 +1,1 @@
-# monolith-ready-to-deploy
+# monolith (ready to deploy)
