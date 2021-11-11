@@ -4,13 +4,13 @@ const coursesController = require('./courses-controller');
 
 // ==============================================
 
-// | N   | Method | Endpoint                | Description                                                                                                                     |
-// | --- | ------ | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+// | N   | Method | Endpoint                | Description                                                                                                                         |
+// | --- | ------ | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 // | 1   | GET    | /api/courses              | Returns **an array of all the course objects** contained in the database                                                          |
 // | 2   | GET    | /api/courses/:id          | Returns **the course object with the specified id**                                                                               |
-// | 3   | POST   | /api/products              | Creates a product using the information sent inside the request body and returns **the newly created product object**                 |
-// | 4   | PUT    | /api/products/:id          | Updates the product with the specified id using data from the request body and **returns the modified document**, not the original |
-// | 5   | DELETE | /api/courses/:id          | Removes the course with the specified id and returns the **deleted product object**                                                  |
+// | 3   | POST   | /api/courses              | Creates a course using the information sent inside the request body and returns **the newly created course object**               |
+// | 4   | PUT    | /api/courses/:id          | Updates the course with the specified id using data from the request body and **returns the modified document**, not the original |
+// | 5   | DELETE | /api/courses/:id          | Removes the course with the specified id and returns the **deleted course object**                                                |
 
 // ==============================================
 
@@ -29,17 +29,17 @@ router.post('/', coursesController.postCourse);
 
 // ==============================================
 
-// (4) [PUT]   /api/products/:id
-router.put('/:id', coursesController.putProductById);
+// (4) [PUT]   /api/courses/:id
+router.put('/:id', coursesController.putCourseById);
 
 // ==============================================
 
-// (5) [DELETE] /api/products/:id
+// (5) [DELETE] /api/courses/:id
 router.delete('/:id', coursesController.deleteCourseById);
 
 // ==============================================
 
-// -Error handling middleware (products-router)
+// -Error handling middleware (c-router)
 router.use((err, req, res, next) /* eslint-disable-line */ => {
   console.log(
     `
@@ -61,7 +61,7 @@ router.use((err, req, res, next) /* eslint-disable-line */ => {
   // err.code
   res.status(err.status || 500).json({
     stack: err.stack,
-    message: err.message || 'an unkown error occurred (products-router.js)',
+    message: err.message || 'an unkown error occurred (courses-router.js)',
   });
 });
 
