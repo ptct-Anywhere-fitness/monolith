@@ -25,6 +25,10 @@ export default function AdminDashboarPage() {
 
   // --------------------------------------------
 
+  const [post_course_title, setPostCourseTitle] = useState('');
+
+  // --------------------------------------------
+
   const authCtx = useContext(AuthContext);
   const loadingCtx = useContext(LoadingContext);
 
@@ -101,12 +105,14 @@ export default function AdminDashboarPage() {
 
       <h6>Post Course</h6>
 
-      <Button
-        onClick={async () => {
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+
           try {
             loadingCtx.setIsLoading(true);
             const response = await fetchData('/courses', 'POST', {
-              title: 'test title',
+              title: post_course_title,
             });
 
             const data = await response.json();
@@ -136,8 +142,15 @@ export default function AdminDashboarPage() {
           }
         }}
       >
-        Post Course
-      </Button>
+        <input
+          type='text'
+          value={post_course_title}
+          onChange={(e) => setPostCourseTitle(e.target.value)}
+        ></input>
+
+        <Button type='submit'>Post Course</Button>
+      </form>
+
       {posted_course && (
         <div>
           Posted Course:
