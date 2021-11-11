@@ -8,20 +8,24 @@ import TableCourses from '../components/tables/table-courses';
 import TableUsers from '../components/tables/table-users';
 
 import { AuthContext } from '../context/auth-context';
+import { LoadingContext } from '../context/loading-context';
 
 import getData from '../helpers/get-data';
+import fetchData from '../helpers/fetch-data';
 
 // ==============================================
 
-export default function DashboardPage() {
+export default function AdminDashboarPage() {
   // --------------------------------------------
 
-  const [courses, setCourses] = useState([]);
-  const [users, setUsers] = useState([]);
+  const [course_by_id, setCourseById] = useState();
+  const [courses, setCourses] = useState();
+  const [users, setUsers] = useState();
 
   // --------------------------------------------
 
   const authCtx = useContext(AuthContext);
+  const loadingCtx = useContext(LoadingContext);
 
   // --------------------------------------------
 
@@ -57,9 +61,39 @@ export default function DashboardPage() {
 
       <hr />
 
-      <h6>Create Courses</h6>
+      <h6>Get Course By ID</h6>
 
-      <Button onClick={() => {}}>Create Course</Button>
+      <Button
+        onClick={async () => {
+          try {
+            loadingCtx.setIsLoading(true);
+
+            const data = await getData('/courses/1', authCtx.token);
+            console.log('data: ', data);
+
+            // TODO: Proper error handling
+            if (data.course) {
+              setCourseById(data.course);
+            }
+          } catch (err) {
+            console.log(
+              'Error in dashboard-admin --> getCourseByIdHandler() -- err: ',
+              err
+            );
+            // setError(
+            //   err.message || // This message comes from the backend!
+            //     'Error in onRegisterHandler()'
+            // );
+          }
+        }}
+      >
+        Get Course By ID
+      </Button>
+      {course_by_id && (
+        <div>
+          <p>Title: {course_by_id.title}</p>
+        </div>
+      )}
 
       <hr />
 
