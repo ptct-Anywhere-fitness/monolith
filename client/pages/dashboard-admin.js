@@ -2,6 +2,9 @@ import { useState, useEffect, useContext } from 'react';
 
 import { format } from 'date-fns';
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
 import TableCourses from '../components/tables/table-courses';
@@ -18,6 +21,7 @@ import fetchData from '../helpers/fetch-data';
 export default function AdminDashboarPage() {
   // --------------------------------------------
 
+  const [put_course, setPutCourse] = useState();
   const [posted_course, setPostedCourse] = useState();
   const [course_by_id, setCourseById] = useState();
   const [courses, setCourses] = useState();
@@ -25,6 +29,8 @@ export default function AdminDashboarPage() {
 
   // --------------------------------------------
 
+  const [put_course_id, setPutCourseId] = useState('');
+  const [put_course_title, setPutCourseTitle] = useState('');
   const [post_course_title, setPostCourseTitle] = useState('');
 
   // --------------------------------------------
@@ -54,12 +60,12 @@ export default function AdminDashboarPage() {
         setUsers(u);
       })();
     }
-  }, [authCtx.token]);
+  }, [put_course, posted_course, authCtx.token]);
 
   // --------------------------------------------
 
   return (
-    <main>
+    <>
       <h4>Admin Dashboard</h4>
 
       <h6>{format(new Date(), 'MMMM do Y')}</h6>
@@ -68,130 +74,223 @@ export default function AdminDashboarPage() {
 
       <h6>Get Course By ID</h6>
 
-      <Button
-        onClick={async () => {
-          try {
-            loadingCtx.setIsLoading(true);
+      <Row>
+        <Col>
+          <Button
+            onClick={async () => {
+              try {
+                loadingCtx.setIsLoading(true);
 
-            const data = await getData('/courses/1', authCtx.token);
-            console.log('data: ', data);
+                const data = await getData('/courses/1', authCtx.token);
+                console.log('data: ', data);
 
-            // TODO: Proper error handling
-            if (data.course) {
-              setCourseById(data.course);
-              loadingCtx.setIsLoading(false);
-            }
-          } catch (err) {
-            console.log(
-              'Error in dashboard-admin --> getCourseByIdHandler() -- err: ',
-              err
-            );
-            // setError(
-            //   err.message || // This message comes from the backend!
-            //     'Error in onRegisterHandler()'
-            // );
-          }
-        }}
-      >
-        Get Course By ID
-      </Button>
-      {course_by_id && (
-        <div>
-          <p>Title: {course_by_id.title}</p>
-        </div>
-      )}
-
-      <hr />
-
-      <h6>Post Course</h6>
-
-      <form
-        onSubmit={async (e) => {
-          e.preventDefault();
-
-          try {
-            loadingCtx.setIsLoading(true);
-            const response = await fetchData('/courses', 'POST', {
-              title: post_course_title,
-            });
-
-            const data = await response.json();
-
-            // -4xx / 5xx status code does NOT throw error.
-            // -data.ok is true with a 2xx status code
-            if (!response.ok) {
-              // -data.message comes from the .message property
-              //  sent from the backend.
-              throw new Error(data.message);
-            }
-
-            console.log('data: ', data);
-
-            setPostedCourse(data);
-            loadingCtx.setIsLoading(false);
-          } catch (err) {
-            console.log(
-              'Error in dashboard-admin --> postCourseHandler() -- err: ',
-              err
-            );
-            loadingCtx.setIsLoading(false);
-            // setError(
-            //   err.message || // This message comes from the backend!
-            //     'Error in onLoginHandler()'
-            // );
-          }
-        }}
-      >
-        <input
-          type='text'
-          value={post_course_title}
-          onChange={(e) => setPostCourseTitle(e.target.value)}
-        ></input>
-
-        <Button type='submit'>Post Course</Button>
-      </form>
-
-      {posted_course && (
-        <div>
-          Posted Course:
-          <p>Title: {posted_course.title}</p>
-        </div>
-      )}
+                // TODO: Proper error handling
+                if (data.course) {
+                  setCourseById(data.course);
+                  loadingCtx.setIsLoading(false);
+                }
+              } catch (err) {
+                console.log(
+                  'Error in dashboard-admin --> getCourseByIdHandler() -- err: ',
+                  err
+                );
+                // setError(
+                //   err.message || // This message comes from the backend!
+                //     'Error in onRegisterHandler()'
+                // );
+              }
+            }}
+          >
+            Get Course By ID
+          </Button>
+          {course_by_id && (
+            <div>
+              <p>Title: {course_by_id.title}</p>
+            </div>
+          )}
+        </Col>
+      </Row>
 
       <hr />
 
-      {courses && (
-        <div
-          style={{
-            background: '#cfe8fc',
-            width: '100%',
-            padding: '1%',
-            height: '300px',
-          }}
-        >
-          {' '}
-          <h6>Courses</h6>
-          <TableCourses courses={courses} />
-        </div>
-      )}
+      <Row>
+        <Col>
+          <h6>Post Course</h6>
+
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+
+              try {
+                loadingCtx.setIsLoading(true);
+                const response = await fetchData('/courses', 'POST', {
+                  title: post_course_title,
+                });
+
+                const data = await response.json();
+
+                // -4xx / 5xx status code does NOT throw error.
+                // -data.ok is true with a 2xx status code
+                if (!response.ok) {
+                  // -data.message comes from the .message property
+                  //  sent from the backend.
+                  throw new Error(data.message);
+                }
+
+                console.log('data: ', data);
+
+                setPostedCourse(data);
+                loadingCtx.setIsLoading(false);
+              } catch (err) {
+                console.log(
+                  'Error in dashboard-admin --> postCourseHandler() -- err: ',
+                  err
+                );
+                loadingCtx.setIsLoading(false);
+                // setError(
+                //   err.message || // This message comes from the backend!
+                //     'Error in onLoginHandler()'
+                // );
+              }
+            }}
+          >
+            <label>
+              Title:
+              <input
+                type='text'
+                value={post_course_title}
+                onChange={(e) => setPostCourseTitle(e.target.value)}
+              ></input>
+            </label>
+
+            <Button type='submit'>Post Course</Button>
+          </form>
+
+          {posted_course && (
+            <div>
+              Posted Course:
+              <p>Title: {posted_course.title}</p>
+            </div>
+          )}
+        </Col>
+      </Row>
 
       <hr />
 
-      {users && (
-        <div
-          style={{
-            background: '#cfe8fc',
-            width: '100%',
-            padding: '1%',
-            height: '300px',
-          }}
-        >
-          {' '}
-          <h6>Users</h6>
-          <TableUsers users={users} />
-        </div>
-      )}
-    </main>
+      <Row>
+        <Col>
+          <h6>Update Course</h6>
+
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+
+              console.log('PUT course handler');
+
+              try {
+                loadingCtx.setIsLoading(true);
+                const response = await fetchData(
+                  `/courses/${put_course_id}`,
+                  'PUT',
+                  {
+                    title: put_course_title,
+                  }
+                );
+
+                const data = await response.json();
+
+                // -4xx / 5xx status code does NOT throw error.
+                // -data.ok is true with a 2xx status code
+                if (!response.ok) {
+                  // -data.message comes from the .message property
+                  //  sent from the backend.
+                  throw new Error(data.message);
+                }
+
+                console.log('data: ', data);
+
+                setPutCourse(data);
+                loadingCtx.setIsLoading(false);
+              } catch (err) {
+                console.log(
+                  'Error in dashboard-admin --> putCourseHandler() -- err: ',
+                  err
+                );
+                loadingCtx.setIsLoading(false);
+                // setError(
+                //   err.message || // This message comes from the backend!
+                //     'Error in onLoginHandler()'
+                // );
+              }
+            }}
+          >
+            <label>
+              ID:
+              <input
+                value={put_course_id}
+                onChange={(e) => setPutCourseId(e.target.value)}
+              ></input>
+            </label>
+
+            <label>
+              Title:
+              <input
+                type='text'
+                value={put_course_title}
+                onChange={(e) => setPutCourseTitle(e.target.value)}
+              ></input>
+            </label>
+
+            <Button type='submit'>Update Course</Button>
+          </form>
+
+          {put_course && (
+            <div>
+              Updated Course:
+              <p>Title: {put_course.title}</p>
+              <p>ID: {put_course.id}</p>
+            </div>
+          )}
+        </Col>
+      </Row>
+
+      <hr />
+
+      <Row>
+        {courses && (
+          <div
+            style={{
+              background: '#cfe8fc',
+              width: '100%',
+              padding: '1%',
+              height: '300px',
+            }}
+          >
+            {' '}
+            <h6>Courses</h6>
+            <TableCourses courses={courses} />
+          </div>
+        )}
+      </Row>
+
+      <hr />
+      <Row>
+        {users && (
+          <div
+            style={{
+              background: '#cfe8fc',
+              width: '100%',
+              padding: '1%',
+              height: '300px',
+            }}
+          >
+            {' '}
+            <h6>Users</h6>
+            <TableUsers users={users} />
+          </div>
+        )}
+      </Row>
+    </>
   );
 
   // --------------------------------------------
