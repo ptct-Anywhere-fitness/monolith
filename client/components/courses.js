@@ -44,7 +44,7 @@ export default function Courses() {
   useEffect(() => {
     (async () => {
       // TODO: Change route to /classes
-      const returned_courses = await getData('/products');
+      const returned_courses = await getData('/courses');
       console.log('returned_courses: ', returned_courses);
       setCourses(returned_courses);
     })();
