@@ -25,6 +25,13 @@ export default function CourseDetailsModal({
 
   // --------------------------------------------
 
+  const [edit_mode, setEditMode] = useState(false);
+  const [delete_mode, setDeleteMode] = useState(false);
+
+  const [title_input, setTitleInput] = useState('');
+
+  // --------------------------------------------
+
   const handleDelete = (course_id) => async () => {
     console.log('DELETE course handler');
 
@@ -43,6 +50,7 @@ export default function CourseDetailsModal({
       setCourses(await getData('/courses', token));
       loadingCtx.setIsLoading(false);
       handleClose();
+      setEditMode(false);
     } catch (err) {
       console.log(
         'Error in dashboard-admin --> deleteCourseHandler() -- err: ',
@@ -59,7 +67,55 @@ export default function CourseDetailsModal({
 
   // --------------------------------------------
 
-  const handleEdit = () => {};
+  const handleEdit = () => {
+    setEditMode(true);
+  };
+
+  // --------------------------------------------
+
+  let modal_footer;
+  if (edit_mode) {
+    modal_footer = (
+      <>
+        <Button variant='danger' onClick={handleDelete(course?.id)}>
+          Delete
+        </Button>
+
+        <Button
+          variant='primary'
+          onClick={() => {
+            handleClose();
+            setEditMode(false);
+          }}
+        >
+          Cancel
+        </Button>
+
+        <Button
+          variant='success'
+          onClick={() => {
+            alert('handle save -> Update endpoint');
+            handleClose();
+            setEditMode(false);
+          }}
+        >
+          Save
+        </Button>
+      </>
+    );
+  } else {
+    modal_footer = (
+      <>
+        <Button variant='secondary' onClick={handleEdit}>
+          Edit
+        </Button>
+
+        <Button variant='primary' onClick={handleClose}>
+          Close
+        </Button>
+      </>
+    );
+  }
 
   // --------------------------------------------
 
@@ -89,7 +145,18 @@ export default function CourseDetailsModal({
               </tr> */}
               <tr>
                 <td>Title</td>
-                <td>{course?.title}</td>
+                <td>
+                  {!edit_mode ? (
+                    course?.title
+                  ) : (
+                    <input
+                      type='text'
+                      placeholder={course?.title}
+                      value={title_input}
+                      onChange={(e) => setTitleInput(e.target.value)}
+                    />
+                  )}
+                </td>
               </tr>
               <tr>
                 <td>Registered Attendees</td>
@@ -121,17 +188,7 @@ export default function CourseDetailsModal({
           </Table>
         </Modal.Body>
         <Modal.Footer className='justify-content-around'>
-          <Button variant='danger' onClick={handleDelete(course?.id)}>
-            Delete
-          </Button>
-
-          <Button variant='secondary' onClick={handleEdit}>
-            Edit
-          </Button>
-
-          <Button variant='primary' onClick={handleClose}>
-            Close
-          </Button>
+          {modal_footer}
         </Modal.Footer>
       </Modal>
     </>
