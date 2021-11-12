@@ -1,44 +1,63 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import Table from 'react-bootstrap/Table';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+
+// import { AuthContext } from '../context/auth-context';
+import { LoadingContext } from '../../context/loading-context';
+
+import fetchData from '../../helpers/fetch-data';
 
 // ==============================================
 
 export default function ModalComponent({ show_modal, handleClose, course }) {
   // --------------------------------------------
 
-  // -This function uses the get_course_by_id HTTP flow
-  // -Not really needed since the table already has all the data for a row.
-  // -By passing in the course into this modal component
-  //  instead of calling the get-course-by-id endpoint
-  //  will speed up the interactivity of the app
-  //  since the user does not have to wait on the
-  //  HTTP req/res to get the course by ID.
-  // async () => {
-  //   try {
-  //     loadingCtx.setIsLoading(true);
+  const loadingCtx = useContext(LoadingContext);
 
-  //     const data = await getData('/courses/1', authCtx.token);
-  //     console.log('data: ', data);
+  // --------------------------------------------
 
-  //     // TODO: Proper error handling
-  //     if (data.course) {
-  //       setCourseById(data.course);
-  //       loadingCtx.setIsLoading(false);
-  //     }
-  //   } catch (err) {
-  //     console.log(
-  //       'Error in dashboard-admin --> getCourseByIdHandler() -- err: ',
-  //       err
-  //     );
-  //     // setError(
-  //     //   err.message || // This message comes from the backend!
-  //     //     'Error in onRegisterHandler()'
-  //     // );
-  //   }
-  // };
+  const handleDelete = (course_id) => async () => {
+    console.log('DELETE course handler');
+
+    try {
+      loadingCtx.setIsLoading(true);
+      const response = await fetchData(`/courses/${course_id}`, 'DELETE');
+
+      const data = await response.json();
+
+      // -4xx / 5xx status code does NOT throw error.
+      // -data.ok is true with a 2xx status code
+      if (!response.ok) {
+        // -data.message comes from the .message property
+        //  sent from the backend.
+        throw new Error(data.message);
+      }
+
+      console.log('deleted data: ', data);
+
+      loadingCtx.setIsLoading(false);
+      handleClose();
+    } catch (err) {
+      console.log(
+        'Error in dashboard-admin --> deleteCourseHandler() -- err: ',
+        err
+      );
+      loadingCtx.setIsLoading(false);
+      handleClose();
+      // setError(
+      //   err.message || // This message comes from the backend!
+      //     'Error in onLoginHandler()'
+      // );
+    }
+  };
+
+  // --------------------------------------------
+
+  const handleEdit = () => {};
+
+  // --------------------------------------------
 
   return (
     <>
@@ -71,7 +90,7 @@ export default function ModalComponent({ show_modal, handleClose, course }) {
               <tr>
                 <td>Registered Attendees</td>
                 <td>
-                  {course?.registered_attendees} / {course.max_class_size}
+                  {course?.registered_attendees} / {course?.max_class_size}
                 </td>
               </tr>
               <tr>
@@ -97,7 +116,15 @@ export default function ModalComponent({ show_modal, handleClose, course }) {
             </tbody>
           </Table>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className='justify-content-around'>
+          <Button variant='danger' onClick={handleDelete(course?.id)}>
+            Delete
+          </Button>
+
+          <Button variant='secondary' onClick={handleEdit}>
+            Edit
+          </Button>
+
           <Button variant='primary' onClick={handleClose}>
             Close
           </Button>
