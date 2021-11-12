@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import { useRouter } from 'next/router';
 
 import { format } from 'date-fns';
 
@@ -31,6 +32,8 @@ export default function AdminDashboarPage() {
   const authCtx = useContext(AuthContext);
   const loadingCtx = useContext(LoadingContext);
 
+  const router = useRouter();
+
   // --------------------------------------------
 
   const [show_add_course_modal, setShowAddCourseModal] = useState();
@@ -51,7 +54,7 @@ export default function AdminDashboarPage() {
     //  from local storage (e.g. page-refresh)
     // -See auth-hook for retrieval of token
     //  from local storage.
-    if (token) {
+    if (token && authCtx.user.role === 'admin') {
       (async () => {
         try {
           const p = await getData('/courses', token);
@@ -87,6 +90,10 @@ export default function AdminDashboarPage() {
           // );
         }
       })();
+    } else {
+      // -If no token or if user is not a admin
+      //  then redirect back to root-route.
+      router.replace('/');
     }
   }, [authCtx.token]);
 

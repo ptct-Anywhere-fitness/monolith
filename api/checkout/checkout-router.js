@@ -18,6 +18,8 @@ const f = async (cart_items) => {
     products.push(product);
   }
 
+  console.log('products: ', products);
+
   return products.map((product, idx) => {
     return {
       price_data: {
@@ -39,12 +41,16 @@ router.post('/', async (req, res) => {
   try {
     const line_items = await f(req.body.items);
 
+    console.log('line_items: ', line_items);
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
       line_items,
-      success_url: `https://joshua-holloway.com/`,
-      cancel_url: `https://joshua-holloway.com/`,
+      // success_url: `https://joshua-holloway.com/`,
+      // cancel_url: `https://joshua-holloway.com/`,
+      success_url: `http://localhost:3000/`,
+      cancel_url: `http://localhost:300/dashboard-customer/`,
       // success_url: `${process.env.CLIENT_URL}/success.html`,
       // cancel_url: `${process.env.CLIENT_URL}/cancel.html`,
     });

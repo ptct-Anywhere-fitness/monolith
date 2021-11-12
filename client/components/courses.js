@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import { useRouter } from 'next/router';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -23,30 +24,37 @@ export default function Courses() {
   const authCtx = useContext(AuthContext);
   const loadingCtx = useContext(LoadingContext);
 
-  const [courses, setCourses] = useState([]);
+  const [courses, setCourses] = useState();
+
+  const router = useRouter();
 
   // --------------------------------------------
 
   useEffect(() => {
-    (async () => {
-      try {
-        const token = authCtx.token;
-
-        const returned_courses = await getData('/courses', token);
-        console.log('returned_courses: ', returned_courses);
-        setCourses(returned_courses);
-      } catch (err) {
-        console.log(
-          'Error in dashboard-admin --> useEffect() --> getData(/courses),  err: ',
-          err
-        );
-        loadingCtx.setIsLoading(false);
-        // setError(
-        //   err.message || // This message comes from the backend!
-        //     'Error in onLoginHandler()'
-        // );
-      }
-    })();
+    const token = authCtx.token;
+    if (token && authCtx.user.role === 'customer') {
+      (async () => {
+        try {
+          const returned_courses = await getData('/courses', token);
+          console.log('returned_courses: ', returned_courses);
+          setCourses(returned_courses);
+        } catch (err) {
+          console.log(
+            'Error in dashboard-admin --> useEffect() --> getData(/courses),  err: ',
+            err
+          );
+          loadingCtx.setIsLoading(false);
+          // setError(
+          //   err.message || // This message comes from the backend!
+          //     'Error in onLoginHandler()'
+          // );
+        }
+      })();
+    } else {
+      // -If not token or if user is not a customer
+      //  then redirect back to root-route.
+      router.replace('/');
+    }
   }, []);
 
   // --------------------------------------------
@@ -54,7 +62,7 @@ export default function Courses() {
   return (
     <Row>
       {courses &&
-        courses.map((course) => {
+        courses?.map((course) => {
           return (
             <Col key={course.id} xs={3}>
               <Card>
