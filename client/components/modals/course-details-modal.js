@@ -38,7 +38,14 @@ export default function CourseDetailsModal({
 
   // --------------------------------------------
 
-  const [title_input, setTitleInput] = useState('');
+  const [title_input, setTitleInput] = useState(course?.title);
+  const [date_input, setDateInput] = useState(course?.date);
+  const [time_input, setTimeInput] = useState(course?.time);
+  const [duration_input, setDurationInput] = useState(course?.duration);
+  const [city_input, setCityInput] = useState(course?.city);
+  const [max_class_size_input, setMaxClassSizeInput] = useState(
+    course?.max_class_size
+  );
 
   // --------------------------------------------
 
@@ -101,6 +108,11 @@ export default function CourseDetailsModal({
         'PUT',
         {
           title: title_input,
+          date: date_input,
+          time: time_input,
+          duration: duration_input,
+          city: city_input,
+          max_class_size: max_class_size_input,
         },
         token
       );
@@ -236,23 +248,78 @@ export default function CourseDetailsModal({
               </tr>
               <tr>
                 <td>Date</td>
-                <td>{course?.date}</td>
+                <td>
+                  {!edit_mode ? (
+                    course?.date
+                  ) : (
+                    <input
+                      type='text'
+                      placeholder={course?.date}
+                      value={date_input}
+                      onChange={(e) => setDateInput(e.target.value)}
+                    />
+                  )}
+                </td>
               </tr>
               <tr>
                 <td>Time</td>
-                <td>{course?.time}</td>
+                <td>
+                  {!edit_mode ? (
+                    course?.time
+                  ) : (
+                    <input
+                      type='text'
+                      placeholder={course?.time}
+                      value={time_input}
+                      onChange={(e) => setTimeInput(e.target.value)}
+                    />
+                  )}
+                </td>
               </tr>
               <tr>
                 <td>Duration</td>
-                <td>{course?.duration}</td>
+                <td>
+                  {!edit_mode ? (
+                    course?.duration
+                  ) : (
+                    <input
+                      type='text'
+                      placeholder={course?.duration}
+                      value={duration_input}
+                      onChange={(e) => setDurationInput(e.target.value)}
+                    />
+                  )}
+                </td>
               </tr>
               <tr>
                 <td>City</td>
-                <td>{course?.city}</td>
+                <td>
+                  {!edit_mode ? (
+                    course?.city
+                  ) : (
+                    <input
+                      type='text'
+                      placeholder={course?.city}
+                      value={city_input}
+                      onChange={(e) => setCityInput(e.target.value)}
+                    />
+                  )}
+                </td>
               </tr>
               <tr>
                 <td>Max Class Size</td>
-                <td>{course?.max_class_size}</td>
+                <td>
+                  {!edit_mode ? (
+                    course?.max_class_size
+                  ) : (
+                    <input
+                      type='text'
+                      placeholder={course?.max_class_size}
+                      value={max_class_size_input}
+                      onChange={(e) => setMaxClassSizeInput(e.target.value)}
+                    />
+                  )}
+                </td>
               </tr>
             </tbody>
           </Table>
