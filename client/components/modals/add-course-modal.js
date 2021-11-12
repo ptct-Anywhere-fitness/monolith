@@ -28,14 +28,16 @@ export default function AddCourseModal({
 
   const [course_title, setCourseTitle] = useState('title');
   const [course_price, setCoursePrice] = useState(1);
-
-  // date: '2022-01-01',
-  const [course_date, setCourseDate] = useState('2022-01-01');
-
   const [course_details, setCourseDetails] = useState('');
 
+  // date: '2022-01-01',
+  // const [course_date, setCourseDate] = useState('2022-01-01');
+  const [course_date_year, setCourseDateYear] = useState('2022');
+  const [course_date_month, setCourseDateMonth] = useState('01');
+  const [course_date_day, setCourseDateDay] = useState('01');
+
   // time: '00:00:00.0-06',
-  const [course_time, setCourseTime] = useState('00:00:00.0-06');
+  // const [course_time, setCourseTime] = useState('00:00:00.0-06');
   const [course_time_hr, setCourseTimeHr] = useState(0);
   const [course_time_min, setCourseTimeMin] = useState(0);
 
@@ -68,7 +70,7 @@ export default function AddCourseModal({
           title: course_title,
           details: course_details,
           price: course_price,
-          date: course_date,
+          date: `${course_date_year}-${course_date_month}-${course_date_day}`,
           time: `${course_time_hr}:${course_time_min}:00.0-06`,
           duration: course_duration,
           intensity: course_intensity,
@@ -160,35 +162,59 @@ export default function AddCourseModal({
               Date:
               <input
                 type='text'
-                value={course_date}
-                onChange={(e) => setCourseDate(e.target.value)}
+                value={course_date_year}
+                onChange={(e) => setCourseDateYear(e.target.value)}
               ></input>
             </label>
           </Row>
 
           <Row>
-            <Col>
-              {/* time: '00:00:00.0-06', */}
-              <label>
-                Hr:
-                <input
-                  type='text'
-                  value={course_time_hr}
-                  onChange={(e) => setCourseTimeHr(e.target.value)}
-                ></input>
-              </label>
-            </Col>
+            {/* // date: '2022-01-01', */}
+            <label>
+              Date:
+              <input
+                type='text'
+                value={course_date_month}
+                onChange={(e) => setCourseDateMonth(e.target.value)}
+              ></input>
+            </label>
+          </Row>
 
-            <Col>
-              <label>
-                Min:
-                <input
-                  type='text'
-                  value={course_time_min}
-                  onChange={(e) => setCourseTimeMin(e.target.value)}
-                ></input>
-              </label>
-            </Col>
+          <Row>
+            {/* // date: '2022-01-01', */}
+            <label>
+              Date:
+              <input
+                type='text'
+                value={course_date_day}
+                onChange={(e) => setCourseDateDay(e.target.value)}
+              ></input>
+            </label>
+          </Row>
+
+          <Row>
+            {/* <Col> */}
+            {/* time: '00:00:00.0-06', */}
+            <label>
+              Hr:
+              <input
+                type='text'
+                value={course_time_hr}
+                onChange={(e) => setCourseTimeHr(e.target.value)}
+              ></input>
+            </label>
+            {/* </Col> */}
+
+            {/* <Col> */}
+            <label>
+              Min:
+              <input
+                type='text'
+                value={course_time_min}
+                onChange={(e) => setCourseTimeMin(e.target.value)}
+              ></input>
+            </label>
+            {/* </Col> */}
           </Row>
 
           <Row>

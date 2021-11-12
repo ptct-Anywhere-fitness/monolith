@@ -26,7 +26,7 @@ export default function TableCourses({ courses, setCourses }) {
   // --------------------------------------------
 
   return (
-    <>
+    <div style={{ maxHeight: '255px', overflowY: 'scroll' }}>
       <CourseDetailsModal
         show_modal={show_details_modal}
         handleClose={handleDetailsModalClose}
@@ -34,14 +34,7 @@ export default function TableCourses({ courses, setCourses }) {
         setCourses={setCourses}
       />
 
-      <Table
-        striped
-        bordered
-        hover
-        variant='dark'
-        responsive
-        style={{ maxHeight: '260px', overflowY: 'scroll' }}
-      >
+      <Table striped bordered hover variant='dark' responsive>
         <thead>
           <tr>
             <th></th>
@@ -127,6 +120,6 @@ export default function TableCourses({ courses, setCourses }) {
             })}
         </tbody>
       </Table>
-    </>
+    </div>
   );
 }
