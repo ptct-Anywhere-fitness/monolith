@@ -36,6 +36,8 @@ export default function AddCourseModal({
 
   // time: '00:00:00.0-06',
   const [course_time, setCourseTime] = useState('00:00:00.0-06');
+  const [course_time_hr, setCourseTimeHr] = useState(0);
+  const [course_time_min, setCourseTimeMin] = useState(0);
 
   // duration: 30,
   const [course_duration, setCourseDuration] = useState(30);
@@ -67,7 +69,7 @@ export default function AddCourseModal({
           details: course_details,
           price: course_price,
           date: course_date,
-          time: course_time,
+          time: `${course_time_hr}:${course_time_min}:00.0-06`,
           duration: course_duration,
           intensity: course_intensity,
           city: course_city,
@@ -165,15 +167,28 @@ export default function AddCourseModal({
           </Row>
 
           <Row>
-            {/* time: '00:00:00.0-06', */}
-            <label>
-              Time:
-              <input
-                type='text'
-                value={course_time}
-                onChange={(e) => setCourseTime(e.target.value)}
-              ></input>
-            </label>
+            <Col>
+              {/* time: '00:00:00.0-06', */}
+              <label>
+                Hr:
+                <input
+                  type='text'
+                  value={course_time_hr}
+                  onChange={(e) => setCourseTimeHr(e.target.value)}
+                ></input>
+              </label>
+            </Col>
+
+            <Col>
+              <label>
+                Min:
+                <input
+                  type='text'
+                  value={course_time_min}
+                  onChange={(e) => setCourseTimeMin(e.target.value)}
+                ></input>
+              </label>
+            </Col>
           </Row>
 
           <Row>
