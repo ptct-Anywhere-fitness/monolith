@@ -16,7 +16,7 @@ const postCourse = (req, res, next) => {
     details,
     price,
     date,
-    // time,
+    time,
     duration,
     intensity,
     city,
@@ -30,10 +30,11 @@ const postCourse = (req, res, next) => {
       details,
       price,
       date,
-      // time,
+      time,
       duration,
       intensity,
       city,
+      registered_attendees: 0,
       max_class_size,
     })
       .then((course) => {
