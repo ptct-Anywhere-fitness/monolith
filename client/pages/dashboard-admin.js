@@ -74,47 +74,6 @@ export default function AdminDashboarPage() {
 
       <hr />
 
-      <h6>Get Course By ID</h6>
-
-      <Row>
-        <Col>
-          <Button
-            onClick={async () => {
-              try {
-                loadingCtx.setIsLoading(true);
-
-                const data = await getData('/courses/1', authCtx.token);
-                console.log('data: ', data);
-
-                // TODO: Proper error handling
-                if (data.course) {
-                  setCourseById(data.course);
-                  loadingCtx.setIsLoading(false);
-                }
-              } catch (err) {
-                console.log(
-                  'Error in dashboard-admin --> getCourseByIdHandler() -- err: ',
-                  err
-                );
-                // setError(
-                //   err.message || // This message comes from the backend!
-                //     'Error in onRegisterHandler()'
-                // );
-              }
-            }}
-          >
-            Get Course By ID
-          </Button>
-          {course_by_id && (
-            <div>
-              <p>Title: {course_by_id.title}</p>
-            </div>
-          )}
-        </Col>
-      </Row>
-
-      <hr />
-
       <Row>
         <Col>
           <h6>Post Course</h6>
