@@ -11,18 +11,26 @@ export default function TableCourses({ courses }) {
   // --------------------------------------------
 
   const [show_modal, setShowModal] = useState();
-  const handleClose = () => setShowModal(false);
-  const handleOpen = () => setShowModal(true);
+  const handleClose = () => {
+    setShowModal(false);
+    setModalCourseId(null);
+  };
+  const handleOpen = (id) => () => {
+    setModalCourseId(id);
+    setShowModal(true);
+  };
+
+  const [modal_course_id, setModalCourseId] = useState();
 
   // --------------------------------------------
 
   return (
     <>
-      <Button variant='success' onClick={handleOpen}>
-        Outside Modal
-      </Button>
-
-      <Modal show_modal={show_modal} handleClose={handleClose} />
+      <Modal
+        show_modal={show_modal}
+        handleClose={handleClose}
+        course_id={modal_course_id}
+      />
 
       <Table
         striped
@@ -50,7 +58,10 @@ export default function TableCourses({ courses }) {
             courses.map((course, idx) => {
               return (
                 <tr key={idx}>
-                  <td>
+                  <td
+                    onClick={handleOpen(course.id)}
+                    style={{ cursor: 'pointer' }}
+                  >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
                       width='16'

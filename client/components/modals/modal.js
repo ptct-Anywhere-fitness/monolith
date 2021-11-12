@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 
 // ==============================================
 
-export default function ModalComponent({ show_modal, handleClose }) {
+export default function ModalComponent({ show_modal, handleClose, course_id }) {
   // --------------------------------------------
 
   return (
@@ -19,10 +19,7 @@ export default function ModalComponent({ show_modal, handleClose }) {
         <Modal.Header closeButton>
           <Modal.Title>Modal title</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          I will not close if you click outside me. Don't even try to press
-          escape key.
-        </Modal.Body>
+        <Modal.Body>Course ID: {course_id}</Modal.Body>
         <Modal.Footer>
           <Button variant='secondary' onClick={handleClose}>
             Close
