@@ -1,14 +1,29 @@
-import * as React from 'react';
+import { useState } from 'react';
 
 import Table from 'react-bootstrap/Table';
+
+import Modal from '../modals/modal';
+import Button from 'react-bootstrap/Button';
 
 // ==============================================
 
 export default function TableCourses({ courses }) {
   // --------------------------------------------
 
+  const [show_modal, setShowModal] = useState();
+  const handleClose = () => setShowModal(false);
+  const handleOpen = () => setShowModal(true);
+
+  // --------------------------------------------
+
   return (
     <>
+      <Button variant='success' onClick={handleOpen}>
+        Outside Modal
+      </Button>
+
+      <Modal show_modal={show_modal} handleClose={handleClose} />
+
       <Table
         striped
         bordered
