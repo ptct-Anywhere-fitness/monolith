@@ -12,7 +12,7 @@ import getData from '../../helpers/get-data';
 
 // ==============================================
 
-export default function ModalComponent({
+export default function CourseDetailsModal({
   show_modal,
   handleClose,
   course,
@@ -49,7 +49,7 @@ export default function ModalComponent({
         err
       );
       loadingCtx.setIsLoading(false);
-      handleClose();
+      // handleClose();
       // setError(
       //   err.message || // This message comes from the backend!
       //     'Error in onLoginHandler()'

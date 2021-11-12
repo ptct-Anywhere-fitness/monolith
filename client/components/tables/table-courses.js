@@ -1,34 +1,34 @@
 import { useState } from 'react';
 
-import Table from 'react-bootstrap/Table';
-import Modal from '../modals/modal';
 // import Button from 'react-bootstrap/Button';
+
+import Table from 'react-bootstrap/Table';
+import CourseDetailsModal from '../modals/course-details-modal';
 
 // ==============================================
 
 export default function TableCourses({ courses, setCourses }) {
   // --------------------------------------------
 
-  const [show_modal, setShowModal] = useState();
-  const handleClose = () => {
-    setShowModal(false);
+  const [details_modal_course, setDetailsModalCourse] = useState();
+  const [show_details_modal, setShowDetailsModal] = useState();
+  const handleDetailsModalClose = () => {
+    setShowDetailsModal(false);
     // setActiveModalCourse({});
   };
-  const handleOpen = (course) => () => {
-    setActiveModalCourse(course);
-    setShowModal(true);
+  const handleDetailsModalOpen = (course) => () => {
+    setDetailsModalCourse(course);
+    setShowDetailsModal(true);
   };
-
-  const [active_modal_course, setActiveModalCourse] = useState();
 
   // --------------------------------------------
 
   return (
     <>
-      <Modal
-        show_modal={show_modal}
-        handleClose={handleClose}
-        course={active_modal_course}
+      <CourseDetailsModal
+        show_modal={show_details_modal}
+        handleClose={handleDetailsModalClose}
+        course={details_modal_course}
         setCourses={setCourses}
       />
 
@@ -59,7 +59,7 @@ export default function TableCourses({ courses, setCourses }) {
               return (
                 <tr key={idx}>
                   <td
-                    onClick={handleOpen(course)}
+                    onClick={handleDetailsModalOpen(course)}
                     style={{ cursor: 'pointer' }}
                   >
                     <svg

@@ -10,6 +10,8 @@ import Button from 'react-bootstrap/Button';
 import TableCourses from '../components/tables/table-courses';
 import TableUsers from '../components/tables/table-users';
 
+import AddCourseModal from '../components/modals/add-course-modal';
+
 import { AuthContext } from '../context/auth-context';
 import { LoadingContext } from '../context/loading-context';
 
@@ -21,10 +23,8 @@ import fetchData from '../helpers/fetch-data';
 export default function AdminDashboarPage() {
   // --------------------------------------------
 
-  const [deleted_course, setDeletedCourse] = useState();
   const [put_course, setPutCourse] = useState();
   const [posted_course, setPostedCourse] = useState();
-  const [course_by_id, setCourseById] = useState();
   const [courses, setCourses] = useState();
   const [users, setUsers] = useState();
 
@@ -33,12 +33,22 @@ export default function AdminDashboarPage() {
   const [delete_course_id, setDeleteCourseId] = useState('');
   const [put_course_id, setPutCourseId] = useState('');
   const [put_course_title, setPutCourseTitle] = useState('');
-  const [post_course_title, setPostCourseTitle] = useState('');
 
   // --------------------------------------------
 
   const authCtx = useContext(AuthContext);
   const loadingCtx = useContext(LoadingContext);
+
+  // --------------------------------------------
+
+  const [show_add_course_modal, setShowAddCourseModal] = useState();
+  const handleAddCourseModalClose = () => {
+    setShowAddCourseModal(false);
+    // setActiveModalCourse({});
+  };
+  const handleAddCourseModalOpen = () => {
+    setShowAddCourseModal(true);
+  };
 
   // --------------------------------------------
 
@@ -73,7 +83,7 @@ export default function AdminDashboarPage() {
     //        loading spinner during the call
     //        to /courses, so we should
     //        actually
-  }, [deleted_course, put_course, posted_course, authCtx.token]);
+  }, [put_course, posted_course, authCtx.token]);
 
   // --------------------------------------------
 
@@ -83,70 +93,12 @@ export default function AdminDashboarPage() {
 
       <h6>{format(new Date(), 'MMMM do Y')}</h6>
 
-      <hr />
-
-      <Row>
-        <Col>
-          <h6>Post Course</h6>
-
-          <form
-            onSubmit={async (e) => {
-              e.preventDefault();
-
-              try {
-                loadingCtx.setIsLoading(true);
-                const response = await fetchData('/courses', 'POST', {
-                  title: post_course_title,
-                });
-
-                const data = await response.json();
-
-                // -4xx / 5xx status code does NOT throw error.
-                // -data.ok is true with a 2xx status code
-                if (!response.ok) {
-                  // -data.message comes from the .message property
-                  //  sent from the backend.
-                  throw new Error(data.message);
-                }
-
-                console.log('data: ', data);
-
-                setPostedCourse(data);
-                loadingCtx.setIsLoading(false);
-              } catch (err) {
-                console.log(
-                  'Error in dashboard-admin --> postCourseHandler() -- err: ',
-                  err
-                );
-                loadingCtx.setIsLoading(false);
-                // setError(
-                //   err.message || // This message comes from the backend!
-                //     'Error in onLoginHandler()'
-                // );
-              }
-            }}
-          >
-            <label>
-              Title:
-              <input
-                type='text'
-                value={post_course_title}
-                onChange={(e) => setPostCourseTitle(e.target.value)}
-              ></input>
-            </label>
-
-            <Button type='submit'>Post Course</Button>
-          </form>
-
-          {posted_course && (
-            <div>
-              Posted Course:
-              <p>Title: {posted_course.title}</p>
-              <p>Title: {posted_course.id}</p>
-            </div>
-          )}
-        </Col>
-      </Row>
+      <AddCourseModal
+        show_modal={show_add_course_modal}
+        handleClose={handleAddCourseModalClose}
+        setCourses={setCourses}
+      />
+      <Button onClick={handleAddCourseModalOpen}>Add a Course</Button>
 
       <hr />
 
