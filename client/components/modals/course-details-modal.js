@@ -51,11 +51,12 @@ export default function CourseDetailsModal({
     console.log('DELETE course handler');
 
     try {
+      loadingCtx.setIsLoading(true);
+
       const token = authCtx.token;
 
-      loadingCtx.setIsLoading(true);
-      let response = await fetchData(`/courses/${course_id}`, 'DELETE');
-      let data = await response.json();
+      const response = await fetchData(`/courses/${course_id}`, 'DELETE');
+      const data = await response.json();
       if (!response.ok) {
         throw new Error(data.message);
       }
@@ -64,6 +65,7 @@ export default function CourseDetailsModal({
       // -Update the courses table:
       setCourses(await getData('/courses', token));
       loadingCtx.setIsLoading(false);
+      handleTotalClose();
     } catch (err) {
       console.log(
         'Error in dashboard-admin --> deleteCourseHandler() -- err: ',
@@ -76,13 +78,54 @@ export default function CourseDetailsModal({
       //     'Error in onLoginHandler()'
       // );
     }
-    handleTotalClose();
   };
 
   // --------------------------------------------
 
   const handleEdit = () => {
     setEditMode(true);
+  };
+
+  // --------------------------------------------
+
+  const handleSave = async (e) => {
+    console.log('handleSave()');
+
+    try {
+      loadingCtx.setIsLoading(true);
+
+      const token = authCtx.token;
+
+      const response = await fetchData(`/courses/${course.id}`, 'PUT', {
+        title: title_input,
+      });
+
+      const data = await response.json();
+
+      // -4xx / 5xx status code does NOT throw error.
+      // -data.ok is true with a 2xx status code
+      if (!response.ok) {
+        // -data.message comes from the .message property
+        //  sent from the backend.
+        throw new Error(data.message);
+      }
+      console.log('updated course: ', data);
+
+      // -Update the courses table:
+      setCourses(await getData('/courses', token));
+      loadingCtx.setIsLoading(false);
+      handleTotalClose();
+    } catch (err) {
+      console.log(
+        'Error in dashboard-admin --> putCourseHandler() -- err: ',
+        err
+      );
+      loadingCtx.setIsLoading(false);
+      // setError(
+      //   err.message || // This message comes from the backend!
+      //     'Error in onLoginHandler()'
+      // );
+    }
   };
 
   // --------------------------------------------
@@ -108,17 +151,11 @@ export default function CourseDetailsModal({
             Cancel
           </Button>
 
-          <Button
-            variant='success'
-            onClick={() => {
-              alert('handle save -> Update endpoint');
-              handleTotalClose();
-            }}
-          >
+          <Button variant='success' onClick={handleSave}>
             Save
           </Button>
 
-          <Button variant='danger' onClick={() => setDeleteMode(true)}>
+          <Button variant='secondary' onClick={() => setDeleteMode(true)}>
             Enable Delete
           </Button>
         </>
