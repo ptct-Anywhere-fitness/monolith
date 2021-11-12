@@ -28,12 +28,7 @@ export default function CourseDetailsModal({
   const [edit_mode, setEditMode] = useState(false);
   const [delete_mode, setDeleteMode] = useState(false);
 
-  useEffect(() => {
-    console.log('edit_mode: ', edit_mode);
-  }, [edit_mode]);
-  useEffect(() => {
-    console.log('delete_mode: ', delete_mode);
-  }, [delete_mode]);
+  // --------------------------------------------
 
   const handleTotalClose = () => {
     handleClose();

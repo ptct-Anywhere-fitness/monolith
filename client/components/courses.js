@@ -7,6 +7,8 @@ import Button from 'react-bootstrap/Button';
 
 // import Product from './product';
 
+import { AuthContext } from '../context/auth-context';
+import { LoadingContext } from '../context/loading-context';
 import { CartContext } from '../context/cart-context';
 // import styles from '../styles/products.module.css'
 
@@ -18,6 +20,8 @@ export default function Courses() {
   // --------------------------------------------
 
   const cartCtx = useContext(CartContext);
+  const authCtx = useContext(AuthContext);
+  const loadingCtx = useContext(LoadingContext);
 
   const [courses, setCourses] = useState([]);
 
@@ -25,9 +29,23 @@ export default function Courses() {
 
   useEffect(() => {
     (async () => {
-      const returned_courses = await getData('/courses');
-      console.log('returned_courses: ', returned_courses);
-      setCourses(returned_courses);
+      try {
+        const token = authCtx.token;
+
+        const returned_courses = await getData('/courses', token);
+        console.log('returned_courses: ', returned_courses);
+        setCourses(returned_courses);
+      } catch (err) {
+        console.log(
+          'Error in dashboard-admin --> useEffect() --> getData(/courses),  err: ',
+          err
+        );
+        loadingCtx.setIsLoading(false);
+        // setError(
+        //   err.message || // This message comes from the backend!
+        //     'Error in onLoginHandler()'
+        // );
+      }
     })();
   }, []);
 

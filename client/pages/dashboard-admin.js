@@ -23,16 +23,8 @@ import fetchData from '../helpers/fetch-data';
 export default function AdminDashboarPage() {
   // --------------------------------------------
 
-  const [put_course, setPutCourse] = useState();
-  const [posted_course, setPostedCourse] = useState();
   const [courses, setCourses] = useState();
   const [users, setUsers] = useState();
-
-  // --------------------------------------------
-
-  const [delete_course_id, setDeleteCourseId] = useState('');
-  const [put_course_id, setPutCourseId] = useState('');
-  const [put_course_title, setPutCourseTitle] = useState('');
 
   // --------------------------------------------
 
@@ -96,7 +88,7 @@ export default function AdminDashboarPage() {
         }
       })();
     }
-  }, [put_course, posted_course, authCtx.token]);
+  }, [authCtx.token]);
 
   // --------------------------------------------
 

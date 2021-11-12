@@ -16,6 +16,7 @@ router.get('/', authMiddleware.restricted, usersController.getUsers);
 router.get(
   '/protected',
   authMiddleware.restricted,
+  authMiddleware.admin_only,
   usersController.protectedRoute
 );
 
