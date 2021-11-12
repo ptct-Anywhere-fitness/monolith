@@ -10,12 +10,32 @@ const Courses = require('../courses-model');
 // ==============================================
 
 // (3) [POST]  /api/courses
-const postCourse = (req, res) => {
-  const { title } = req.body;
+const postCourse = (req, res, next) => {
+  const {
+    title,
+    details,
+    price,
+    // date,
+    // time,
+    duration,
+    intensity,
+    city,
+    max_class_size,
+  } = req.body;
   console.log('[POST]  /api/courses');
 
   if (title) {
-    Courses.insert({ title })
+    Courses.insert({
+      title,
+      details,
+      price,
+      // date,
+      // time,
+      duration,
+      intensity,
+      city,
+      max_class_size,
+    })
       .then((course) => {
         console.log('Successful addition of course to DB! - course: ', course);
         res.status(201).json(course);

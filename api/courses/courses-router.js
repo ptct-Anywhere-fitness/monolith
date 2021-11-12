@@ -6,8 +6,9 @@ const authMiddleware = require('../auth/auth-middleware');
 
 // -Two middlewares:
 //  --authMiddleware.restricted
-//    ---Requires a valid JWT.
-//  --
+//    ---Requires valid JWT to pass.
+//  --authMiddleware.admin_only
+//    ---Only admins can pass.
 
 // ==============================================
 
@@ -22,32 +23,42 @@ const authMiddleware = require('../auth/auth-middleware');
 // ==============================================
 
 // (1) [GET]  /api/courses
-router.get(
-  '/',
-  authMiddleware.restricted,
-  authMiddleware.admin_only,
-  coursesController.getCourses
-);
+router.get('/', authMiddleware.restricted, coursesController.getCourses);
 
 // ==============================================
 
 // (2) [GET]  /api/courses/:id
-router.get('/:id', coursesController.getCourseById);
+router.get('/:id', authMiddleware.restricted, coursesController.getCourseById);
 
 // ==============================================
 
 // (3) [POST]  /api/courses
-router.post('/', coursesController.postCourse);
+router.post(
+  '/',
+  authMiddleware.restricted,
+  authMiddleware.admin_only,
+  coursesController.postCourse
+);
 
 // ==============================================
 
 // (4) [PUT]   /api/courses/:id
-router.put('/:id', coursesController.putCourseById);
+router.put(
+  '/:id',
+  authMiddleware.restricted,
+  authMiddleware.admin_only,
+  coursesController.putCourseById
+);
 
 // ==============================================
 
 // (5) [DELETE] /api/courses/:id
-router.delete('/:id', coursesController.deleteCourseById);
+router.delete(
+  '/:id',
+  authMiddleware.restricted,
+  authMiddleware.admin_only,
+  coursesController.deleteCourseById
+);
 
 // ==============================================
 

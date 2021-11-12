@@ -9,7 +9,7 @@ const Courses = require('../courses-model');
 // ==============================================
 
 // (4) [PUT]  /api/courses/:id
-const putCourseById = (req, res) => {
+const putCourseById = (req, res, next) => {
   const id = req.params.id;
   const body = req.body;
 

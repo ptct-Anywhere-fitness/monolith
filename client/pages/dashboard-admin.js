@@ -101,10 +101,23 @@ export default function AdminDashboarPage() {
   // --------------------------------------------
 
   return (
-    <>
-      <h4>Admin Dashboard</h4>
+    <Container className='mt-4'>
+      <Row>
+        <Col>
+          <h4>Admin Dashboard</h4>
+        </Col>
+        <Col
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+          }}
+        >
+          <h6>{format(new Date(), 'MMMM do Y')}</h6>
+        </Col>
+      </Row>
 
-      <h6>{format(new Date(), 'MMMM do Y')}</h6>
+      <hr />
 
       <AddCourseModal
         show_modal={show_add_course_modal}
@@ -112,85 +125,6 @@ export default function AdminDashboarPage() {
         setCourses={setCourses}
       />
       <Button onClick={handleAddCourseModalOpen}>Add a Course</Button>
-
-      <hr />
-
-      <Row>
-        <Col>
-          <h6>Update Course</h6>
-
-          <form
-            onSubmit={async (e) => {
-              e.preventDefault();
-
-              console.log('PUT course handler');
-
-              try {
-                loadingCtx.setIsLoading(true);
-                const response = await fetchData(
-                  `/courses/${put_course_id}`,
-                  'PUT',
-                  {
-                    title: put_course_title,
-                  }
-                );
-
-                const data = await response.json();
-
-                // -4xx / 5xx status code does NOT throw error.
-                // -data.ok is true with a 2xx status code
-                if (!response.ok) {
-                  // -data.message comes from the .message property
-                  //  sent from the backend.
-                  throw new Error(data.message);
-                }
-
-                console.log('data: ', data);
-
-                setPutCourse(data);
-                loadingCtx.setIsLoading(false);
-              } catch (err) {
-                console.log(
-                  'Error in dashboard-admin --> putCourseHandler() -- err: ',
-                  err
-                );
-                loadingCtx.setIsLoading(false);
-                // setError(
-                //   err.message || // This message comes from the backend!
-                //     'Error in onLoginHandler()'
-                // );
-              }
-            }}
-          >
-            <label>
-              ID:
-              <input
-                value={put_course_id}
-                onChange={(e) => setPutCourseId(e.target.value)}
-              ></input>
-            </label>
-
-            <label>
-              Title:
-              <input
-                type='text'
-                value={put_course_title}
-                onChange={(e) => setPutCourseTitle(e.target.value)}
-              ></input>
-            </label>
-
-            <Button type='submit'>Update Course</Button>
-          </form>
-
-          {put_course && (
-            <div>
-              Updated Course:
-              <p>Title: {put_course.title}</p>
-              <p>ID: {put_course.id}</p>
-            </div>
-          )}
-        </Col>
-      </Row>
 
       <hr />
 
@@ -231,7 +165,7 @@ export default function AdminDashboarPage() {
           </div>
         )}
       </Row>
-    </>
+    </Container>
   );
 
   // --------------------------------------------

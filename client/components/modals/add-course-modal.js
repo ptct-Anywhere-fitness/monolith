@@ -26,12 +26,83 @@ export default function AddCourseModal({
 
   // --------------------------------------------
 
-  const [post_course_title, setPostCourseTitle] = useState('');
+  const [course_title, setCourseTitle] = useState('');
+  const [course_price, setCoursePrice] = useState('');
+
+  // date: '2022-01-01',
+  const [course_date, setCourseDate] = useState('');
+
+  const [course_details, setCourseDetails] = useState('');
+
+  // time: '00:00:00.0-06',
+  const [course_time, setCourseTime] = useState('');
+
+  // duration: 30,
+  const [course_duration, setCourseDuration] = useState('');
+
+  // intensity: 1,
+  const [course_intensity, setCourseIntensity] = useState('');
+
+  // city: 'tulsa',
+  const [course_city, setCourseCity] = useState('');
+
+  // registered_attendees: 0,
+  const [course_registered, setCourseRegistered] = useState('');
+
+  // max_class_size: 10,
+  const [course_max_class_size, setCourseMaxClassSize] = useState('');
 
   // --------------------------------------------
 
   const handleAdd = async () => {
-    alert('handle edit');
+    try {
+      const token = authCtx.token;
+
+      loadingCtx.setIsLoading(true);
+      const response = await fetchData(
+        '/courses',
+        'POST',
+        {
+          title: course_title,
+          details: course_details,
+          price: course_price,
+          date: course_date,
+          time: course_time,
+          duration: course_duration,
+          intensity: course_intensity,
+          city: course_city,
+          max_class_size: course_max_class_size,
+        },
+        token
+      );
+
+      const data = await response.json();
+
+      // -4xx / 5xx status code does NOT throw error.
+      // -data.ok is true with a 2xx status code
+      if (!response.ok) {
+        // -data.message comes from the .message property
+        //  sent from the backend.
+        throw new Error(data.message);
+      }
+
+      console.log('data: ', data);
+
+      // -Update the courses table:
+      setCourses(await getData('/courses', token));
+      loadingCtx.setIsLoading(false);
+      handleClose();
+    } catch (err) {
+      console.log(
+        'Error in dashboard-admin --> postCourseHandler() -- err: ',
+        err
+      );
+      loadingCtx.setIsLoading(false);
+      // setError(
+      //   err.message || // This message comes from the backend!
+      //     'Error in onLoginHandler()'
+      // );
+    }
   };
 
   // --------------------------------------------
@@ -49,62 +120,108 @@ export default function AddCourseModal({
         </Modal.Header>
         <Modal.Body>
           <Row>
-            <Col>
-              <h6>Post Course</h6>
+            <label>
+              Title:
+              <input
+                type='text'
+                value={course_title}
+                onChange={(e) => setCourseTitle(e.target.value)}
+              ></input>
+            </label>
+          </Row>
 
-              <form
-                onSubmit={async (e) => {
-                  e.preventDefault();
+          <Row></Row>
+          {/* // price: 3333, */}
+          <label>
+            Price:
+            <input
+              type='number'
+              value={course_price}
+              onChange={(e) => setCoursePrice(e.target.value)}
+            ></input>
+          </label>
 
-                  try {
-                    const token = authCtx.token;
+          <Row>
+            {/* // details: 'details-3', */}
+            <label>
+              Details:
+              <input
+                type='text'
+                value={course_details}
+                onChange={(e) => setCourseDetails(e.target.value)}
+              ></input>
+            </label>
+          </Row>
+          <Row>
+            {/* // date: '2022-01-01', */}
+            <label>
+              Date:
+              <input
+                type='text'
+                value={course_date}
+                onChange={(e) => setCourseDate(e.target.value)}
+              ></input>
+            </label>
+          </Row>
 
-                    loadingCtx.setIsLoading(true);
-                    const response = await fetchData('/courses', 'POST', {
-                      title: post_course_title,
-                    });
+          <Row>
+            {/* time: '00:00:00.0-06', */}
+            <label>
+              Time:
+              <input
+                type='text'
+                value={course_time}
+                onChange={(e) => setCourseTime(e.target.value)}
+              ></input>
+            </label>
+          </Row>
 
-                    const data = await response.json();
+          <Row>
+            {/* // duration: 30, */}
+            <label>
+              Duration:
+              <input
+                type='text'
+                value={course_duration}
+                onChange={(e) => setCourseDuration(e.target.value)}
+              ></input>
+            </label>
+          </Row>
 
-                    // -4xx / 5xx status code does NOT throw error.
-                    // -data.ok is true with a 2xx status code
-                    if (!response.ok) {
-                      // -data.message comes from the .message property
-                      //  sent from the backend.
-                      throw new Error(data.message);
-                    }
+          <Row>
+            {/* // intensity: 1, */}
+            <label>
+              Intensity:
+              <input
+                type='text'
+                value={course_intensity}
+                onChange={(e) => setCourseIntensity(e.target.value)}
+              ></input>
+            </label>
+          </Row>
 
-                    console.log('data: ', data);
+          <Row>
+            {/* // city: 'tulsa', */}
+            <label>
+              City:
+              <input
+                type='text'
+                value={course_city}
+                onChange={(e) => setCourseCity(e.target.value)}
+              ></input>
+            </label>
+          </Row>
 
-                    // -Update the courses table:
-                    setCourses(await getData('/courses', token));
-                    loadingCtx.setIsLoading(false);
-                    handleClose();
-                  } catch (err) {
-                    console.log(
-                      'Error in dashboard-admin --> postCourseHandler() -- err: ',
-                      err
-                    );
-                    loadingCtx.setIsLoading(false);
-                    // setError(
-                    //   err.message || // This message comes from the backend!
-                    //     'Error in onLoginHandler()'
-                    // );
-                  }
-                }}
-              >
-                <label>
-                  Title:
-                  <input
-                    type='text'
-                    value={post_course_title}
-                    onChange={(e) => setPostCourseTitle(e.target.value)}
-                  ></input>
-                </label>
-
-                <Button type='submit'>Post Course</Button>
-              </form>
-            </Col>
+          <Row>
+            {/* // max_class_size: 10, */}
+            <label>
+              Max Class Size:
+              <input
+                type='text'
+                value={course_max_class_size}
+                onChange={(e) => setCourseMaxClassSize(e.target.value)}
+              ></input>
+            </label>
           </Row>
         </Modal.Body>
         <Modal.Footer className='justify-content-center'>

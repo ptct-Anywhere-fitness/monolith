@@ -12,10 +12,10 @@ exports.up = async (knex) => {
     .createTable('courses', (course) => {
       course.increments('id');
       course.string('title', 50).notNullable();
-      course.string('category', 50);
+      // course.string('category', 50);
       course.string('details', 256);
       course.integer('price').unsigned();
-      course.integer('quantity_in_stock').unsigned();
+      // course.integer('quantity_in_stock').unsigned();
 
       // Name (title)
       // course.string('name', 50).notNullable();
@@ -27,7 +27,7 @@ exports.up = async (knex) => {
       // date — table.date(name)
       // course.date('date');
       // course.time('time');
-      course.datetime('datetime');
+      // course.datetime('datetime');
       course.date('date');
       course.time('time');
 

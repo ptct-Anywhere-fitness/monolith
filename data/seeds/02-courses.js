@@ -7,17 +7,17 @@ exports.seed = function (knex, Promise) {
 
       // Type (category)
       // course.string('category', 50);
-      category: 'category-1',
+      // category: 'category-1',
 
       details: 'details-1',
       price: 1111,
-      quantity_in_stock: 1,
+      // quantity_in_stock: 1,
 
       // Start time
       // date — table.date(name)
       // course.date('date');
       // course.time('time');
-      datetime: '2021-11-12 03:51:53.863049-06',
+      // datetime: '2021-11-12 03:51:53.863049-06',
       date: '2021-11-12',
       time: '03:51:53.863049-06',
 
@@ -51,11 +51,11 @@ exports.seed = function (knex, Promise) {
     },
     {
       title: 'course-2',
-      category: 'category-2',
+      // category: 'category-2',
       details: 'details-2',
       price: 2222,
-      quantity_in_stock: 2,
-      datetime: '2022-01-01 00:00:00.0-06',
+      // quantity_in_stock: 2,
+      // datetime: '2022-01-01 00:00:00.0-06',
       date: '2022-01-01',
       time: '00:00:00.0-06',
       duration: 30,
@@ -66,10 +66,10 @@ exports.seed = function (knex, Promise) {
     },
     {
       title: 'course-3',
-      category: 'category-3',
+      // category: 'category-3',
       details: 'details-3',
       price: 3333,
-      datetime: '2022-01-01 00:00:00.0-06',
+      // datetime: '2022-01-01 00:00:00.0-06',
       date: '2022-01-01',
       time: '00:00:00.0-06',
       duration: 30,

@@ -55,7 +55,12 @@ export default function CourseDetailsModal({
 
       const token = authCtx.token;
 
-      const response = await fetchData(`/courses/${course_id}`, 'DELETE');
+      const response = await fetchData(
+        `/courses/${course_id}`,
+        'DELETE',
+        {},
+        token
+      );
       const data = await response.json();
       if (!response.ok) {
         throw new Error(data.message);
@@ -96,9 +101,14 @@ export default function CourseDetailsModal({
 
       const token = authCtx.token;
 
-      const response = await fetchData(`/courses/${course.id}`, 'PUT', {
-        title: title_input,
-      });
+      const response = await fetchData(
+        `/courses/${course.id}`,
+        'PUT',
+        {
+          title: title_input,
+        },
+        token
+      );
 
       const data = await response.json();
 
