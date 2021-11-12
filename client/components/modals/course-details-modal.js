@@ -1,5 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 
+import { format } from 'date-fns';
+
 import Table from 'react-bootstrap/Table';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -9,6 +11,11 @@ import { LoadingContext } from '../../context/loading-context';
 
 import fetchData from '../../helpers/fetch-data';
 import getData from '../../helpers/get-data';
+import {
+  formatDate,
+  formatTime_12hr,
+  formatTime_24hr,
+} from '../../helpers/format-date';
 
 // ==============================================
 
@@ -39,8 +46,8 @@ export default function CourseDetailsModal({
   // --------------------------------------------
 
   const [title_input, setTitleInput] = useState(course?.title);
-  const [date_input, setDateInput] = useState(course?.date);
-  const [time_input, setTimeInput] = useState(course?.time);
+  const [date_input, setDateInput] = useState(formatDate(course?.date));
+  const [time_input, setTimeInput] = useState(''); //useState(formatTime_12hr(course?.time));
   const [duration_input, setDurationInput] = useState(course?.duration);
   const [city_input, setCityInput] = useState(course?.city);
   const [max_class_size_input, setMaxClassSizeInput] = useState(
@@ -250,11 +257,14 @@ export default function CourseDetailsModal({
                 <td>Date</td>
                 <td>
                   {!edit_mode ? (
-                    course?.date
+                    // format(new Date(course?.date), 'MMMM do Y')
+                    // format(new Date(course?.date.split('T')[0]), 'MMMM do Y')
+                    // course?.date.split('T')[0]
+                    formatDate(course?.date)
                   ) : (
                     <input
                       type='text'
-                      placeholder={course?.date}
+                      placeholder={formatDate(course?.date)}
                       value={date_input}
                       onChange={(e) => setDateInput(e.target.value)}
                     />
@@ -265,11 +275,11 @@ export default function CourseDetailsModal({
                 <td>Time</td>
                 <td>
                   {!edit_mode ? (
-                    course?.time
+                    formatTime_12hr(course?.time)
                   ) : (
                     <input
                       type='text'
-                      placeholder={course?.time}
+                      placeholder={formatTime_24hr(course?.time)}
                       value={time_input}
                       onChange={(e) => setTimeInput(e.target.value)}
                     />

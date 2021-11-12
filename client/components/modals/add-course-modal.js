@@ -38,7 +38,7 @@ export default function AddCourseModal({
 
   // time: '00:00:00.0-06',
   // const [course_time, setCourseTime] = useState('00:00:00.0-06');
-  const [course_time_hr, setCourseTimeHr] = useState(0);
+  const [course_time_hr, setCourseTimeHr] = useState(12);
   const [course_time_min, setCourseTimeMin] = useState(0);
 
   // duration: 30,

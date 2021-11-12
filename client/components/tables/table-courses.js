@@ -7,6 +7,8 @@ import { format } from 'date-fns';
 import Table from 'react-bootstrap/Table';
 import CourseDetailsModal from '../modals/course-details-modal';
 
+import { formatTime_12hr, formatTime_24hr } from '../../helpers/format-date';
+
 // ==============================================
 
 export default function TableCourses({ courses, setCourses }) {
@@ -110,7 +112,7 @@ export default function TableCourses({ courses, setCourses }) {
                     {course?.date &&
                       format(new Date(course?.date), 'MMMM do Y')}
                   </td>
-                  <td>{course?.time}</td>
+                  <td>{formatTime_12hr(course?.time)}</td>
                   <td>{course?.duration}</td>
                   <td>{course?.city}</td>
                   <td>{course?.registered_attendees}</td>
