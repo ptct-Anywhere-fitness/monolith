@@ -326,6 +326,7 @@ export default function AdminDashboarPage() {
 
       <hr />
 
+      {/* Table: Courses */}
       <Row>
         {courses && (
           <div
@@ -344,6 +345,8 @@ export default function AdminDashboarPage() {
       </Row>
 
       <hr />
+
+      {/* Table: Users */}
       <Row>
         {users && (
           <div
