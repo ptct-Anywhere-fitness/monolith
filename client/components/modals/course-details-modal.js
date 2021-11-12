@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 import Table from 'react-bootstrap/Table';
 import Modal from 'react-bootstrap/Modal';
@@ -28,6 +28,21 @@ export default function CourseDetailsModal({
   const [edit_mode, setEditMode] = useState(false);
   const [delete_mode, setDeleteMode] = useState(false);
 
+  useEffect(() => {
+    console.log('edit_mode: ', edit_mode);
+  }, [edit_mode]);
+  useEffect(() => {
+    console.log('delete_mode: ', delete_mode);
+  }, [delete_mode]);
+
+  const handleTotalClose = () => {
+    handleClose();
+    setEditMode(false);
+    setDeleteMode(false);
+  };
+
+  // --------------------------------------------
+
   const [title_input, setTitleInput] = useState('');
 
   // --------------------------------------------
@@ -49,8 +64,6 @@ export default function CourseDetailsModal({
       // -Update the courses table:
       setCourses(await getData('/courses', token));
       loadingCtx.setIsLoading(false);
-      handleClose();
-      setEditMode(false);
     } catch (err) {
       console.log(
         'Error in dashboard-admin --> deleteCourseHandler() -- err: ',
@@ -63,6 +76,7 @@ export default function CourseDetailsModal({
       //     'Error in onLoginHandler()'
       // );
     }
+    handleTotalClose();
   };
 
   // --------------------------------------------
@@ -75,34 +89,41 @@ export default function CourseDetailsModal({
 
   let modal_footer;
   if (edit_mode) {
-    modal_footer = (
-      <>
-        <Button variant='danger' onClick={handleDelete(course?.id)}>
-          Delete
-        </Button>
+    if (delete_mode) {
+      modal_footer = (
+        <>
+          <Button variant='primary' onClick={handleTotalClose}>
+            Cancel
+          </Button>
 
-        <Button
-          variant='primary'
-          onClick={() => {
-            handleClose();
-            setEditMode(false);
-          }}
-        >
-          Cancel
-        </Button>
+          <Button variant='danger' onClick={handleDelete(course?.id)}>
+            Delete
+          </Button>
+        </>
+      );
+    } /* delete_mode */ else {
+      modal_footer = (
+        <>
+          <Button variant='primary' onClick={handleTotalClose}>
+            Cancel
+          </Button>
 
-        <Button
-          variant='success'
-          onClick={() => {
-            alert('handle save -> Update endpoint');
-            handleClose();
-            setEditMode(false);
-          }}
-        >
-          Save
-        </Button>
-      </>
-    );
+          <Button
+            variant='success'
+            onClick={() => {
+              alert('handle save -> Update endpoint');
+              handleTotalClose();
+            }}
+          >
+            Save
+          </Button>
+
+          <Button variant='danger' onClick={() => setDeleteMode(true)}>
+            Enable Delete
+          </Button>
+        </>
+      );
+    }
   } else {
     modal_footer = (
       <>
@@ -110,7 +131,14 @@ export default function CourseDetailsModal({
           Edit
         </Button>
 
-        <Button variant='primary' onClick={handleClose}>
+        <Button
+          variant='primary'
+          onClick={() => {
+            handleClose();
+            setEditMode(false);
+            setDeleteMode(false);
+          }}
+        >
           Close
         </Button>
       </>
@@ -123,7 +151,7 @@ export default function CourseDetailsModal({
     <>
       <Modal
         show={show_modal}
-        onHide={handleClose}
+        onHide={handleTotalClose}
         backdrop='static'
         keyboard={false}
       >
