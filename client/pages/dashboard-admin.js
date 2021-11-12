@@ -61,28 +61,41 @@ export default function AdminDashboarPage() {
     //  from local storage.
     if (token) {
       (async () => {
-        const p = await getData('/courses', token);
-        console.log('courses: ', p);
-        setCourses(p);
+        try {
+          const p = await getData('/courses', token);
+          console.log('courses: ', p);
+          setCourses(p);
+        } catch (err) {
+          console.log(
+            'Error in dashboard-admin --> useEffect() --> getData(/courses),  err: ',
+            err
+          );
+          loadingCtx.setIsLoading(false);
+          // setError(
+          //   err.message || // This message comes from the backend!
+          //     'Error in onLoginHandler()'
+          // );
+        }
       })();
 
       (async () => {
-        const u = await getData('/users', token);
-        console.log('users: ', u);
-        setUsers(u);
+        try {
+          const u = await getData('/users', token);
+          console.log('users: ', u);
+          setUsers(u);
+        } catch (err) {
+          console.log(
+            'Error in dashboard-admin --> useEffect() --> getData(/users),  err: ',
+            err
+          );
+          loadingCtx.setIsLoading(false);
+          // setError(
+          //   err.message || // This message comes from the backend!
+          //     'Error in onLoginHandler()'
+          // );
+        }
       })();
     }
-
-    // TODO: -Both HTTP-requests made
-    //        every time there is a change
-    //        to the loading context
-    //        (in order  to update courses table
-    //         when a row is edited / deleted).
-    //       -The call to /users is redundant.
-    //       -We evenutally want to load the
-    //        loading spinner during the call
-    //        to /courses, so we should
-    //        actually
   }, [put_course, posted_course, authCtx.token]);
 
   // --------------------------------------------

@@ -18,7 +18,7 @@ const restricted = (req, res, next) => {
         next(new HttpError('Invalid JWT!', 401));
       } else {
         // -Token is valid => move along!
-        req.decodedJwt = decoded_token;
+        req.decoded_token = decoded_token;
         next();
       }
     });
@@ -30,7 +30,14 @@ const restricted = (req, res, next) => {
 
 // ==============================================
 
-const admin_only = () => {};
+const admin_only = (req, res, next) => {
+  console.log('req.decoded_token: ', req.decoded_token);
+  if (req.decoded_token.role === 'admin') {
+    next();
+  } else {
+    next(new HttpError('Admin role required!', 401));
+  }
+};
 
 // ==============================================
 
@@ -51,4 +58,4 @@ const checkAuthPayload = (req, res, next) => {
 
 // ==============================================
 
-module.exports = { checkAuthPayload, restricted };
+module.exports = { checkAuthPayload, restricted, admin_only };

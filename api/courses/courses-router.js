@@ -22,7 +22,12 @@ const authMiddleware = require('../auth/auth-middleware');
 // ==============================================
 
 // (1) [GET]  /api/courses
-router.get('/', authMiddleware.restricted, coursesController.getCourses);
+router.get(
+  '/',
+  authMiddleware.restricted,
+  authMiddleware.admin_only,
+  coursesController.getCourses
+);
 
 // ==============================================
 
