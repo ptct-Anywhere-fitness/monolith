@@ -27,7 +27,7 @@ export default function AddCourseModal({
   // --------------------------------------------
 
   const [course_title, setCourseTitle] = useState('title');
-  const [course_price, setCoursePrice] = useState(1);
+  const [course_price, setCoursePrice] = useState(100);
   const [course_details, setCourseDetails] = useState('');
 
   // date: '2022-01-01',

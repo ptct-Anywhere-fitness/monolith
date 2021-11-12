@@ -65,7 +65,7 @@ export default function Layout(props) {
           flexGrow: 1,
         }}
       >
-        <Container>{props.children}</Container>
+        <Container className='mt-4'>{props.children}</Container>
       </main>
 
       {/* ----------------------------------- */}

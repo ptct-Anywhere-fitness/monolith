@@ -51,7 +51,7 @@ export default function Courses() {
         }
       })();
     } else {
-      // -If not token or if user is not a customer
+      // -If no token or if user is not a customer
       //  then redirect back to root-route.
       router.replace('/');
     }

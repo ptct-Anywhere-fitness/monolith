@@ -12,11 +12,13 @@ const f = async (cart_items) => {
   console.log('cart_items: ', cart_items);
 
   let products = [];
-  for (let i = 0; i < cart_items.length; ++i) {
-    const product = await productsModel.findById(cart_items[i].product_id);
-    product.cart_quantity = cart_items[i].quantity;
-    products.push(product);
-  }
+  await (async () => {
+    for (let i = 0; i < cart_items.length; ++i) {
+      const product = await productsModel.findById(cart_items[i].product_id);
+      product.cart_quantity = cart_items[i].quantity;
+      products.push(product);
+    }
+  })();
 
   console.log('products: ', products);
 
@@ -50,7 +52,7 @@ router.post('/', async (req, res) => {
       // success_url: `https://joshua-holloway.com/`,
       // cancel_url: `https://joshua-holloway.com/`,
       success_url: `http://localhost:3000/`,
-      cancel_url: `http://localhost:300/dashboard-customer/`,
+      cancel_url: `http://localhost:3000/dashboard-customer/`,
       // success_url: `${process.env.CLIENT_URL}/success.html`,
       // cancel_url: `${process.env.CLIENT_URL}/cancel.html`,
     });

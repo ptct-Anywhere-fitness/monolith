@@ -100,7 +100,7 @@ export default function AdminDashboarPage() {
   // --------------------------------------------
 
   return (
-    <Container className='mt-4'>
+    <>
       <Row>
         <Col>
           <h4>Admin Dashboard</h4>
@@ -164,7 +164,7 @@ export default function AdminDashboarPage() {
           </div>
         )}
       </Row>
-    </Container>
+    </>
   );
 
   // --------------------------------------------
