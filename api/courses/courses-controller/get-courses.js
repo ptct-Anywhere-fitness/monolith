@@ -1,3 +1,4 @@
+const HttpError = require('../../helpers/http-error');
 const Courses = require('../courses-model');
 
 // ==============================================
@@ -16,10 +17,13 @@ const getCourses = (req, res) => {
     })
     .catch((err) => {
       // - There's an error in retrieving the _courses_ from the database:
-      res.status(500).json({
-        err,
-        message: 'The courses information could not be retrieved',
-      });
+      // res.status(500).json({
+      //   err,
+      //   message: 'The courses information could not be retrieved',
+      // });
+      next(
+        new HttpError('The courses information could not be retrieved.', 500)
+      );
     });
 };
 

@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const { TOKEN_SECRET } = require('../../config/secrets');
 
+const HttpError = require('../helpers/http-error');
+
 // ==============================================
 
 const restricted = (req, res, next) => {
@@ -12,17 +14,23 @@ const restricted = (req, res, next) => {
     // -callback is used to handle success or failure
     jwt.verify(token, TOKEN_SECRET, (err, decoded_token) => {
       if (err) {
-        next({ status: 401, message: `token bad: ${err.message}` });
+        // next({ status: 401, message: `token bad: ${err.message}` });
+        next(new HttpError('Invalid JWT!', 401));
       } else {
-        // -Assume the token is valid and move along!
+        // -Token is valid => move along!
         req.decodedJwt = decoded_token;
         next();
       }
     });
   } else {
-    next({ status: 401, message: 'we wants token!' });
+    // next({ status: 401, message: 'Token required!' });
+    next(new HttpError('JWT required!', 401));
   }
 };
+
+// ==============================================
+
+const admin_only = () => {};
 
 // ==============================================
 
