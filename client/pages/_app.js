@@ -45,7 +45,7 @@ export default function App({ Component, pageProps }) {
                 name='viewport'
                 content='width=device-width, initial-scale=1.0'
               />
-              <link rel='icon' href='/reav.svg' />
+              <link rel='icon' href='/react.svg' />
               {/* <link rel='manifest' href='/manifest.json' /> */}
             </Head>
             <Component {...pageProps} />

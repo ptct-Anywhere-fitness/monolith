@@ -9,13 +9,42 @@ exports.up = async (knex) => {
       users.string('role', 200);
       users.timestamps(false, true);
     })
-    .createTable('courses', (product) => {
-      product.increments('id');
-      product.string('title', 50).notNullable();
-      product.string('category', 50);
-      product.string('details', 256);
-      product.integer('price').unsigned();
-      product.integer('quantity_in_stock').unsigned();
+    .createTable('courses', (course) => {
+      course.increments('id');
+      course.string('title', 50).notNullable();
+      course.string('category', 50);
+      course.string('details', 256);
+      course.integer('price').unsigned();
+      course.integer('quantity_in_stock').unsigned();
+
+      // Name (title)
+      // course.string('name', 50).notNullable();
+
+      // Type (category)
+      // course.string('category', 50);
+
+      // Start time
+      // date — table.date(name)
+      // course.date('date');
+      // course.time('time');
+      course.datetime('datetime');
+      course.date('date');
+      course.time('time');
+
+      // Duration
+      course.integer('duration').unsigned();
+
+      // Intensity level
+      course.integer('intensity').unsigned();
+
+      // Location
+      course.string('city', 50);
+
+      // Current number of registered attendees
+      course.integer('registered_attendees').unsigned();
+
+      // Max class size
+      course.integer('max_class_size').unsigned();
     });
 };
 
