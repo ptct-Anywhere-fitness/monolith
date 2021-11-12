@@ -41,7 +41,7 @@ export default function Layout(props) {
                 Signed in as:{' '}
                 <h6
                   style={{ display: 'inline' }}
-                >{`${props.user.username} | ${props.user.role}`}</h6>
+                >{`${props.user?.username} | ${props.user?.role}`}</h6>
               </Navbar.Text>
             </Navbar.Collapse>
           )}

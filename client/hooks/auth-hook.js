@@ -87,9 +87,10 @@ export const useAuth = () => {
   const logout = useCallback((token) => {
     if (localStorage.getItem('userData')) {
       localStorage.removeItem('userData');
+      localStorage.removeItem('cart'); // ensures the user doesn't load stale course data (e.g. if admin deletes or modifies a course)
     }
 
-    setUser({});
+    setUser(null);
     setToken(null);
     setTokenExpirationDate(null);
     router.push('/');
