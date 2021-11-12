@@ -6,7 +6,7 @@ import Modal from '../modals/modal';
 
 // ==============================================
 
-export default function TableCourses({ courses }) {
+export default function TableCourses({ courses, setCourses }) {
   // --------------------------------------------
 
   const [show_modal, setShowModal] = useState();
@@ -29,6 +29,7 @@ export default function TableCourses({ courses }) {
         show_modal={show_modal}
         handleClose={handleClose}
         course={active_modal_course}
+        setCourses={setCourses}
       />
 
       <Table

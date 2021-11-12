@@ -62,6 +62,17 @@ export default function AdminDashboarPage() {
         setUsers(u);
       })();
     }
+
+    // TODO: -Both HTTP-requests made
+    //        every time there is a change
+    //        to the loading context
+    //        (in order  to update courses table
+    //         when a row is edited / deleted).
+    //       -The call to /users is redundant.
+    //       -We evenutally want to load the
+    //        loading spinner during the call
+    //        to /courses, so we should
+    //        actually
   }, [deleted_course, put_course, posted_course, authCtx.token]);
 
   // --------------------------------------------
@@ -231,7 +242,7 @@ export default function AdminDashboarPage() {
           >
             {' '}
             <h6>Courses</h6>
-            <TableCourses courses={courses} />
+            <TableCourses courses={courses} setCourses={setCourses} />
           </div>
         )}
       </Row>

@@ -4,17 +4,24 @@ import Table from 'react-bootstrap/Table';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
-// import { AuthContext } from '../context/auth-context';
+import { AuthContext } from '../../context/auth-context';
 import { LoadingContext } from '../../context/loading-context';
 
 import fetchData from '../../helpers/fetch-data';
+import getData from '../../helpers/get-data';
 
 // ==============================================
 
-export default function ModalComponent({ show_modal, handleClose, course }) {
+export default function ModalComponent({
+  show_modal,
+  handleClose,
+  course,
+  setCourses,
+}) {
   // --------------------------------------------
 
   const loadingCtx = useContext(LoadingContext);
+  const authCtx = useContext(AuthContext);
 
   // --------------------------------------------
 
@@ -22,21 +29,18 @@ export default function ModalComponent({ show_modal, handleClose, course }) {
     console.log('DELETE course handler');
 
     try {
+      const token = authCtx.token;
+
       loadingCtx.setIsLoading(true);
-      const response = await fetchData(`/courses/${course_id}`, 'DELETE');
-
-      const data = await response.json();
-
-      // -4xx / 5xx status code does NOT throw error.
-      // -data.ok is true with a 2xx status code
+      let response = await fetchData(`/courses/${course_id}`, 'DELETE');
+      let data = await response.json();
       if (!response.ok) {
-        // -data.message comes from the .message property
-        //  sent from the backend.
         throw new Error(data.message);
       }
+      console.log('deleted course: ', data);
 
-      console.log('deleted data: ', data);
-
+      // -Update the courses table:
+      setCourses(await getData('/courses', token));
       loadingCtx.setIsLoading(false);
       handleClose();
     } catch (err) {
