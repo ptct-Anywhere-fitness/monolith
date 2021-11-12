@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { format } from 'date-fns';
+
 // import Button from 'react-bootstrap/Button';
 
 import Table from 'react-bootstrap/Table';
@@ -110,7 +112,11 @@ export default function TableCourses({ courses, setCourses }) {
 
                   <td>{course?.id}</td>
                   <td>{course?.title}</td>
-                  <td>{course?.date}</td>
+                  {/* <td>{format(course?.date, 'MMMM do Y')}</td> */}
+                  <td>
+                    {course?.date &&
+                      format(new Date(course?.date), 'MMMM do Y')}
+                  </td>
                   <td>{course?.time}</td>
                   <td>{course?.duration}</td>
                   <td>{course?.city}</td>

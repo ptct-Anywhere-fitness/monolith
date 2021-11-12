@@ -26,11 +26,11 @@ export default function AddCourseModal({
 
   // --------------------------------------------
 
-  const [course_title, setCourseTitle] = useState('');
-  const [course_price, setCoursePrice] = useState('');
+  const [course_title, setCourseTitle] = useState('title');
+  const [course_price, setCoursePrice] = useState(1);
 
   // date: '2022-01-01',
-  const [course_date, setCourseDate] = useState('');
+  const [course_date, setCourseDate] = useState('2022-01-01');
 
   const [course_details, setCourseDetails] = useState('');
 
@@ -38,19 +38,19 @@ export default function AddCourseModal({
   const [course_time, setCourseTime] = useState('');
 
   // duration: 30,
-  const [course_duration, setCourseDuration] = useState('');
+  const [course_duration, setCourseDuration] = useState(30);
 
   // intensity: 1,
-  const [course_intensity, setCourseIntensity] = useState('');
+  const [course_intensity, setCourseIntensity] = useState(5);
 
   // city: 'tulsa',
-  const [course_city, setCourseCity] = useState('');
+  const [course_city, setCourseCity] = useState('tulsa');
 
   // registered_attendees: 0,
-  const [course_registered, setCourseRegistered] = useState('');
+  const [course_registered, setCourseRegistered] = useState(0);
 
   // max_class_size: 10,
-  const [course_max_class_size, setCourseMaxClassSize] = useState('');
+  const [course_max_class_size, setCourseMaxClassSize] = useState(10);
 
   // --------------------------------------------
 
