@@ -104,12 +104,8 @@ export default function CourseDetailsModal({
         'Error in dashboard-admin --> deleteCourseHandler() -- err: ',
         err
       );
-      loadingCtx.setIsLoading(false);
       // handleClose();
-      // setError(
-      //   err.message || // This message comes from the backend!
-      //     'Error in onLoginHandler()'
-      // );
+      loadingCtx.setIsLoading(false);
       notificationCtx.showNotification({
         title: 'Error in course-details-modal -> handleDelete()',
         message: `Message from backend:\n${err.message}`,
@@ -132,6 +128,13 @@ export default function CourseDetailsModal({
 
     try {
       loadingCtx.setIsLoading(true);
+
+      notificationCtx.showNotification({
+        title: 'Updating...',
+        message: `updating course`,
+        status: 'pending',
+        animation: 'show',
+      });
 
       const token = authCtx.token;
 
@@ -162,6 +165,14 @@ export default function CourseDetailsModal({
 
       // -Update the courses table:
       setCourses(await getData('/courses', token));
+
+      notificationCtx.showNotification({
+        title: 'Success!',
+        message: `added course`,
+        status: 'success',
+        animation: 'show',
+      });
+
       loadingCtx.setIsLoading(false);
       handleTotalClose();
     } catch (err) {
@@ -170,10 +181,12 @@ export default function CourseDetailsModal({
         err
       );
       loadingCtx.setIsLoading(false);
-      // setError(
-      //   err.message || // This message comes from the backend!
-      //     'Error in onLoginHandler()'
-      // );
+      notificationCtx.showNotification({
+        title: 'Error in course-details-modal -> handleSave()',
+        message: `Message from backend:\n${err.message}`,
+        status: 'error',
+        animation: 'show',
+      });
     }
   };
 
@@ -220,6 +233,7 @@ export default function CourseDetailsModal({
         <Button variant='secondary' onClick={handleEdit}>
           Edit
         </Button>
+
         <Button
           variant='primary'
           onClick={() => {
