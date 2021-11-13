@@ -8,6 +8,9 @@ import Button from 'react-bootstrap/Button';
 
 import { AuthContext } from '../../context/auth-context';
 import { LoadingContext } from '../../context/loading-context';
+import NotificationContext from '../../context/notification-context';
+
+// ==============================================
 
 import fetchData from '../../helpers/fetch-data';
 import getData from '../../helpers/get-data';
@@ -29,6 +32,7 @@ export default function CourseDetailsModal({
 
   const loadingCtx = useContext(LoadingContext);
   const authCtx = useContext(AuthContext);
+  const notificationCtx = useContext(NotificationContext);
 
   // --------------------------------------------
 
@@ -62,6 +66,12 @@ export default function CourseDetailsModal({
     try {
       loadingCtx.setIsLoading(true);
 
+      notificationCtx.showNotification({
+        title: 'Deleting...',
+        message: `deleting course`,
+        status: 'pending',
+      });
+
       const token = authCtx.token;
 
       const response = await fetchData(
@@ -78,6 +88,13 @@ export default function CourseDetailsModal({
 
       // -Update the courses table:
       setCourses(await getData('/courses', token));
+
+      notificationCtx.showNotification({
+        title: 'Success!',
+        message: `deleted course`,
+        status: 'success',
+      });
+
       loadingCtx.setIsLoading(false);
       handleTotalClose();
     } catch (err) {
@@ -91,6 +108,11 @@ export default function CourseDetailsModal({
       //   err.message || // This message comes from the backend!
       //     'Error in onLoginHandler()'
       // );
+      notificationCtx.showNotification({
+        title: 'Error in course-details-modal -> handleDelete()',
+        message: `Message from backend:\n${err.message}`,
+        status: 'error',
+      });
     }
   };
 
