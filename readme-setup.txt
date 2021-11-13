@@ -2,10 +2,9 @@ To deploy this scaffolding to Heroko, do the following:
 (https://youtu.be/kTO_tf4L23I)
 
 ***************************************
-Names used for example:
-Repo:         portfolio-3
-Heroku App:   portfolio-3-app
-DB:           portfolio-3-DB / portfolio-3-DB_testing
+Repo:         https://github.com/ptct-Anywhere-fitness/monolith
+Heroku App:   anywhere-fitness--app
+DB:           anywhere-fitness--DB / anywhere-fitness--DB_testing
 ***************************************
 
 Step 1.) Clone this repo and hook up to a new github repo.
