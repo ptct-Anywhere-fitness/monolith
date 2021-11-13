@@ -9,7 +9,7 @@ import css from './Backdrop.module.scss';
 
 // ==============================================
 
-const Backdrop = ({ show }) => {
+const Backdrop = ({ show, children }) => {
   // --------------------------------------------
 
   const duration = 0.25;
@@ -68,20 +68,7 @@ const Backdrop = ({ show }) => {
       className={cssClassList}
       // onClick={hideHandler}
     >
-      <Spinner
-        animation='border'
-        role='status'
-        variant='light'
-        style={{
-          position: 'absolute',
-          top: 'calc(50% - 50px)',
-          left: 'calc(50% - 50px)',
-          height: '50px',
-          width: '50px',
-        }}
-      >
-        <span className='visually-hidden'>Loading...</span>
-      </Spinner>
+      {children}
     </div>
   );
 
