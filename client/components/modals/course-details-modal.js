@@ -181,35 +181,39 @@ export default function CourseDetailsModal({
 
   let modal_footer;
   if (edit_mode) {
-    if (delete_mode) {
-      modal_footer = (
-        <>
-          <Button variant='primary' onClick={handleTotalClose}>
-            Cancel
-          </Button>
+    modal_footer = (
+      <>
+        <Button variant='primary' onClick={handleTotalClose}>
+          Cancel
+        </Button>
 
-          <Button variant='danger' onClick={handleDelete(course?.id)}>
-            Delete
-          </Button>
-        </>
-      );
-    } /* delete_mode */ else {
-      modal_footer = (
-        <>
-          <Button variant='primary' onClick={handleTotalClose}>
-            Cancel
-          </Button>
+        <Button variant='success' onClick={handleSave}>
+          Save
+        </Button>
 
-          <Button variant='success' onClick={handleSave}>
-            Save
-          </Button>
+        <Button
+          variant='secondary'
+          onClick={() => {
+            setEditMode(false);
+            setDeleteMode(true);
+          }}
+        >
+          Enable Delete
+        </Button>
+      </>
+    );
+  } else if (delete_mode) {
+    modal_footer = (
+      <>
+        <Button variant='primary' onClick={handleTotalClose}>
+          Cancel
+        </Button>
 
-          <Button variant='secondary' onClick={() => setDeleteMode(true)}>
-            Enable Delete
-          </Button>
-        </>
-      );
-    }
+        <Button variant='danger' onClick={handleDelete(course?.id)}>
+          Delete
+        </Button>
+      </>
+    );
   } else {
     modal_footer = (
       <>
