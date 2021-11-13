@@ -8,10 +8,11 @@ import Container from 'react-bootstrap/Container';
 // import Row from 'react-bootstrap/Row';
 // import Col from 'react-bootstrap/Col';
 
-// import Backdrop from './backdrop/Backdrop';
 import Loading from './loading/loading';
+import Notification from '../components/notification/notification';
 
 import { AuthContext } from '../context/auth-context';
+import NotificationContext from '../context/notification-context';
 
 // ==============================================
 
@@ -20,13 +21,14 @@ export default function Layout(props) {
 
   // const router = useRouter();
   const autCtx = useContext(AuthContext);
+  const notificationCtx = useContext(NotificationContext);
+
+  const active_notification = notificationCtx.notification;
 
   // --------------------------------------------
 
   return (
     <>
-      <Loading />
-
       <div
         style={{
           height: '100vh',
@@ -82,6 +84,24 @@ export default function Layout(props) {
           </Navbar>
         </footer>
       </div>
+
+      {/* ----------------------------------- */}
+
+      {/* loading-spinner and backdrop */}
+      <Loading />
+
+      {/* ----------------------------------- */}
+
+      {/* notification UI-feedback */}
+      {active_notification && (
+        <Notification
+          title={active_notification.title}
+          message={active_notification.message}
+          status={active_notification.status}
+        />
+      )}
+
+      {/* ----------------------------------- */}
     </>
   );
 }

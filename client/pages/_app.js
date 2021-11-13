@@ -1,7 +1,6 @@
 import Head from 'next/head';
 
 import Layout from '../components/layout';
-import Notification from '../components/notification/notification';
 
 import { AuthContext } from '../context/auth-context';
 import { useAuth } from '../hooks/auth-hook';
@@ -52,15 +51,8 @@ export default function App({ Component, pageProps }) {
                 <link rel='icon' href='/react.svg' />
                 {/* <link rel='manifest' href='/manifest.json' /> */}
               </Head>
+
               <Component {...pageProps} />
-
-              <Notification
-                title='Test'
-                message='This is a test.'
-                status='error'
-              />
-
-              <h1>JOSH</h1>
             </Layout>
           </NotificationContextProvider>
         </LoadingContext.Provider>
