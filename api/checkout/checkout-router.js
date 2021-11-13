@@ -51,8 +51,8 @@ router.post('/', async (req, res) => {
       line_items,
       // success_url: `https://joshua-holloway.com/`,
       // cancel_url: `https://joshua-holloway.com/`,
-      success_url: `http://localhost:3000/`,
-      cancel_url: `http://localhost:3000/dashboard-customer/`,
+      success_url: `http://localhost:9000/`,
+      cancel_url: `http://localhost:9000/`,
       // success_url: `${process.env.CLIENT_URL}/success.html`,
       // cancel_url: `${process.env.CLIENT_URL}/cancel.html`,
     });

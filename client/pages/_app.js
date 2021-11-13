@@ -1,6 +1,7 @@
 import Head from 'next/head';
 
 import Layout from '../components/layout';
+import Notification from '../components/notification/notification';
 
 import { AuthContext } from '../context/auth-context';
 import { useAuth } from '../hooks/auth-hook';
@@ -10,6 +11,8 @@ import { useCart } from '../hooks/cart-hook';
 
 import { LoadingContext } from '../context/loading-context';
 import { useLoading } from '../hooks/loading-hook';
+
+import { NotificationContextProvider } from '../context/notification-context';
 
 // import '../styles/bs-mod.scss';
 
@@ -34,22 +37,32 @@ export default function App({ Component, pageProps }) {
         value={{ cart, cart_total, addToCart, deleteFromCart }}
       >
         <LoadingContext.Provider value={{ is_loading, setIsLoading }}>
-          <Layout token={token} user={user} logout={logout}>
-            <Head>
-              <title>Anywhere Fitness</title>
-              <meta
-                name='description'
-                content='Anywhere Fitness is the all-in-one solution to meet your “on-location” fitness class needs. AnywhereFitness makes it painless for Instructors and Clients alike to hold and attend Fitness classes wherever they might be held. '
+          <NotificationContextProvider>
+            <Layout token={token} user={user} logout={logout}>
+              <Head>
+                <title>Anywhere Fitness</title>
+                <meta
+                  name='description'
+                  content='Anywhere Fitness is the all-in-one solution to meet your “on-location” fitness class needs. AnywhereFitness makes it painless for Instructors and Clients alike to hold and attend Fitness classes wherever they might be held. '
+                />
+                <meta
+                  name='viewport'
+                  content='width=device-width, initial-scale=1.0'
+                />
+                <link rel='icon' href='/react.svg' />
+                {/* <link rel='manifest' href='/manifest.json' /> */}
+              </Head>
+              <Component {...pageProps} />
+
+              <Notification
+                title='Test'
+                message='This is a test.'
+                status='error'
               />
-              <meta
-                name='viewport'
-                content='width=device-width, initial-scale=1.0'
-              />
-              <link rel='icon' href='/react.svg' />
-              {/* <link rel='manifest' href='/manifest.json' /> */}
-            </Head>
-            <Component {...pageProps} />
-          </Layout>
+
+              <h1>JOSH</h1>
+            </Layout>
+          </NotificationContextProvider>
         </LoadingContext.Provider>
       </CartContext.Provider>
     </AuthContext.Provider>

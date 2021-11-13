@@ -3,8 +3,6 @@ import { createPortal } from 'react-dom';
 
 import { gsap } from 'gsap';
 
-import Spinner from 'react-bootstrap/Spinner';
-
 import css from './Backdrop.module.scss';
 
 // ==============================================

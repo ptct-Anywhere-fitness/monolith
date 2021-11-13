@@ -33,7 +33,6 @@ export default function CustomerDashboardPage() {
 
   return (
     <>
-      <ModalBackdrop />
       <Calendar setDate={setDate} setDays={setDays} />
       <Courses />
       <Cart />
