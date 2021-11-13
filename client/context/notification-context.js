@@ -4,6 +4,7 @@ import { useState, useEffect, createContext } from 'react';
 
 const NotificationContext = createContext({
   notification: null, // { title, message, status },
+  animation: 'hide',
   showNotification: function (notification_data) {},
   hideNotification: function () {},
 });
@@ -38,13 +39,19 @@ function NotificationContextProvider(props) {
       title: notification_data.title,
       message: notification_data.message,
       status: notification_data.status,
+      animation: notification_data.animation,
     });
   };
 
   // --------------------------------------------
 
   const hideNotificationHandler = () => {
-    setActiveNotification(null);
+    setActiveNotification({
+      title: 'Success!',
+      message: `deleted course`,
+      status: 'success',
+      animation: 'hide',
+    });
   };
 
   // --------------------------------------------

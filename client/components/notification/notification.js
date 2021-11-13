@@ -15,10 +15,10 @@ export default function Notification(props) {
   // --------------------------------------------
 
   const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-    return () => setMounted(false);
-  }, []);
+  // useEffect(() => {
+  //   setMounted(true);
+  //   return () => setMounted(false);
+  // }, []);
 
   // --------------------------------------------
 
@@ -26,20 +26,29 @@ export default function Notification(props) {
   const timeline_ref = useRef();
 
   useEffect(() => {
-    if (mounted && notificationCtx.notification !== null) {
+    console.log(
+      'useEffect() \t notification.animation: ',
+      notificationCtx.notification?.animation,
+      ' \t mounted: ',
+      mounted
+    );
+
+    if (mounted && notificationCtx.notification?.animation === 'show') {
       timeline_ref.current = gsap.timeline().to(div_ref.current, {
-        duration: 1.2,
+        duration: 0.2,
         yPercent: '-100',
         onReverseComplete: () => {
           // setCssClassList(`${css.backdrop} ${css.hide}`);
         },
       });
-    } else if (mounted && notificationCtx.notification.notification === null) {
+    } else if (mounted && notificationCtx.notification?.animation === 'hide') {
       if (timeline_ref) {
-        timeline_ref.current.reverse();
+        timeline_ref.current?.reverse();
       }
     }
-  }, [notificationCtx.notification]);
+    setMounted(true);
+    return () => setMounted(false);
+  }, [notificationCtx.notification?.animation]);
 
   // --------------------------------------------
 

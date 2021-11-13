@@ -70,6 +70,7 @@ export default function CourseDetailsModal({
         title: 'Deleting...',
         message: `deleting course`,
         status: 'pending',
+        animation: 'show',
       });
 
       const token = authCtx.token;
@@ -93,6 +94,7 @@ export default function CourseDetailsModal({
         title: 'Success!',
         message: `deleted course`,
         status: 'success',
+        animation: 'show',
       });
 
       loadingCtx.setIsLoading(false);
@@ -112,6 +114,7 @@ export default function CourseDetailsModal({
         title: 'Error in course-details-modal -> handleDelete()',
         message: `Message from backend:\n${err.message}`,
         status: 'error',
+        animation: 'show',
       });
     }
   };
