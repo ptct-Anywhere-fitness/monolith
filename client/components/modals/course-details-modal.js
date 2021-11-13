@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 // import { format } from 'date-fns';
 
@@ -41,6 +41,17 @@ export default function CourseDetailsModal({
 
   // --------------------------------------------
 
+  useEffect(() => {
+    setTitleInput(course?.title);
+    setDateInput(course?.date);
+    setTimeInput(course?.time);
+    setDurationInput(course?.duration);
+    setCityInput(course?.city);
+    setMaxClassSizeInput(course?.max_class_size);
+  }, [course]);
+
+  // --------------------------------------------
+
   const handleTotalClose = () => {
     handleClose();
     setEditMode(false);
@@ -49,14 +60,12 @@ export default function CourseDetailsModal({
 
   // --------------------------------------------
 
-  const [title_input, setTitleInput] = useState(course?.title);
-  const [date_input, setDateInput] = useState(formatDate(course?.date));
-  const [time_input, setTimeInput] = useState(''); //useState(formatTime_12hr(course?.time));
-  const [duration_input, setDurationInput] = useState(course?.duration);
-  const [city_input, setCityInput] = useState(course?.city);
-  const [max_class_size_input, setMaxClassSizeInput] = useState(
-    course?.max_class_size
-  );
+  const [title_input, setTitleInput] = useState();
+  const [date_input, setDateInput] = useState();
+  const [time_input, setTimeInput] = useState(); //useState(formatTime_12hr(course?.time));
+  const [duration_input, setDurationInput] = useState();
+  const [city_input, setCityInput] = useState();
+  const [max_class_size_input, setMaxClassSizeInput] = useState();
 
   // --------------------------------------------
 
@@ -137,6 +146,11 @@ export default function CourseDetailsModal({
       });
 
       const token = authCtx.token;
+
+      console.log('course: ', course);
+      console.log('course?.title: ', course?.title);
+      console.log('course.title: ', course.title);
+      console.log('title_input: ', title_input);
 
       const response = await fetchData(
         `/courses/${course.id}`,

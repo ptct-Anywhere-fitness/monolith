@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { format } from 'date-fns';
 
@@ -24,6 +24,9 @@ export default function TableCourses({ courses, setCourses }) {
     setDetailsModalCourse(course);
     setShowDetailsModal(true);
   };
+  useEffect(() => {
+    console.log('handleDetailsModalOpen in table-courses.js, course: ');
+  }, [show_details_modal]);
 
   // --------------------------------------------
 
