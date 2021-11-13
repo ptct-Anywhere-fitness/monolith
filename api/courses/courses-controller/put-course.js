@@ -1,10 +1,11 @@
+const HttpError = require('../../helpers/http-error');
 const Courses = require('../courses-model');
 
 // ==============================================
 
-// | N   | Method | Endpoint                | Description                                                                                                                     |
-// | --- | ------ | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-// | 4   | PUT    | /api/courses/:id          | Updates the course with the specified id using data from the request body and **returns the modified document**, not the original |
+// | N   | Method | Endpoint                | Description                                                                                                                       |
+// | --- | ------ | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+// | 4   | PUT    | /api/courses/:id        | Updates the course with the specified id using data from the request body and **returns the modified document**, not the original |
 //
 // ==============================================
 
@@ -17,9 +18,7 @@ const putCourseById = (req, res, next) => {
   //   - respond with HTTP status code `400` (Bad Request).
   //   - return the following JSON: `{ message: "Please provide title and contents for the course" }`.
   if (!body.title) {
-    return res
-      .status(400)
-      .json({ message: 'Please provide title for the course' });
+    return next(new HttpError('Please provide title for the course', 400));
   }
 
   console.log('[PUT]  /api/courses/:id, \t body: ', body);
@@ -37,9 +36,9 @@ const putCourseById = (req, res, next) => {
         // - If the _course_ with the specified `id` is not found:
         //   - return HTTP status code `404` (Not Found).
         //   - return the following JSON: `{ message: "The course with the specified ID does not exist" }`.
-        res.status(404).json({
-          message: 'The course with the specified ID does not exist',
-        });
+        next(
+          new HttpError('The course with the specified ID does not exist', 404)
+        );
       }
     })
     .catch((err) => {
@@ -47,9 +46,7 @@ const putCourseById = (req, res, next) => {
       // - If there's an error when updating the _course_:
       //   - respond with HTTP status code `500`.
       //   - return the following JSON: `{ message: "The course information could not be modified" }`.
-      res
-        .status(500)
-        .json({ message: 'The course information could not be modified' });
+      next(new HttpError('The course information could not be modified', 500));
     });
 };
 
