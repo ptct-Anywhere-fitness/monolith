@@ -7,7 +7,7 @@ import { format } from 'date-fns';
 import Table from 'react-bootstrap/Table';
 import CourseDetailsModal from '../modals/course-details-modal';
 
-import { formatTime_12hr, formatTime_24hr } from '../../helpers/format-date';
+import { formatTime_12hr } from '../../helpers/format-date';
 
 // ==============================================
 

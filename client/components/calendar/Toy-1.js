@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 // import styled from 'styled-components'
 import ToyTop from './Toy-Top';
 import ToyBottom from './Toy-Bottom';

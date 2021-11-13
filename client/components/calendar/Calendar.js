@@ -82,25 +82,25 @@ export default function Calendar({ setDate, setDays }) {
   //      -also, do not allow for selection beyond the current date
   //      -also, do not allow idx_2 to be less than idx_1,
   //       or better yet, if idx_2 > idx_1 then just swap order.
-  const [day, setDay] = useState(null);
+  // const [day, setDay] = useState(null);
   useEffect(() => {
-    const [y, m, d] = get_todays_date();
+    const [y, m /*, d */] = get_todays_date();
     setYear(y);
     setMonth(m);
-    setDay(d);
+    // setDay(d);
   }, []);
 
   // --------------------------------------------
 
   const [num_blanks, setNumBlanks] = useState(calc_num_blanks(year, month, 1));
   const [d_in_m, setNumDaysInMonth] = useState(dNm(year, month));
-  const [num_blanks_end, setNumBlanksEnd] = useState(
-    6 - calc_num_blanks(year, month, d_in_m)
-  );
-  const [num_rows, setNumRows] = useState(
-    Math.floor((d_in_m + num_blanks + num_blanks_end + 1) / 7)
-  );
-  const [num_Days, setNumDAYS] = useState(num_rows * 7);
+  // const [num_blanks_end, setNumBlanksEnd] = useState(
+  // 6 - calc_num_blanks(year, month, d_in_m)
+  // );
+  // const [num_rows, setNumRows] = useState(
+  //   Math.floor((d_in_m + num_blanks + num_blanks_end + 1) / 7)
+  // );
+  // const [num_Days, setNumDAYS] = useState(num_rows * 7);
 
   const [day_range_1, setDayRange1] = useState(null);
   const [day_range_2, setDayRange2] = useState(null);
@@ -118,14 +118,14 @@ export default function Calendar({ setDate, setDays }) {
 
     const _days_in_month = dNm(year, month);
     setNumDaysInMonth(_days_in_month);
-    const _num_blanks_end = 6 - calc_num_blanks(year, month, _days_in_month);
-    setNumBlanksEnd(_num_blanks_end);
+    // const _num_blanks_end = 6 - calc_num_blanks(year, month, _days_in_month);
+    // setNumBlanksEnd(_num_blanks_end);
 
-    const _num_rows = Math.floor(
-      (_days_in_month + _num_blanks + _num_blanks_end + 1) / 7
-    );
-    setNumRows(_num_rows);
-    setNumDAYS(_num_rows * 7);
+    // const _num_rows = Math.floor(
+    //   (_days_in_month + _num_blanks + _num_blanks_end + 1) / 7
+    // );
+    // setNumRows(_num_rows);
+    // setNumDAYS(_num_rows * 7);
 
     // Update array of ref's to store one ref for each day:
     console.clear();

@@ -1,9 +1,13 @@
 =================================================
 
-Test deploy:
-  /client > npm start
-  /       > npm run server
-          --Navigate to localhost:9000
+Test Front-End production build locally before deploy:
+  /client   > npm run build
+  /client   > npm run export
+  /         > npm run server
+    --Navigate to localhost:9000
+    --Do NOT do 'npm start' in /client
+    --The built app is run on the server serving the backend.
+    --This completely simulates the way it is deployed (monolith style).
 
 =================================================
 
@@ -13,7 +17,6 @@ Migrate Remote DB:
   /       > npm run seedh
   /       > npm run databaseh
             >> select * from products;
-
 
 =================================================
 

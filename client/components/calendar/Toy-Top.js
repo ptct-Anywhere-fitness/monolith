@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 // ==============================================
 
 const NUM_ROWS = 7;
 const NUM_COLS = 7;
-const NUM_SQUARES = NUM_ROWS * NUM_COLS;
+// const NUM_SQUARES = NUM_ROWS * NUM_COLS;
 
 const r = (idx) => Math.floor(idx / NUM_COLS);
 const c = (idx) => idx % NUM_COLS;

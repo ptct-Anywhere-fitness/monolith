@@ -19,6 +19,7 @@ class MyDocument extends Document {
         </Head>
         <body>
           <Main />
+          <div id='backdrop-hook'></div>
           <NextScript />
         </body>
       </Html>

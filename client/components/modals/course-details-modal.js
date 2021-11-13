@@ -1,6 +1,6 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 
-import { format } from 'date-fns';
+// import { format } from 'date-fns';
 
 import Table from 'react-bootstrap/Table';
 import Modal from 'react-bootstrap/Modal';
@@ -102,7 +102,7 @@ export default function CourseDetailsModal({
 
   // --------------------------------------------
 
-  const handleSave = async (e) => {
+  const handleSave = async () => {
     console.log('handleSave()');
 
     try {

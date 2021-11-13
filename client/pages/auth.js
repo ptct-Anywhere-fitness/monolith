@@ -27,7 +27,7 @@ export default function AuthPage() {
   // --------------------------------------------
 
   // const [is_loading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  // const [error, setError] = useState(false);
 
   const [mode, setMode] = useState('login');
   const [username, setUsername] = useState('homer');
@@ -73,10 +73,10 @@ export default function AuthPage() {
       }
     } catch (err) {
       console.log('Error in onRegisterHandler() -- err: ', err);
-      setError(
-        err.message || // This message comes from the backend!
-          'Error in onRegisterHandler()'
-      );
+      // setError(
+      //   err.message || // This message comes from the backend!
+      //     'Error in onRegisterHandler()'
+      // );
     }
 
     loadingCtx.setIsLoading(false);
@@ -128,10 +128,10 @@ export default function AuthPage() {
     } catch (err) {
       console.log('Error in onLoginHandler() -- err: ', err);
       loadingCtx.setIsLoading(false);
-      setError(
-        err.message || // This message comes from the backend!
-          'Error in onLoginHandler()'
-      );
+      // setError(
+      //   err.message || // This message comes from the backend!
+      //     'Error in onLoginHandler()'
+      // );
     }
   };
 

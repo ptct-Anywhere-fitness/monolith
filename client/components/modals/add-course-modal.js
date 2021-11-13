@@ -4,7 +4,7 @@ import { useState, useContext } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+// import Col from 'react-bootstrap/Col';
 
 import { AuthContext } from '../../context/auth-context';
 import { LoadingContext } from '../../context/loading-context';
@@ -51,7 +51,7 @@ export default function AddCourseModal({
   const [course_city, setCourseCity] = useState('tulsa');
 
   // registered_attendees: 0,
-  const [course_registered, setCourseRegistered] = useState(0);
+  // const [course_registered, setCourseRegistered] = useState(0);
 
   // max_class_size: 10,
   const [course_max_class_size, setCourseMaxClassSize] = useState(10);

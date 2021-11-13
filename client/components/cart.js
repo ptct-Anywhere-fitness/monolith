@@ -1,10 +1,10 @@
 import { useContext } from 'react';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 
 import Button from 'react-bootstrap/Button';
 
 import { CartContext } from '../context/cart-context';
-import { AuthContext } from '../context/auth-context';
+// import { AuthContext } from '../context/auth-context';
 import { LoadingContext } from '../context/loading-context';
 
 import { placeOrder } from '../helpers/place-order.js';
@@ -15,10 +15,10 @@ export default function Cart() {
   // --------------------------------------------
 
   const cartCtx = useContext(CartContext);
-  const authCtx = useContext(AuthContext);
+  // const authCtx = useContext(AuthContext);
   const loadingCtx = useContext(LoadingContext);
 
-  const router = useRouter();
+  // const router = useRouter();
 
   // --------------------------------------------
 
