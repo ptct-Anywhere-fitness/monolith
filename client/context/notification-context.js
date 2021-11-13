@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { useState, useEffect, createContext } from 'react';
 
 // ==============================================
 
@@ -14,6 +14,22 @@ function NotificationContextProvider(props) {
   // --------------------------------------------
 
   const [active_notification, setActiveNotification] = useState();
+
+  useEffect(() => {
+    if (
+      active_notification &&
+      active_notification.status === 'success'
+      // ||active_notification.status === 'error'
+    ) {
+      const timer = setTimeout(() => {
+        hideNotificationHandler();
+      }, 3e3);
+
+      // -Clear the timer if useEffect runs
+      //  before the previous timer ends.
+      return () => clearTimeout(timer);
+    }
+  }, [active_notification]);
 
   // --------------------------------------------
 

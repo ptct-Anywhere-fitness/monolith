@@ -28,7 +28,7 @@ export default function Notification(props) {
   useEffect(() => {
     if (mounted && notificationCtx.notification !== null) {
       timeline_ref.current = gsap.timeline().to(div_ref.current, {
-        duration: 0.2,
+        duration: 1.2,
         yPercent: '-100',
         onReverseComplete: () => {
           // setCssClassList(`${css.backdrop} ${css.hide}`);
