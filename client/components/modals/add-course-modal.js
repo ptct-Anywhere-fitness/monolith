@@ -8,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 
 import { AuthContext } from '../../context/auth-context';
 import { LoadingContext } from '../../context/loading-context';
+import NotificationContext from '../../context/notification-context';
 
 import fetchData from '../../helpers/fetch-data';
 import getData from '../../helpers/get-data';
@@ -23,6 +24,7 @@ export default function AddCourseModal({
 
   const loadingCtx = useContext(LoadingContext);
   const authCtx = useContext(AuthContext);
+  const notificationCtx = useContext(NotificationContext);
 
   // --------------------------------------------
 
@@ -63,6 +65,14 @@ export default function AddCourseModal({
       const token = authCtx.token;
 
       loadingCtx.setIsLoading(true);
+
+      notificationCtx.showNotification({
+        title: 'Adding...',
+        message: `adding course`,
+        status: 'pending',
+        animation: 'show',
+      });
+
       const response = await fetchData(
         '/courses',
         'POST',
@@ -94,6 +104,14 @@ export default function AddCourseModal({
 
       // -Update the courses table:
       setCourses(await getData('/courses', token));
+
+      notificationCtx.showNotification({
+        title: 'Success!',
+        message: `added course`,
+        status: 'success',
+        animation: 'show',
+      });
+
       loadingCtx.setIsLoading(false);
       handleClose();
     } catch (err) {
@@ -102,10 +120,12 @@ export default function AddCourseModal({
         err
       );
       loadingCtx.setIsLoading(false);
-      // setError(
-      //   err.message || // This message comes from the backend!
-      //     'Error in onLoginHandler()'
-      // );
+      notificationCtx.showNotification({
+        title: 'Error adding course)',
+        message: `Message from backend:\n${err.message}`,
+        status: 'error',
+        animation: 'show',
+      });
     }
   };
 

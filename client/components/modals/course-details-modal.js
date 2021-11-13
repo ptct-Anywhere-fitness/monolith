@@ -116,7 +116,7 @@ export default function CourseDetailsModal({
       // handleClose();
       loadingCtx.setIsLoading(false);
       notificationCtx.showNotification({
-        title: 'Error in course-details-modal -> handleDelete()',
+        title: 'Error deleting course)',
         message: `Message from backend:\n${err.message}`,
         status: 'error',
         animation: 'show',
@@ -182,7 +182,7 @@ export default function CourseDetailsModal({
 
       notificationCtx.showNotification({
         title: 'Success!',
-        message: `added course`,
+        message: `updated course`,
         status: 'success',
         animation: 'show',
       });
@@ -196,7 +196,7 @@ export default function CourseDetailsModal({
       );
       loadingCtx.setIsLoading(false);
       notificationCtx.showNotification({
-        title: 'Error in course-details-modal -> handleSave()',
+        title: 'Error updating course',
         message: `Message from backend:\n${err.message}`,
         status: 'error',
         animation: 'show',
