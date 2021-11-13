@@ -220,7 +220,6 @@ export default function CourseDetailsModal({
         <Button variant='secondary' onClick={handleEdit}>
           Edit
         </Button>
-
         <Button
           variant='primary'
           onClick={() => {
