@@ -17,14 +17,12 @@ import getData from '../helpers/get-data';
 
 // ==============================================
 
-export default function Courses() {
+export default function Courses({ courses, setCourses }) {
   // --------------------------------------------
 
   const cartCtx = useContext(CartContext);
   const authCtx = useContext(AuthContext);
   const loadingCtx = useContext(LoadingContext);
-
-  const [courses, setCourses] = useState();
 
   const router = useRouter();
 
