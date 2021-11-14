@@ -10,7 +10,8 @@ import Calendar from '../components/calendar/Calendar';
 import RangeSlider from '../components/range-slider/range-slider';
 
 // import Canvas_1 from '../components/canvas/canvas-1/canvas';
-import Canvas_2 from '../components/canvas/canvas-2/canvas';
+// import Canvas_2 from '../components/canvas/canvas-2/canvas';
+import Canvas_3 from '../components/canvas/canvas-3/canvas';
 
 // import { AuthContext } from '../context/auth-context';
 // import { LoadingContext } from '../context/loading-context';
@@ -94,7 +95,8 @@ export default function CustomerDashboardPage() {
   return (
     <>
       {/* <Canvas_1 /> */}
-      <Canvas_2 />
+      {/* <Canvas_2 /> */}
+      <Canvas_3 />
     </>
   );
 }
