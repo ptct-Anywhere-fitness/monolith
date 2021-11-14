@@ -65,11 +65,6 @@ export default function Courses({ courses, setCourses }) {
           return (
             <Col key={course.id} xs={3}>
               <Card>
-                {/* <Card.Img
-                  variant='top'
-                  src='https://picsum.photos/256/256'
-                  style={{ width: '200px' }}
-                /> */}
                 <Card.Body>
                   <Card.Title>{course.title}</Card.Title>
                   <Card.Text>{`$${(course.price / 100).toFixed(2)}`}</Card.Text>

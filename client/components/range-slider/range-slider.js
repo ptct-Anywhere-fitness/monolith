@@ -1,74 +1,122 @@
-import {useState, useEffect} from 'react'
+import { useState, useEffect, useRef } from 'react';
 
-import css from './range-slider.module.scss';
+import { element_geometry, viewport_geometry } from './geometry.js';
 
 // ==============================================
 
-export default function RangeSlider() {
+export default function Canvas({setDurationMinInput, setDurationMaxInput}) {
 
   // --------------------------------------------
 
-  const [min, setMin] = useState('0');
-  const [max, setMax] = useState('10');
+  const CANVAS_WIDTH = 400;
+  const MAX_VAL = 120;
+  const MIN_VAL = 1;
 
-  const MAX = 10;
-  const MIN = 0;
+   // --------------------------------------------
 
+  const [click_num, setClickNum] = useState(1);
+
+  // --------------------------------------------
+
+  const [mounted, setMounted] = useState(false);
   useEffect(() => {
-    console.log('min: ', min, '\tmax: ', max);
-  }, [min, max]);
+    setMounted(true);
+
+    return () => setMounted(false);
+  }, []);
 
   // --------------------------------------------
-  
+
+  const canvas_ref = useRef();
+
+  // --------------------------------------------
+
+  const canvas_click_handler = (e) => {
+
+
+    // - - - - - - - - - - - - - - - - - - - - - 
+
+    function get_mouse_coordinates(event) {
+      const [x, y] = [event.clientX, event.clientY];
+      return [x, y];
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - 
+    
+    // console.log('clicked');
+    const { x0, y0, x1, y1, w, h } = element_geometry(canvas_ref.current);
+    // console.log('x0: ', x0);
+    // console.log(`(x1, y1)  :  (${x1}, ${y1})`);
+
+    // Step 0: get context
+    const ctx = canvas_ref.current.getContext('2d');
+    // console.log(ctx);
+    
+
+    // Step 1: Get mouse coordinates
+    const [x, y] = get_mouse_coordinates(e);
+    // console.log(`(x, y)  :  (${x}, ${y})`);
+
+    // Step 2: Draw circle at location clicked
+    const half_canvas_height = canvas_ref.current.height / 2;
+   
+    // - - - - - - - - - - - - - - - - - - - - - 
+   
+    function drawCircle(circle) {
+      ctx.beginPath();
+      // ctx.arc(circle.x - x1, circle.y - y1, circle.size, 0, Math.PI * 2);
+
+      ctx.arc(
+        circle.x - x1, 
+        half_canvas_height, 
+        circle.size, 
+        0, 
+        Math.PI * 2
+      );
+      // ctx.fillStyle = 'purple';
+      ctx.fill();
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - 
+
+    // Step 3: Set value of slider and draw circle
+    
+    
+    
+    if (click_num === 1) {
+      // 3.2: Clear canvas:
+      
+      ctx.clearRect(0, 0, canvas_ref.current.width, canvas_ref.current.height);
+      const scale_factor = x / CANVAS_WIDTH;
+      setDurationMinInput(Math.round(Math.min(MAX_VAL * scale_factor, MAX_VAL)));
+      setClickNum(2);
+      ctx.fillStyle = 'red';
+    } else {
+      const scale_factor = x / CANVAS_WIDTH;
+      setDurationMaxInput(Math.min(MAX_VAL * scale_factor, MAX_VAL));
+      setClickNum(1);
+      ctx.fillStyle = 'green';
+    }
+    
+    drawCircle({
+      x,
+      y,
+      size: 30,
+    });
+
+  }
+  // --------------------------------------------
+
   return (
-    <div className={css.container}>
-      <input 
-        type="range" 
-        className={`${css.slider} ${css.slider_1}`} 
-        value={min} 
-        min={MIN}
-        max={MAX}
-        onChange={(e) => {
-
-          console.clear();
-          console.log('e.target.value: ', e.target.value);
-          console.log('min: ', min);
-          console.log('max: ', max);
-
-          if (e.target.value < max && e.target.value != MAX) {
-            setMin(e.target.value);
-          } else {
-            setMin((prev) => prev);
-          }
-        }}
-        onClick={(e) => {
-          console.clear();
-          console.log('one, e.target: ', e.target, ', e.currentTarget: ', e.currentTarget);
-        }}
-      />
-
-      <br />
-
-      <input 
-        type="range" 
-        className={`${css.slider} ${css.slider_2}`}
-        value={max}
-        min={MIN}
-        max={MAX}
-        onChange={(e) => {
-          if (min < e.target.value)
-            setMax(e.target.value)
-          else {
-            setMax((prev) => prev);
-          }
-        }}
-
-      />
-
-
-
-    </div>
+    <>
+      <canvas 
+        ref={canvas_ref} 
+        id="canvas" 
+        width={`${CANVAS_WIDTH}px`} 
+        height="50px" 
+        style={{background: 'lightgray', borderRadius: '5px'}} 
+        onClick={canvas_click_handler}
+      ></canvas>
+    </>
   );
-
-  // --------------------------------------------
 }

@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -7,11 +9,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Courses from '../components/courses';
 import Cart from '../components/cart';
 import Calendar from '../components/calendar/Calendar';
-import RangeSlider from '../components/range-slider/range-slider';
 
-// import Canvas_1 from '../components/canvas/canvas-1/canvas';
-// import Canvas_2 from '../components/canvas/canvas-2/canvas';
-import CanvasSlider from '../components/canvas/canvas-3/canvas';
+import CanvasSlider from '../components/range-slider/range-slider';
 
 // import { AuthContext } from '../context/auth-context';
 // import { LoadingContext } from '../context/loading-context';
@@ -47,6 +46,11 @@ export default function CustomerDashboardPage() {
 
   const [duration_input_min, setDurationMinInput] = useState(30);
   const [duration_input_max, setDurationMaxInput] = useState(120);
+  useEffect(() => {
+    console.log('duration_input_min: ', duration_input_min, '\tduration_input_max: ', duration_input_max);
+  }, [duration_input_min, duration_input_max]);
+
+
   const [intensity_input, setIntensityInput] = useState(0);
   const [intensity_str, setIntensityStr] = useState('Intensity Level');
   useEffect(() => {
@@ -93,80 +97,69 @@ export default function CustomerDashboardPage() {
   return (
     <>
       <Form onSubmit={submitHandler}>
-        {['checkbox', 'radio'].map((type) => (
-          <div key={`inline-${type}`} className='mb-3'>
-            <Form.Check
-              inline
-              label='1'
-              name='group1'
-              type={type}
-              id={`inline-${type}-1`}
-            />
-            <Form.Check
-              inline
-              label='2'
-              name='group1'
-              type={type}
-              id={`inline-${type}-2`}
-            />
-            <Form.Check
-              inline
-              disabled
-              label='3 (disabled)'
-              type={type}
-              id={`inline-${type}-3`}
-            />
+        <Row className="justify-content-center" className="mt-5 mb-4">
+          <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <Button variant='outline-dark' type='submit'>
+              Apply Filter
+            </Button>
           </div>
-        ))}
+        </Row>
+        <Row>
 
-        <Dropdown>
-          <Dropdown.Toggle
-            id='dropdown-button-dark-example1'
-            variant='secondary'
-          >
-            {intensity_str}
-          </Dropdown.Toggle>
+          <Col>
+            {/* Intensity Level */}
+            <Dropdown>
+              <Dropdown.Toggle
+                id='dropdown-button-dark-example1'
+                variant='secondary'
+              >
+                {intensity_str}
+              </Dropdown.Toggle>
 
-          <Dropdown.Menu variant='dark'>
-            <Dropdown.Item active={intensity_input == 1} onClick={(e) => { e.preventDefault(); setIntensityInput(1); }}>Level 1: Easy</Dropdown.Item>
-            <Dropdown.Item active={intensity_input == 2} onClick={(e) => { e.preventDefault(); setIntensityInput(2); }}>Level 2: Moderate</Dropdown.Item>
-            <Dropdown.Item active={intensity_input == 3} onClick={(e) => { e.preventDefault(); setIntensityInput(3); }}>Level 3: Extreme</Dropdown.Item>
-            <Dropdown.Item active={intensity_input == 0} onClick={(e) => { e.preventDefault(); setIntensityInput(0); }}>All Intensity Levels</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+              <Dropdown.Menu variant='dark'>
+                <Dropdown.Item active={intensity_input == 1} onClick={(e) => { e.preventDefault(); setIntensityInput(1); }}>Level 1: Easy</Dropdown.Item>
+                <Dropdown.Item active={intensity_input == 2} onClick={(e) => { e.preventDefault(); setIntensityInput(2); }}>Level 2: Moderate</Dropdown.Item>
+                <Dropdown.Item active={intensity_input == 3} onClick={(e) => { e.preventDefault(); setIntensityInput(3); }}>Level 3: Extreme</Dropdown.Item>
+                <Dropdown.Item active={intensity_input == 0} onClick={(e) => { e.preventDefault(); setIntensityInput(0); }}>All Intensity Levels</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Col>
 
-        <hr />
+          <Col>
+            {/* Date */}
+            <Dropdown>
+              <Dropdown.Toggle
+                id='dropdown-button-dark-example1'
+                variant='secondary'
+              >
+                Date
+              </Dropdown.Toggle>
 
-        <Dropdown>
-          <Dropdown.Toggle
-            id='dropdown-button-dark-example1'
-            variant='secondary'
-          >
-            Date
-          </Dropdown.Toggle>
+              <Dropdown.Menu variant='dark'>
+                <Calendar setDate={setDate} setDays={setDays} />
+              </Dropdown.Menu>
+            </Dropdown>
+          </Col>
+          
+          <Col>
+            {/* duration */}
+            <Form.Label>
+              Duration [minutes]
+              <br />
+              <CanvasSlider setDurationMinInput={setDurationMinInput}  setDurationMaxInput={setDurationMaxInput}/>
+              <br />
+              <span style={{marginRight: '260px'}}>Min: {duration_input_min}</span>
+              <span>Max: {duration_input_max}</span>
+            </Form.Label>
+          </Col>
+       
 
-          <Dropdown.Menu variant='dark'>
-            <Calendar setDate={setDate} setDays={setDays} />
-          </Dropdown.Menu>
-        </Dropdown>
+        </Row>
 
-        <hr />
-
-        {/* range */}
-        <Form.Label>
-          Duration [minutes]
-          <br />
-          <CanvasSlider setDurationMinInput={setDurationMinInput}  setDurationMaxInput={setDurationMaxInput}/>
-          <br />
-          <span style={{marginRight: '285px'}}>Min: {duration_input_min}</span>
-          <span>Max: {duration_input_max}</span>
-          <hr />
-        </Form.Label>
-
-        <Button variant='outline-dark' type='submit'>
-          Submit
-        </Button>
+        
       </Form>
+
+      <hr />
 
       <Courses courses={ui_courses} setCourses={setCourses} />
       <Cart />
