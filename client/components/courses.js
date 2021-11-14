@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
 
 import Row from 'react-bootstrap/Row';
@@ -68,13 +68,17 @@ export default function Courses({ courses, setCourses }) {
                 <Card.Body>
                   <Card.Title>{course.title}</Card.Title>
                   <Card.Text>{`$${(course.price / 100).toFixed(2)}`}</Card.Text>
-                  
+
                   <Card.Text>Duration: {course.duration}-min.</Card.Text>
                   <Card.Text>Intensity: {course.intensity}</Card.Text>
                   <Card.Text>Date: {formatDate(course.date)}</Card.Text>
-                  <Card.Text>Start Time: {formatTime_12hr(course.time)}</Card.Text>
+                  <Card.Text>
+                    Start Time: {formatTime_12hr(course.time)}
+                  </Card.Text>
                   <Card.Text>Location: {course.city}</Card.Text>
-                  <Card.Text>Registered Attendees: {course.registered_attendees}</Card.Text>
+                  <Card.Text>
+                    Registered Attendees: {course.registered_attendees}
+                  </Card.Text>
                   <Card.Text>Max Class Size: {course.max_class_size}</Card.Text>
                   <Button
                     variant='primary'

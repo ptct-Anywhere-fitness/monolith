@@ -4,10 +4,10 @@ const viewport_geometry = () => {
   const viewport_center_x = viewport_width / 2;
   const viewport_center_y = viewport_height / 2;
 
-  const document_height1 = document.documentElement.offsetHeight;
-  const document_height2 =
-    document.documentElement.getBoundingClientRect().height;
-  const scroll_offset = window.scrollY;
+  // const document_height1 = document.documentElement.offsetHeight;
+  // const document_height2 =
+  // document.documentElement.getBoundingClientRect().height;
+  // const scroll_offset = window.scrollY;
 
   // console.log(`scroll_offset: ${scroll_offset}`);
   // console.log(`document_height1 = ${document_height1},   document_height2 = ${document_height2}`);

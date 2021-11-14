@@ -1,5 +1,5 @@
 {
-  "name": "portfolio-3",
+  "name": "anywhere-fitness--app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,10 +9,10 @@
     "migrate": "knex migrate:latest",
     "rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
-    "migrateh": "heroku run knex migrate:latest -a portfolio-3-app",
-    "rollbackh": "heroku run knex migrate:rollback -a portfolio-3-app",
-    "seedh": "heroku run knex seed:run -a portfolio-3-app",
-    "databaseh": "heroku pg:psql -a portfolio-3-app",
+    "migrateh": "heroku run knex migrate:latest -a anywhere-fitness--app",
+    "rollbackh": "heroku run knex migrate:rollback -a anywhere-fitness--app",
+    "seedh": "heroku run knex seed:run -a anywhere-fitness--app",
+    "databaseh": "heroku pg:psql -a anywhere-fitness--app",
     "deploy": "git push heroku main",
     "heroku-postbuild": "cd client && npm i && npm run build && npm run export",
     "test": "cross-env NODE_ENV=testing jest --watchAll --verbose --runInBand"

@@ -25,13 +25,12 @@ Step 1.) Clone this repo and hook up to a new github repo.
 
 Step 2.) Create heroku app
   --Give it unique name
-    --This example uses:    portfolio-3-app
   --In heroku deploy settings:
     --Deployment method: github
     --App connected to Github: Seach for the github repo and connect
   --in terminal of project:
     heroku login
-    heroku git:remote -a portfolio-3-app
+    heroku git:remote -a anywhere-fitness--app
                          <heroku-app-name>
 
   --to deploy:
@@ -72,10 +71,10 @@ Step 3.) Set up Postgres DB on heroku
     ---Resources -> Heroke Postgress (click a-tag)
   --Set scripts for production deployment DB:
     --Change the 4 heroku (h) scripts in package.json to have the App (!!!NOT DB!!!) name:
-        "migrateh": "heroku run knex migrate:latest -a portfolio-3-app",
-        "rollbackh": "heroku run knex migrate:rollback -a portfolio-3-app",
-        "seedh": "heroku run knex seed:run -a portfolio-3-app",
-        "databaseh": "heroku pg:psql -a portfolio-3-app",
+        "migrateh": "heroku run knex migrate:latest -a anywhere-fitness--app",
+        "rollbackh": "heroku run knex migrate:rollback -a anywhere-fitness--app",
+        "seedh": "heroku run knex seed:run -a anywhere-fitness--app",
+        "databaseh": "heroku pg:psql -a anywhere-fitness--app",
 
 Step 4.) Test deploy
 
