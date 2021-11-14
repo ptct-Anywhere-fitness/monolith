@@ -21,7 +21,7 @@ export default function RangeSlider() {
   // --------------------------------------------
   
   return (
-    <>
+    <div className={css.container}>
       <input 
         type="range" 
         className={`${css.slider} ${css.slider_1}`} 
@@ -35,12 +35,17 @@ export default function RangeSlider() {
           console.log('min: ', min);
           console.log('max: ', max);
 
-        if (e.target.value < max && e.target.value != MAX) {
-          setMin(e.target.value);
-        } else {
-          setMin((prev) => prev);
-        }
-      }}/>
+          if (e.target.value < max && e.target.value != MAX) {
+            setMin(e.target.value);
+          } else {
+            setMin((prev) => prev);
+          }
+        }}
+        onClick={(e) => {
+          console.clear();
+          console.log('one, e.target: ', e.target, ', e.currentTarget: ', e.currentTarget);
+        }}
+      />
 
       <br />
 
@@ -56,8 +61,13 @@ export default function RangeSlider() {
           else {
             setMax((prev) => prev);
           }
-      }}/>
-    </>
+        }}
+
+      />
+
+
+
+    </div>
   );
 
   // --------------------------------------------

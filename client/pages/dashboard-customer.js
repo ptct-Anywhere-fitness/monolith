@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -11,6 +11,9 @@ import RangeSlider from '../components/range-slider/range-slider';
 
 // import { AuthContext } from '../context/auth-context';
 // import { LoadingContext } from '../context/loading-context';
+
+import { element_geometry, viewport_geometry } from '../helpers/geometry.js';
+
 
 // ==============================================
 
@@ -64,6 +67,7 @@ export default function CustomerDashboardPage() {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    
 
     // -Filter duration
     const filtered_courses = courses.filter((course) => {
@@ -86,115 +90,150 @@ export default function CustomerDashboardPage() {
 
   // --------------------------------------------
 
+  const canvas_ref = useRef();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
+
+  useEffect(() => {
+    if(mounted) {
+
+      
+      const ctx = canvas_ref.current.getContext('2d');
+      console.log(ctx);
+      ctx.clearRect(0, 0, canvas_ref.current.width, canvas_ref.current.height);
+
+      const canvas_basics = () => {
+        // fillRect();
+        ctx.fillStyle='red';
+        ctx.fillRect(20, 20, 150, 100);
+
+        // strokeRect()
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = 'green';
+        ctx.strokeRect(100, 200, 150, 100);
+
+        // clearRect()
+        ctx.clearRect(25, 25, 140, 90);
+
+        // fillext()
+        ctx.font = '30px Arial';
+        ctx.fillStyle = 'purple';
+        ctx.fillText('hello world', 400, 80);
+      };
+      // canvas_basics();
+
+      const animation = () => {
+        const circle = {
+          x: 200,
+          y: 200,
+          size: 30,
+          dx: 5,
+          dy: 4
+        };
+
+        function drawCircle() {
+          ctx.beginPath();
+          ctx.arc(circle.x, circle.y, circle.size, 0, Math.PI * 2);
+          ctx.fillStyle = 'purple';
+          ctx.fill();
+        }
+
+        (function update() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          drawCircle();
+
+          // change position
+          circle.x += circle.dx;
+          circle.y += circle.dy;
+
+          // Detect side walls
+          if (circle.x + circle.size > canvas.width || circle.x - circle.size < 0) {
+            circle.dx *= -1;
+          }
+
+          // Detect top and bottom walls
+          if (circle.y + circle.size > canvas.height || circle.y - circle.size < 0) {
+            circle.dy *= -1;
+          }
+
+          requestAnimationFrame(update);
+        })();
+      };
+      // animation();
+
+      const draw_slider = () => {
+
+
+        function drawCircle(circle) {
+          ctx.beginPath();
+          ctx.arc(circle.x, circle.y, circle.size, 0, Math.PI * 2);
+          ctx.fillStyle = 'purple';
+          ctx.fill();
+        }
+
+        drawCircle({
+          x: 200,
+          y: 200,
+          size: 30,
+          dx: 5,
+          dy: 40
+        });
+      };
+      // draw_slider();
+
+    }
+  }, [mounted]);
+
+  // --------------------------------------------
+
   return (
     <>
-      <Form onSubmit={submitHandler}>
-        {['checkbox', 'radio'].map((type) => (
-          <div key={`inline-${type}`} className='mb-3'>
-            <Form.Check
-              inline
-              label='1'
-              name='group1'
-              type={type}
-              id={`inline-${type}-1`}
-            />
-            <Form.Check
-              inline
-              label='2'
-              name='group1'
-              type={type}
-              id={`inline-${type}-2`}
-            />
-            <Form.Check
-              inline
-              disabled
-              label='3 (disabled)'
-              type={type}
-              id={`inline-${type}-3`}
-            />
-          </div>
-        ))}
+      <canvas ref={canvas_ref} id="canvas" width="600px" height="600px" 
+        style={{background: 'lightgray', borderRadius: '5px', 
+          // position: 'absolute', top: 0, left: 0
+        }} onClick={(e) => {
+        function get_mouse_coordinates(event) {
+          const [x, y] = [event.clientX, event.clientY];
+          return [x, y];
+        }
+        
+        console.log('clicked');
+        const { x0, y0, x1, y1, w, h }= element_geometry(canvas_ref.current);
+        console.log('x0: ', x0);
+        console.log(`(x1, y1)  :  (${x1}, ${y1})`);
 
+        // Step 0: Clear canvas
+        const ctx = canvas_ref.current.getContext('2d');
+        console.log(ctx);
+        ctx.clearRect(0, 0, canvas_ref.current.width, canvas_ref.current.height);
 
-        <hr />
+        // Step 1: Get mouse coordinates
+        const [x, y] = get_mouse_coordinates(e);
+        console.log(`(x, y)  :  (${x}, ${y})`);
 
-        <RangeSlider />
+        // Step 2: Draw circle at location clicked
+        function drawCircle(circle) {
+          ctx.beginPath();
+          ctx.arc(circle.x - x1, circle.y - y1, circle.size, 0, Math.PI * 2);
+          // ctx.arc(circle.x - 25, circle.y-100, circle.size, 0, Math.PI * 2);
+          ctx.fillStyle = 'purple';
+          ctx.fill();
+        }
 
-        <hr />
+        drawCircle({
+          x,
+          y,
+          size: 30,
+          // dx: 5,
+          // dy: 40
+        });
 
-        <Dropdown>
-          <Dropdown.Toggle
-            id='dropdown-button-dark-example1'
-            variant='secondary'
-          >
-            {intensity_str}
-          </Dropdown.Toggle>
-
-          <Dropdown.Menu variant='dark'>
-            <Dropdown.Item active={intensity_input == 1} onClick={(e) => { e.preventDefault(); setIntensityInput(1); }}>Level 1: Easy</Dropdown.Item>
-            <Dropdown.Item active={intensity_input == 2} onClick={(e) => { e.preventDefault(); setIntensityInput(2); }}>Level 2: Moderate</Dropdown.Item>
-            <Dropdown.Item active={intensity_input == 3} onClick={(e) => { e.preventDefault(); setIntensityInput(3); }}>Level 3: Extreme</Dropdown.Item>
-            <Dropdown.Item active={intensity_input == 0} onClick={(e) => { e.preventDefault(); setIntensityInput(0); }}>All Intensity Levels</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-
-        <hr />
-
-        <Dropdown>
-          <Dropdown.Toggle
-            id='dropdown-button-dark-example1'
-            variant='secondary'
-          >
-            Date
-          </Dropdown.Toggle>
-
-          <Dropdown.Menu variant='dark'>
-            <Calendar setDate={setDate} setDays={setDays} />
-          </Dropdown.Menu>
-        </Dropdown>
-
-        <hr />
-
-        {/* range */}
-        <Form.Label>
-          Duration (min)
-          <Form.Range
-            min='30'
-            max='120'
-            step='30'
-            value={duration_input_min}
-            onChange={(e) => {
-              setDurationMinInput(e.target.value);
-              console.log('min value: ', e.target.value);
-            }}
-          />
-          {duration_input_min}
-        </Form.Label>
-
-        <Form.Label>
-          Duration (max)
-          <Form.Range
-            min='30'
-            max='120'
-            step='30'
-            value={duration_input_max}
-            onChange={(e) => {
-              console.log('max value: ', e.target.value);
-              // if (duration_input_min <= e.target.value) {
-              setDurationMaxInput(e.target.value);
-              // }
-            }}
-          />
-          {duration_input_max}
-        </Form.Label>
-
-        <Button variant='outline-dark' type='submit'>
-          Submit
-        </Button>
-      </Form>
-
-      <Courses courses={ui_courses} setCourses={setCourses} />
-      <Cart />
+  
+      }}></canvas>
     </>
   );
 }
