@@ -38,7 +38,7 @@ export default function Courses({ courses, setCourses }) {
           setCourses(returned_courses);
         } catch (err) {
           console.log(
-            'Error in dashboard-admin --> useEffect() --> getData(/courses),  err: ',
+            'Error in courses.js --> useEffect() --> getData(/courses),  err: ',
             err
           );
           loadingCtx.setIsLoading(false);

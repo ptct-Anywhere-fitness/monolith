@@ -36,16 +36,20 @@ export default function CustomerDashboardPage() {
 
   // --------------------------------------------
 
-  const [duration_input, setDurationInput] = useState(30);
+  const [duration_input_min, setDurationMinInput] = useState(30);
+  const [duration_input_max, setDurationMaxInput] = useState(120);
 
   // --------------------------------------------
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log('submitting form, duration_input: ', duration_input);
 
+    // -Filter duration
     const filtered_courses = courses.filter((course) => {
-      return course.duration >= duration_input;
+      return (
+        duration_input_min <= course.duration &&
+        course.duration <= duration_input_max
+      );
     });
     console.log('filtered_courses: ', filtered_courses);
     setCourses(filtered_courses);
@@ -123,18 +127,35 @@ export default function CustomerDashboardPage() {
 
         {/* range */}
         <Form.Label>
-          Duration
+          Duration (min)
           <Form.Range
             min='30'
             max='120'
             step='30'
-            value={duration_input}
+            value={duration_input_min}
             onChange={(e) => {
-              console.log('changed, value: ', e.target.value);
-              setDurationInput(e.target.value);
+              setDurationMinInput(e.target.value);
+              console.log('min value: ', e.target.value);
             }}
           />
-          {duration_input}
+          {duration_input_min}
+        </Form.Label>
+
+        <Form.Label>
+          Duration (max)
+          <Form.Range
+            min='30'
+            max='120'
+            step='30'
+            value={duration_input_max}
+            onChange={(e) => {
+              console.log('max value: ', e.target.value);
+              // if (duration_input_min <= e.target.value) {
+              setDurationMaxInput(e.target.value);
+              // }
+            }}
+          />
+          {duration_input_max}
         </Form.Label>
 
         <Button variant='outline-dark' type='submit'>
