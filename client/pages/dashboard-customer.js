@@ -7,6 +7,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Courses from '../components/courses';
 import Cart from '../components/cart';
 import Calendar from '../components/calendar/Calendar';
+import RangeSlider from '../components/range-slider/range-slider';
 
 // import { AuthContext } from '../context/auth-context';
 // import { LoadingContext } from '../context/loading-context';
@@ -114,6 +115,10 @@ export default function CustomerDashboardPage() {
           </div>
         ))}
 
+
+        <hr />
+
+        <RangeSlider />
 
         <hr />
 
