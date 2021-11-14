@@ -33,11 +33,31 @@ export default function CustomerDashboardPage() {
   // --------------------------------------------
 
   const [courses, setCourses] = useState();
+  const [ui_courses, setUICourses] = useState();
+  useEffect(() => {
+    setUICourses(courses);
+  }, [courses]);
 
   // --------------------------------------------
 
   const [duration_input_min, setDurationMinInput] = useState(30);
   const [duration_input_max, setDurationMaxInput] = useState(120);
+  const [intensity_input, setIntensityInput] = useState(0);
+  const [intensity_str, setIntensityStr] = useState('Intensity Level');
+  useEffect(() => {
+    console.log('intensity level: ', intensity_input);
+    if (intensity_input === 0) {
+      setIntensityStr('Intensity Level');
+    }
+    else if (intensity_input == 1) {
+      setIntensityStr('Level 1: Easy');
+    } else if (intensity_input == 2) {
+      setIntensityStr('Level 2: Moderate');
+    } else if (intensity_input == 3) {
+      setIntensityStr('Level 3: Extreme');
+    }
+  }, [intensity_input]);
+
 
   // --------------------------------------------
 
@@ -51,8 +71,16 @@ export default function CustomerDashboardPage() {
         course.duration <= duration_input_max
       );
     });
+
+    // -Filter intensity
+    if (intensity_input != 0) {
+      filtered_courses = filtered_courses.filter((course) => {
+        return course.intensity == intensity_input;
+      });
+    }
+
     console.log('filtered_courses: ', filtered_courses);
-    setCourses(filtered_courses);
+    setUICourses(filtered_courses);
   };
 
   // --------------------------------------------
@@ -86,31 +114,26 @@ export default function CustomerDashboardPage() {
           </div>
         ))}
 
-        <Form.Select aria-label='Default select example'>
-          <option>Open this select menu</option>
-          <option value='1'>One</option>
-          <option value='2'>Two</option>
-          <option value='3'>Three</option>
-        </Form.Select>
+
+        <hr />
 
         <Dropdown>
           <Dropdown.Toggle
             id='dropdown-button-dark-example1'
             variant='secondary'
           >
-            Dropdown Button
+            {intensity_str}
           </Dropdown.Toggle>
 
           <Dropdown.Menu variant='dark'>
-            <Dropdown.Item href='#/action-1' active>
-              Action
-            </Dropdown.Item>
-            <Dropdown.Item href='#/action-2'>Another action</Dropdown.Item>
-            <Dropdown.Item href='#/action-3'>Something else</Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item href='#/action-4'>Separated link</Dropdown.Item>
+            <Dropdown.Item active={intensity_input == 1} onClick={(e) => { e.preventDefault(); setIntensityInput(1); }}>Level 1: Easy</Dropdown.Item>
+            <Dropdown.Item active={intensity_input == 2} onClick={(e) => { e.preventDefault(); setIntensityInput(2); }}>Level 2: Moderate</Dropdown.Item>
+            <Dropdown.Item active={intensity_input == 3} onClick={(e) => { e.preventDefault(); setIntensityInput(3); }}>Level 3: Extreme</Dropdown.Item>
+            <Dropdown.Item active={intensity_input == 0} onClick={(e) => { e.preventDefault(); setIntensityInput(0); }}>All Intensity Levels</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
+
+        <hr />
 
         <Dropdown>
           <Dropdown.Toggle
@@ -124,6 +147,8 @@ export default function CustomerDashboardPage() {
             <Calendar setDate={setDate} setDays={setDays} />
           </Dropdown.Menu>
         </Dropdown>
+
+        <hr />
 
         {/* range */}
         <Form.Label>
@@ -163,7 +188,7 @@ export default function CustomerDashboardPage() {
         </Button>
       </Form>
 
-      <Courses courses={courses} setCourses={setCourses} />
+      <Courses courses={ui_courses} setCourses={setCourses} />
       <Cart />
     </>
   );
