@@ -4,12 +4,12 @@ import { element_geometry, viewport_geometry } from './geometry.js';
 
 // ==============================================
 
-export default function Canvas() {
+export default function Canvas({setDurationMinInput, setDurationMaxInput}) {
 
   // --------------------------------------------
 
   const CANVAS_WIDTH = 400;
-  const MAX_VAL = 10;
+  const MAX_VAL = 120;
   const MIN_VAL = 1;
 
    // --------------------------------------------
@@ -20,6 +20,8 @@ export default function Canvas() {
 
   useEffect(() => {
     console.log('click_1_mag: ', click_1_mag, '\tclick_2_mag: ', click_2_mag);
+    setDurationMinInput(click_1_mag)
+    setDurationMaxInput(click_2_mag);
   }, [click_1_mag, click_2_mag]);
 
   // --------------------------------------------
@@ -36,7 +38,7 @@ export default function Canvas() {
 
       
       const ctx = canvas_ref.current.getContext('2d');
-      console.log(ctx);
+      // console.log(ctx);
       ctx.clearRect(0, 0, canvas_ref.current.width, canvas_ref.current.height);
 
       const canvas_basics = () => {
@@ -137,17 +139,17 @@ export default function Canvas() {
         
         console.log('clicked');
         const { x0, y0, x1, y1, w, h } = element_geometry(canvas_ref.current);
-        console.log('x0: ', x0);
-        console.log(`(x1, y1)  :  (${x1}, ${y1})`);
+        // console.log('x0: ', x0);
+        // console.log(`(x1, y1)  :  (${x1}, ${y1})`);
 
         // Step 0: get context
         const ctx = canvas_ref.current.getContext('2d');
-        console.log(ctx);
+        // console.log(ctx);
         
 
         // Step 1: Get mouse coordinates
         const [x, y] = get_mouse_coordinates(e);
-        console.log(`(x, y)  :  (${x}, ${y})`);
+        // console.log(`(x, y)  :  (${x}, ${y})`);
 
         // Step 2: Draw circle at location clicked
         function drawCircle(circle) {

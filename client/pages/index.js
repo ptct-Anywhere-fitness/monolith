@@ -21,15 +21,15 @@ export default function HomePage() {
 
   // --------------------------------------------
 
-  // if (authCtx.isLoggedIn) {
-  //   if (authCtx.user.role === 'admin') {
-  //     router.push('/dashboard-admin');
-  //   } else {
-  //     router.push('/dashboard-customer');
-  //   }
-  // } else if (mounted) {
-  //   router.push('/auth');
-  // }
+  if (authCtx.isLoggedIn) {
+    if (authCtx.user.role === 'admin') {
+      router.push('/dashboard-admin');
+    } else {
+      router.push('/dashboard-customer');
+    }
+  } else if (mounted) {
+    router.push('/auth');
+  }
 
   // --------------------------------------------
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -11,7 +11,7 @@ import RangeSlider from '../components/range-slider/range-slider';
 
 // import Canvas_1 from '../components/canvas/canvas-1/canvas';
 // import Canvas_2 from '../components/canvas/canvas-2/canvas';
-import Canvas_3 from '../components/canvas/canvas-3/canvas';
+import CanvasSlider from '../components/canvas/canvas-3/canvas';
 
 // import { AuthContext } from '../context/auth-context';
 // import { LoadingContext } from '../context/loading-context';
@@ -68,7 +68,6 @@ export default function CustomerDashboardPage() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    
 
     // -Filter duration
     const filtered_courses = courses.filter((course) => {
@@ -91,12 +90,86 @@ export default function CustomerDashboardPage() {
 
   // --------------------------------------------
 
-
   return (
     <>
-      {/* <Canvas_1 /> */}
-      {/* <Canvas_2 /> */}
-      <Canvas_3 />
+      <Form onSubmit={submitHandler}>
+        {['checkbox', 'radio'].map((type) => (
+          <div key={`inline-${type}`} className='mb-3'>
+            <Form.Check
+              inline
+              label='1'
+              name='group1'
+              type={type}
+              id={`inline-${type}-1`}
+            />
+            <Form.Check
+              inline
+              label='2'
+              name='group1'
+              type={type}
+              id={`inline-${type}-2`}
+            />
+            <Form.Check
+              inline
+              disabled
+              label='3 (disabled)'
+              type={type}
+              id={`inline-${type}-3`}
+            />
+          </div>
+        ))}
+
+        <Dropdown>
+          <Dropdown.Toggle
+            id='dropdown-button-dark-example1'
+            variant='secondary'
+          >
+            {intensity_str}
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu variant='dark'>
+            <Dropdown.Item active={intensity_input == 1} onClick={(e) => { e.preventDefault(); setIntensityInput(1); }}>Level 1: Easy</Dropdown.Item>
+            <Dropdown.Item active={intensity_input == 2} onClick={(e) => { e.preventDefault(); setIntensityInput(2); }}>Level 2: Moderate</Dropdown.Item>
+            <Dropdown.Item active={intensity_input == 3} onClick={(e) => { e.preventDefault(); setIntensityInput(3); }}>Level 3: Extreme</Dropdown.Item>
+            <Dropdown.Item active={intensity_input == 0} onClick={(e) => { e.preventDefault(); setIntensityInput(0); }}>All Intensity Levels</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+
+        <hr />
+
+        <Dropdown>
+          <Dropdown.Toggle
+            id='dropdown-button-dark-example1'
+            variant='secondary'
+          >
+            Date
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu variant='dark'>
+            <Calendar setDate={setDate} setDays={setDays} />
+          </Dropdown.Menu>
+        </Dropdown>
+
+        <hr />
+
+        {/* range */}
+        <Form.Label>
+          Duration [minutes]
+          <br />
+          <CanvasSlider setDurationMinInput={setDurationMinInput}  setDurationMaxInput={setDurationMaxInput}/>
+          <br />
+          <span style={{marginRight: '285px'}}>Min: {duration_input_min}</span>
+          <span>Max: {duration_input_max}</span>
+          <hr />
+        </Form.Label>
+
+        <Button variant='outline-dark' type='submit'>
+          Submit
+        </Button>
+      </Form>
+
+      <Courses courses={ui_courses} setCourses={setCourses} />
+      <Cart />
     </>
   );
 }
