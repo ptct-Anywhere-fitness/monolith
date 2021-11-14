@@ -58,7 +58,7 @@ export default function AdminDashboarPage() {
       (async () => {
         try {
           const p = await getData('/courses', token);
-          console.log('courses: ', p);
+          // console.log('courses: ', p);
           setCourses(p);
         } catch (err) {
           console.log(
@@ -76,7 +76,7 @@ export default function AdminDashboarPage() {
       (async () => {
         try {
           const u = await getData('/users', token);
-          console.log('users: ', u);
+          // console.log('users: ', u);
           setUsers(u);
         } catch (err) {
           console.log(

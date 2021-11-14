@@ -36,7 +36,7 @@ export default function Courses() {
       (async () => {
         try {
           const returned_courses = await getData('/courses', token);
-          console.log('returned_courses: ', returned_courses);
+          // console.log('returned_courses: ', returned_courses);
           setCourses(returned_courses);
         } catch (err) {
           console.log(

@@ -35,21 +35,19 @@ const Backdrop = ({ show, children }) => {
   // --------------------------------------------
 
   useEffect(() => {
-    console.log('show: ', show);
-
     if (show) {
       setCssClassList(css.backdrop);
 
       tl.current = gsap.timeline().to(backdrop_ref.current, {
-        duration,
-        background: 'rgba(0, 0, 0, 0.75)',
+        duration: 5,
+        background: 'rgba(0, 0, 0, 0.95)',
         onReverseComplete: () => {
           setCssClassList(`${css.backdrop} ${css.hide}`);
         },
       });
     } else if (!show && mounted) {
-      if (tl) {
-        tl.current.reverse();
+      if (tl.current /* want to check if tl.current is undefined */) {
+        tl.current?.reverse();
       }
     }
   }, [show]);

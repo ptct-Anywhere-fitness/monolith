@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 
-import ModalBackdrop from '../components/modals/test-modal';
-
 import Courses from '../components/courses';
 import Cart from '../components/cart';
 

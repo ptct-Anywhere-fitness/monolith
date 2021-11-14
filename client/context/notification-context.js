@@ -48,7 +48,7 @@ function NotificationContextProvider(props) {
   const hideNotificationHandler = () => {
     setActiveNotification({
       title: 'Success!',
-      message: `deleted course`,
+      message: '',
       status: 'success',
       animation: 'hide',
     });

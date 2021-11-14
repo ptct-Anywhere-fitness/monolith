@@ -15,10 +15,10 @@ export default function Notification(props) {
   // --------------------------------------------
 
   const [mounted, setMounted] = useState(false);
-  // useEffect(() => {
-  //   setMounted(true);
-  //   return () => setMounted(false);
-  // }, []);
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
 
   // --------------------------------------------
 
@@ -42,13 +42,11 @@ export default function Notification(props) {
         },
       });
     } else if (mounted && notificationCtx.notification?.animation === 'hide') {
-      if (timeline_ref) {
+      if (timeline_ref.current) {
         timeline_ref.current?.reverse();
       }
     }
-    setMounted(true);
-    return () => setMounted(false);
-  }, [notificationCtx.notification?.animation]);
+  }, [mounted, notificationCtx.notification?.animation]);
 
   // --------------------------------------------
 

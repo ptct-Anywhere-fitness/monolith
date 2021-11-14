@@ -25,9 +25,9 @@ export const useAuth = () => {
   // -These f()'s are stored in context.
   const login = useCallback((token, expirationDate) => {
     const decoded = decodeJWT(token);
-    console.log('decoded: ', decoded);
+    // console.log('decoded: ', decoded);
     delta = decoded.exp - decoded.iat;
-    console.log('delta: ', delta);
+    // console.log('delta: ', delta);
     // -NOTE: Can extract expiration date from
     //        decoded token!!!
 
@@ -126,10 +126,10 @@ export const useAuth = () => {
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('userData'));
 
-    if (storedData) {
-      console.log('current time:    ', new Date());
-      console.log('expiration time: ', new Date(storedData.expiration));
-    }
+    // if (storedData) {
+    // console.log('current time:    ', new Date());
+    // console.log('expiration time: ', new Date(storedData.expiration));
+    // }
 
     if (
       storedData &&
