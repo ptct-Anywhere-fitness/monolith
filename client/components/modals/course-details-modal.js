@@ -75,12 +75,7 @@ export default function CourseDetailsModal({
     try {
       loadingCtx.setIsLoading(true);
 
-      notificationCtx.showNotification({
-        title: 'Deleting...',
-        message: `deleting course`,
-        status: 'pending',
-        animation: 'show',
-      });
+      notificationCtx.begin({ message: 'deleting course' });
 
       const token = authCtx.token;
 
@@ -99,12 +94,7 @@ export default function CourseDetailsModal({
       // -Update the courses table:
       setCourses(await getData('/courses', token));
 
-      notificationCtx.showNotification({
-        title: 'Success!',
-        message: `deleted course`,
-        status: 'success',
-        animation: 'show',
-      });
+      notificationCtx.endSuccess({ message: 'deleted course' });
 
       loadingCtx.setIsLoading(false);
       handleTotalClose();

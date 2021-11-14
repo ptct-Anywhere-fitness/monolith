@@ -26,12 +26,12 @@ export default function Notification(props) {
   const timeline_ref = useRef();
 
   useEffect(() => {
-    console.log(
-      'useEffect() \t notification.animation: ',
-      notificationCtx.notification?.animation,
-      ' \t mounted: ',
-      mounted
-    );
+    // console.log(
+    //   'useEffect() \t notification.animation: ',
+    //   notificationCtx.notification?.animation,
+    //   ' \t mounted: ',
+    //   mounted
+    // );
 
     if (mounted && notificationCtx.notification?.animation === 'show') {
       timeline_ref.current = gsap.timeline().to(div_ref.current, {

@@ -3,7 +3,7 @@ import { useState, useEffect, createContext } from 'react';
 // ==============================================
 
 const NotificationContext = createContext({
-  notification: null, // { title, message, status },
+  notification: null, // { title, message, status, animation },
   animation: 'hide',
   showNotification: function (notification_data) {},
   hideNotification: function () {},
@@ -46,13 +46,32 @@ function NotificationContextProvider(props) {
   // --------------------------------------------
 
   const hideNotificationHandler = () => {
-    setActiveNotification({
-      title: 'Success!',
-      message: '',
-      status: 'success',
-      animation: 'hide',
+    if (active_notification.status !== 'pending') {
+      setActiveNotification({ ...active_notification, animation: 'hide' });
+    }
+  };
+
+  // --------------------------------------------
+
+  const beginNotification = ({ message }) => {
+    showNotificationHandler({
+      title: 'Loading...',
+      message,
+      status: 'pending',
+      animation: 'show',
     });
   };
+
+  const endNotificationSuccess = ({ message }) => {
+    showNotificationHandler({
+      title: 'Done!',
+      message,
+      status: 'success',
+      animation: 'show',
+    });
+  };
+
+  const endNotificationError = () => {};
 
   // --------------------------------------------
 
@@ -60,6 +79,9 @@ function NotificationContextProvider(props) {
     notification: active_notification,
     showNotification: showNotificationHandler,
     hideNotification: hideNotificationHandler,
+    begin: beginNotification,
+    endSuccess: endNotificationSuccess,
+    endError: endNotificationError,
   };
 
   // --------------------------------------------
