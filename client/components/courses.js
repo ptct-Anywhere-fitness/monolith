@@ -14,6 +14,7 @@ import { CartContext } from '../context/cart-context';
 // import styles from '../styles/products.module.css'
 
 import getData from '../helpers/get-data';
+import { formatDate, formatTime_12hr } from '../helpers/format-date';
 
 // ==============================================
 
@@ -64,14 +65,22 @@ export default function Courses({ courses, setCourses }) {
           return (
             <Col key={course.id} xs={3}>
               <Card>
-                <Card.Img
+                {/* <Card.Img
                   variant='top'
                   src='https://picsum.photos/256/256'
                   style={{ width: '200px' }}
-                />
+                /> */}
                 <Card.Body>
                   <Card.Title>{course.title}</Card.Title>
                   <Card.Text>{`$${(course.price / 100).toFixed(2)}`}</Card.Text>
+                  
+                  <Card.Text>Duration: {course.duration}-min.</Card.Text>
+                  <Card.Text>Intensity: {course.intensity}</Card.Text>
+                  <Card.Text>Date: {formatDate(course.date)}</Card.Text>
+                  <Card.Text>Start Time: {formatTime_12hr(course.time)}</Card.Text>
+                  <Card.Text>Location: {course.city}</Card.Text>
+                  <Card.Text>Registered Attendees: {course.registered_attendees}</Card.Text>
+                  <Card.Text>Max Class Size: {course.max_class_size}</Card.Text>
                   <Button
                     variant='primary'
                     onClick={() => {
