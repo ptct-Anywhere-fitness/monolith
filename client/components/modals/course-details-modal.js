@@ -100,14 +100,12 @@ export default function CourseDetailsModal({
       handleTotalClose();
     } catch (err) {
       console.log(
-        'Error in dashboard-admin --> deleteCourseHandler() -- err: ',
+        'Error in course-details-modal.js --> handleDelete() -- err: ',
         err
       );
       // handleClose();
       loadingCtx.setIsLoading(false);
-      notificationCtx.endError({
-        message: `Message from backend:\n${err.message}`,
-      });
+      notificationCtx.endError({ message: err.message });
     }
   };
 
@@ -125,12 +123,7 @@ export default function CourseDetailsModal({
     try {
       loadingCtx.setIsLoading(true);
 
-      notificationCtx.showNotification({
-        title: 'Updating...',
-        message: `updating course`,
-        status: 'pending',
-        animation: 'show',
-      });
+      notificationCtx.begin({ message: 'updating course' });
 
       const token = authCtx.token;
 
@@ -167,27 +160,17 @@ export default function CourseDetailsModal({
       // -Update the courses table:
       setCourses(await getData('/courses', token));
 
-      notificationCtx.showNotification({
-        title: 'Success!',
-        message: `updated course`,
-        status: 'success',
-        animation: 'show',
-      });
+      notificationCtx.endSuccess({ message: 'course updated' });
 
       loadingCtx.setIsLoading(false);
       handleTotalClose();
     } catch (err) {
       console.log(
-        'Error in dashboard-admin --> putCourseHandler() -- err: ',
+        'Error in course-details-modal.js --> handleSave() -- err: ',
         err
       );
       loadingCtx.setIsLoading(false);
-      notificationCtx.showNotification({
-        title: 'Error updating course',
-        message: `Message from backend:\n${err.message}`,
-        status: 'error',
-        animation: 'show',
-      });
+      notificationCtx.endError({ message: err.message });
     }
   };
 

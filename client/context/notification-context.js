@@ -74,7 +74,7 @@ function NotificationContextProvider(props) {
   const endNotificationError = ({ message }) => {
     showNotificationHandler({
       title: 'Error!',
-      message,
+      message: `Message from backend:\n${message}`,
       status: 'error',
       animation: 'show',
     });

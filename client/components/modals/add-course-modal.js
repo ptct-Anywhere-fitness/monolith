@@ -66,12 +66,7 @@ export default function AddCourseModal({
 
       loadingCtx.setIsLoading(true);
 
-      notificationCtx.showNotification({
-        title: 'Adding...',
-        message: `adding course`,
-        status: 'pending',
-        animation: 'show',
-      });
+      notificationCtx.begin({ message: 'adding course' });
 
       const response = await fetchData(
         '/courses',
@@ -105,27 +100,14 @@ export default function AddCourseModal({
       // -Update the courses table:
       setCourses(await getData('/courses', token));
 
-      notificationCtx.showNotification({
-        title: 'Success!',
-        message: `added course`,
-        status: 'success',
-        animation: 'show',
-      });
+      notificationCtx.endSuccess({ message: 'course added' });
 
       loadingCtx.setIsLoading(false);
       handleClose();
     } catch (err) {
-      console.log(
-        'Error in dashboard-admin --> postCourseHandler() -- err: ',
-        err
-      );
+      console.log('Error in add-course-modal.js --> handleAdd() -- err: ', err);
       loadingCtx.setIsLoading(false);
-      notificationCtx.showNotification({
-        title: 'Error adding course)',
-        message: `Message from backend:\n${err.message}`,
-        status: 'error',
-        animation: 'show',
-      });
+      notificationCtx.endError({ message: err.message });
     }
   };
 
