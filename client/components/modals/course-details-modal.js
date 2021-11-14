@@ -105,11 +105,8 @@ export default function CourseDetailsModal({
       );
       // handleClose();
       loadingCtx.setIsLoading(false);
-      notificationCtx.showNotification({
-        title: 'Error deleting course)',
+      notificationCtx.endError({
         message: `Message from backend:\n${err.message}`,
-        status: 'error',
-        animation: 'show',
       });
     }
   };

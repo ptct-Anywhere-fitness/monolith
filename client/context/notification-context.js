@@ -71,7 +71,14 @@ function NotificationContextProvider(props) {
     });
   };
 
-  const endNotificationError = () => {};
+  const endNotificationError = ({ message }) => {
+    showNotificationHandler({
+      title: 'Error!',
+      message,
+      status: 'error',
+      animation: 'show',
+    });
+  };
 
   // --------------------------------------------
 
