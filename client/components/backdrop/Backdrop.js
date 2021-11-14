@@ -39,8 +39,8 @@ const Backdrop = ({ show, children }) => {
       setCssClassList(css.backdrop);
 
       tl.current = gsap.timeline().to(backdrop_ref.current, {
-        duration: 5,
-        background: 'rgba(0, 0, 0, 0.95)',
+        duration: 0.275,
+        background: 'rgba(0, 0, 0, 0.75)',
         onReverseComplete: () => {
           setCssClassList(`${css.backdrop} ${css.hide}`);
         },
