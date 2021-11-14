@@ -76,10 +76,10 @@ Step 3.) Set up Postgres DB on heroku
         "seedh": "heroku run knex seed:run -a anywhere-fitness--app",
         "databaseh": "heroku pg:psql -a anywhere-fitness--app",
 
-Step 4.) Test deploy
+Step 4.) Production .env file:
+**NOTE: Need to manually place the .env.production file on the repo in /client!!!
 
-
-Step 4.) If problem with postbuild related to jest:
+Troubleshooting) If problem with postbuild related to jest:
 
   Jest Issue with React (client) folder inside the Node main app folder:
   •	C:\dev\portfolio-1> npm ls babel-jest

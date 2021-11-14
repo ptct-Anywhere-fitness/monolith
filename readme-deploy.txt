@@ -22,21 +22,19 @@ Migrate Remote DB:
 
 To deploy:
 
-Step 0.) Connect the codebase's GitHub repo
-         to a Heroku app.
-          --Follow step 2 in the readme-setup.txt file.
+Connect the codebase's GitHub repo
+  to a Heroku app.
+  --Follow step 2 in the readme-setup.txt file.
 
+**NOTE: Need to manually place the .env.production file on the repo in /client!!!
 
-
-
-Step 0.) Ensure .env and .env.production (for /client)
+If issue with react build) Ensure .env and .env.production (for /client)
          are in remote repo.
           .env: (ACTUALLY, only needed if build error about eslint or jest)
             SKIP_PREFLIGHT_CHECK=true
           .env.production:
             NEXT_PUBLIC_BACKEND_URL=/api
 NOTE: Slightly modified due to NEXT
-
 
 API-Keys:
   -We need the API-key for Stripe.
