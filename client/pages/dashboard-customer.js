@@ -141,7 +141,10 @@ export default function CustomerDashboardPage() {
           <Col>
             {/* Type */}
             <Dropdown>
-              <Dropdown.Toggle variant='secondary'>
+              <Dropdown.Toggle
+                variant='secondary'
+                id='dropdown-button-dark-type'
+              >
                 {type_str ? type_str : 'Types'}
               </Dropdown.Toggle>
 
@@ -198,7 +201,10 @@ export default function CustomerDashboardPage() {
           <Col>
             {/* Intensity Level */}
             <Dropdown>
-              <Dropdown.Toggle variant='secondary'>
+              <Dropdown.Toggle
+                variant='secondary'
+                id='dropdown-button-dark-intensity'
+              >
                 {/* {intensity_str} */}
                 {intensity_str ? intensity_str : 'Intensity Level'}
               </Dropdown.Toggle>
@@ -250,6 +256,7 @@ export default function CustomerDashboardPage() {
               <Dropdown.Toggle
                 id='dropdown-button-dark-example1'
                 variant='secondary'
+                id='dropdown-button-dark-date'
               >
                 Date
               </Dropdown.Toggle>

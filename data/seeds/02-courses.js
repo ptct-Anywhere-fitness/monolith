@@ -14,6 +14,13 @@ exports.seed = function (knex, Promise) {
   //                 30   |  60   | 90  |   120
   const price_arr = [1000, 2000, 3000];
 
+  const date_arr = ['2021-12-01'];
+  for (let i = 0; i <= 2; ++i) {
+    for (let j = 0; j <= 9; ++j) {
+      date_arr.push(`2021-12-${i}${j}`);
+    }
+  }
+
   const city_arr = ['New York', 'Los Angelas', 'Seattle', 'Dallas'];
   const title_matrix = [
     ['Beginner Yoga', 'Intermediate Yoga', 'Advanced Yoga'],
@@ -32,26 +39,39 @@ exports.seed = function (knex, Promise) {
 
   // --------------------------------------------
 
+  function randInterval(min, max) {
+    // min and max included
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  // --------------------------------------------
+
+  function randElem(arr) {
+    return arr[randInterval(0, arr.length - 1)];
+  }
+
+  // --------------------------------------------
+
   const objs = [];
 
   const num_rows = title_matrix.length;
   const num_cols = title_matrix[0].length;
   for (let title_idx = 0; title_idx < num_rows; ++title_idx) {
-    const type = type_arr[title_idx];
-    const city = city_arr[title_idx];
+    const type = type_arr[randInterval(0, type_arr.length - 1)]; //type_arr[title_idx];
+    // const city = city_arr[title_idx];
     for (let title_jdx = 0; title_jdx < num_cols; ++title_jdx) {
       objs.push({
         title: title_matrix[title_idx][title_jdx],
         type,
-        intensity: intensity_arr[title_jdx],
-        duration: duration_arr[title_jdx],
-        price: price_arr[title_jdx],
-        date: '2021-11-12',
+        intensity: randElem(intensity_arr),
+        duration: randElem(duration_arr),
+        price: randElem(price_arr),
+        date: randElem(date_arr),
         time: '13:00:00.0-06',
         registered_attendees: 0,
         max_class_size: 10,
         // details: '...',
-        city,
+        city: randElem(city_arr),
       });
     }
   }
