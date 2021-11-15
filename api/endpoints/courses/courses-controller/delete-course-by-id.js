@@ -1,4 +1,4 @@
-const HttpError = require('../../helpers/http-error');
+const HttpError = require('../../../helpers/http-error');
 const Courses = require('../courses-model');
 
 // ==============================================

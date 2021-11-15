@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
-const { TOKEN_SECRET } = require('../../config/secrets');
+const { TOKEN_SECRET } = require('../../../config/secrets');
 
-const HttpError = require('../helpers/http-error');
+const HttpError = require('../../helpers/http-error');
 
 // ==============================================
 

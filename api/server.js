@@ -49,19 +49,19 @@ if (process.env.NODE_ENV === 'development') {
 // ==============================================
 
 // -Routers:
-const authRouter = require('./auth/auth-router');
+const authRouter = require('./endpoints/auth/auth-router');
 server.use('/api/auth', authRouter);
 
-const usersRouter = require('./users/users-router');
+const usersRouter = require('./endpoints/users/users-router');
 server.use('/api/users', usersRouter);
 
-const ordersRouter = require('./orders/orders-router');
+const ordersRouter = require('./endpoints/orders/orders-router');
 server.use('/api/orders', ordersRouter);
 
-const coursesRouter = require('./courses/courses-router');
+const coursesRouter = require('./endpoints/courses/courses-router');
 server.use('/api/courses', coursesRouter);
 
-const checkoutRouter = require('./checkout/checkout-router');
+const checkoutRouter = require('./endpoints/checkout/checkout-router');
 server.use('/api/checkout', checkoutRouter);
 
 // ==============================================
