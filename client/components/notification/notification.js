@@ -39,7 +39,12 @@ export default function Notification(props) {
         duration: 0.2,
         yPercent: '-100',
         onReverseComplete: () => {
-          setActiveClasses(`${classes.hide}`);
+          setActiveClasses(`${classes.hide} ${classes.notification}`);
+
+          // -Changing color of nav sets inline background,
+          //  which needs to be removed in order
+          //  for next notification to start with pending status.
+          div_ref.current.style.removeProperty('background');
         },
       });
     } else if (mounted && notificationCtx.notification?.animation === 'hide') {
@@ -60,10 +65,19 @@ export default function Notification(props) {
   const [active_classes, setActiveClasses] = useState();
   useEffect(() => {
     let statusClasses = '';
+    console.log('status: ', status);
     if (status === 'success') {
+      gsap.to(div_ref.current, {
+        duration: 0.4,
+        background: '#10be58', // success color (notification.module.scss)
+      });
       statusClasses = classes.success;
     }
     if (status === 'error') {
+      gsap.to(div_ref.current, {
+        duration: 0.4,
+        background: '#e65035', // error color (notification.module.scss)
+      });
       statusClasses = classes.error;
     }
     if (status === 'pending') {
