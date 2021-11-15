@@ -92,9 +92,7 @@ export default function CustomerDashboardPage() {
 
   // --------------------------------------------
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-
+  const do_update_courses = () => {
     // -Filter duration
     // -Defaults to [min, max]
     const filtered_courses = courses.filter((course) => {
@@ -124,6 +122,22 @@ export default function CustomerDashboardPage() {
 
   // --------------------------------------------
 
+  // -Update filter upon any change of input
+  //  --Dropdowns
+  //  --Second click of duration range.
+  useEffect(() => {
+    do_update_courses();
+  }, [intensity_input, type_input, duration_input_max]);
+
+  // --------------------------------------------
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    do_update_courses();
+  };
+
+  // --------------------------------------------
+
   return (
     <>
       <Form onSubmit={submitHandler}>
@@ -135,9 +149,9 @@ export default function CustomerDashboardPage() {
               alignItems: 'center',
             }}
           >
-            <Button variant='outline-dark' type='submit'>
+            {/* <Button variant='outline-dark' type='submit'>
               Apply Filter
-            </Button>
+            </Button> */}
           </div>
         </Row>
         <Row>
