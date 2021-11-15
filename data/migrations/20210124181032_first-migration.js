@@ -13,7 +13,7 @@ exports.up = async (knex) => {
       course.increments('id');
       course.string('title', 50).notNullable();
       // course.string('category', 50);
-      course.string('details', 256);
+      // course.string('details', 256);
       course.integer('price').unsigned();
       // course.integer('quantity_in_stock').unsigned();
 
@@ -36,6 +36,16 @@ exports.up = async (knex) => {
 
       // Intensity level
       course.integer('intensity').unsigned();
+
+      // Type
+      course.integer('type').unsigned();
+      // const type_map = [
+      //   'All Types',
+      //   'Type 1:  Yoga',
+      //   'Type 2: Insanity',
+      //   'Level 3: RIPPED',
+      //   'Level 4: Pilates',
+      // ];
 
       // Location
       course.string('city', 50);

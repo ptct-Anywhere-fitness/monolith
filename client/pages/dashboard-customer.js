@@ -57,12 +57,12 @@ export default function CustomerDashboardPage() {
 
   // --------------------------------------------
 
-  const [intensity_input, setIntensityInput] = useState(0);
-  const [intensity_str, setIntensityStr] = useState('Intensity Level');
+  const [intensity_input, setIntensityInput] = useState();
+  const [intensity_str, setIntensityStr] = useState();
   useEffect(() => {
     console.log('intensity level: ', intensity_input);
     if (intensity_input === 0) {
-      setIntensityStr('Intensity Level');
+      setIntensityStr('All Levels');
     } else if (intensity_input == 1) {
       setIntensityStr('Level 1: Easy');
     } else if (intensity_input == 2) {
@@ -71,6 +71,22 @@ export default function CustomerDashboardPage() {
       setIntensityStr('Level 3: Extreme');
     }
   }, [intensity_input]);
+
+  // --------------------------------------------
+
+  const [type_input, setTypeInput] = useState();
+  const [type_str, setTypeStr] = useState();
+  const type_map = [
+    'All Types',
+    'Type 1:  Yoga',
+    'Type 2: Insanity',
+    'Level 3: RIPPED',
+    'Level 4: Pilates',
+  ];
+  useEffect(() => {
+    console.log('type: ', type_input);
+    setTypeStr(type_map[type_input]);
+  }, [type_input]);
 
   // --------------------------------------------
 
@@ -89,6 +105,13 @@ export default function CustomerDashboardPage() {
     if (intensity_input != 0) {
       filtered_courses = filtered_courses.filter((course) => {
         return course.intensity == intensity_input;
+      });
+    }
+
+    // -Filter type
+    if (type_input != 0) {
+      filtered_courses = filtered_courses.filter((course) => {
+        return course.type == type_input;
       });
     }
 
@@ -116,13 +139,68 @@ export default function CustomerDashboardPage() {
         </Row>
         <Row>
           <Col>
+            {/* Type */}
+            <Dropdown>
+              <Dropdown.Toggle variant='secondary'>
+                {type_str ? type_str : 'Types'}
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu variant='dark'>
+                <Dropdown.Item
+                  active={type_input == 1}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setTypeInput(1);
+                  }}
+                >
+                  {type_map[1]}
+                </Dropdown.Item>
+                <Dropdown.Item
+                  active={type_input == 2}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setTypeInput(2);
+                  }}
+                >
+                  {type_map[2]}
+                </Dropdown.Item>
+                <Dropdown.Item
+                  active={type_input == 3}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setTypeInput(3);
+                  }}
+                >
+                  {type_map[3]}
+                </Dropdown.Item>
+                <Dropdown.Item
+                  active={type_input == 4}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setTypeInput(4);
+                  }}
+                >
+                  {type_map[4]}
+                </Dropdown.Item>
+                <Dropdown.Item
+                  active={type_input == 0}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setTypeInput(0);
+                  }}
+                >
+                  {type_map[0]}
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Col>
+
+          <Col>
             {/* Intensity Level */}
             <Dropdown>
-              <Dropdown.Toggle
-                id='dropdown-button-dark-example1'
-                variant='secondary'
-              >
-                {intensity_str}
+              <Dropdown.Toggle variant='secondary'>
+                {/* {intensity_str} */}
+                {intensity_str ? intensity_str : 'Intensity Level'}
               </Dropdown.Toggle>
 
               <Dropdown.Menu variant='dark'>
