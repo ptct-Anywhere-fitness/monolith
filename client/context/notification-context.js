@@ -14,17 +14,24 @@ const NotificationContext = createContext({
 function NotificationContextProvider(props) {
   // --------------------------------------------
 
-  const [active_notification, setActiveNotification] = useState();
+  const [active_notification, setActiveNotification] = useState({
+    title: '',
+    message: '',
+    status: '',
+    animation: '',
+  });
 
   useEffect(() => {
     if (
-      active_notification &&
-      active_notification.status === 'success'
-      // ||active_notification.status === 'error'
+      (active_notification && active_notification.status === 'success') ||
+      active_notification.status === 'error'
     ) {
-      const timer = setTimeout(() => {
-        hideNotificationHandler();
-      }, 3e3);
+      const timer = setTimeout(
+        () => {
+          hideNotificationHandler();
+        },
+        active_notification.status === 'success' ? 3e3 : 5e3
+      );
 
       // -Clear the timer if useEffect runs
       //  before the previous timer ends.

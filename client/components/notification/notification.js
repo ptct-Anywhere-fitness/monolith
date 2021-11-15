@@ -27,13 +27,6 @@ export default function Notification(props) {
   const timeline_ref = useRef();
 
   useEffect(() => {
-    // console.log(
-    //   'useEffect() \t notification.animation: ',
-    //   notificationCtx.notification?.animation,
-    //   ' \t mounted: ',
-    //   mounted
-    // );
-
     if (mounted && notificationCtx.notification?.animation === 'show') {
       timeline_ref.current = gsap.timeline().to(div_ref.current, {
         duration: 0.2,
@@ -41,7 +34,7 @@ export default function Notification(props) {
         onReverseComplete: () => {
           setActiveClasses(`${classes.hide} ${classes.notification}`);
 
-          // -Changing color of nav sets inline background,
+          // -Changing color of div sets inline background,
           //  which needs to be removed in order
           //  for next notification to start with pending status.
           div_ref.current.style.removeProperty('background');
@@ -60,12 +53,10 @@ export default function Notification(props) {
 
   // --------------------------------------------
 
-  // --------------------------------------------
-
   const [active_classes, setActiveClasses] = useState();
   useEffect(() => {
     let statusClasses = '';
-    console.log('status: ', status);
+    // console.log('status: ', status);
     if (status === 'success') {
       gsap.to(div_ref.current, {
         duration: 0.4,
