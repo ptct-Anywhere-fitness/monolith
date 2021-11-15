@@ -33,7 +33,14 @@ function getUsersOrders() {
   //
   return db('users as u')
     .join('orders as o', 'u.user_id', 'o.user_id_fk')
-    .select('o.total as total', 'u.username as username');
+    .select(
+      'o.id as order_id',
+      'o.total',
+      'u.username',
+      'u.first_name',
+      'u.last_name',
+      'u.user_id'
+    );
   // .where('u.user_id', user_id);
 }
 

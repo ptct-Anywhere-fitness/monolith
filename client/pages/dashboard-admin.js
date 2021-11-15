@@ -10,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 
 import TableCourses from '../components/tables/table-courses';
 import TableUsers from '../components/tables/table-users';
+import TableOrders from '../components/tables/table-orders';
 
 import AddCourseModal from '../components/modals/add-course-modal';
 
@@ -26,6 +27,11 @@ export default function AdminDashboarPage() {
 
   const [courses, setCourses] = useState();
   const [users, setUsers] = useState();
+  const [orders, setOrders] = useState();
+
+  useEffect(() => {
+    console.log('orders (AdminDashboardPage): ', orders);
+  }, [orders]);
 
   // --------------------------------------------
 
@@ -103,7 +109,7 @@ export default function AdminDashboarPage() {
         try {
           const o = await getData('/orders', token);
           console.log('orders: ', o);
-          // setUsers(u);
+          setOrders(o);
         } catch (err) {
           console.log(
             'Error in dashboard-admin --> useEffect() --> getData(/orders),  err: ',
@@ -187,6 +193,26 @@ export default function AdminDashboarPage() {
             {' '}
             <h6>Users</h6>
             <TableUsers users={users} />
+          </div>
+        )}
+      </Row>
+
+      <hr />
+
+      {/* Table: Orders */}
+      <Row>
+        {orders && (
+          <div
+            style={{
+              background: '#cfe8fc',
+              width: '100%',
+              padding: '1%',
+              height: '300px',
+            }}
+          >
+            {' '}
+            <h6>Orders</h6>
+            <TableOrders orders={orders} />
           </div>
         )}
       </Row>

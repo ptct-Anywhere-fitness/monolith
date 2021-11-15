@@ -5,6 +5,8 @@ import Table from 'react-bootstrap/Table';
 export default function TableOrders({ orders }) {
   // --------------------------------------------
 
+  console.log('orders (in TableOrders), orders: ', orders);
+
   return (
     <>
       <Table
@@ -19,16 +21,14 @@ export default function TableOrders({ orders }) {
           <tr>
             <th></th>
             <th>ID</th>
-            <th>User Name</th>
-            <th>Role</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Password</th>
+            <th>Total</th>
+            <th>Username</th>
+            <th>TODO: Products</th>
           </tr>
         </thead>
         <tbody>
-          {users &&
-            users.map((user, idx) => {
+          {orders &&
+            orders.map((order, idx) => {
               return (
                 <tr key={idx}>
                   <td>
@@ -43,12 +43,10 @@ export default function TableOrders({ orders }) {
                       <path d='M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z' />
                     </svg>
                   </td>
-                  <td>{user?.user_id}</td>
-                  <td>{user?.username}</td>
-                  <td>{user?.role}</td>
-                  <td>{user?.first_name}</td>
-                  <td>{user?.last_name}</td>
-                  <td>{user?.password}</td>
+                  <td>{order?.order_id}</td>
+                  <td>{order?.total}</td>
+                  <td>{order?.username}</td>
+                  <td></td>
                 </tr>
               );
             })}
