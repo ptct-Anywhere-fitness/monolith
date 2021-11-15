@@ -93,6 +93,10 @@ export default function CustomerDashboardPage() {
   const submitHandler = (e) => {
     e.preventDefault();
 
+    alert(
+      'Applying all filters! Need to only apply filters that are selected!'
+    );
+
     // -Filter duration
     const filtered_courses = courses.filter((course) => {
       return (

@@ -13,7 +13,7 @@ exports.up = async (knex) => {
       course.increments('id');
       course.string('title', 50).notNullable();
       // course.string('category', 50);
-      // course.string('details', 256);
+      course.string('details', 256);
       course.integer('price').unsigned();
       // course.integer('quantity_in_stock').unsigned();
 

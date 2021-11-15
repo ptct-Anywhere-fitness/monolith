@@ -38,7 +38,7 @@ export default function Notification(props) {
         duration: 0.2,
         yPercent: '-100',
         onReverseComplete: () => {
-          // setCssClassList(`${css.backdrop} ${css.hide}`);
+          setActiveClasses(`${classes.hide}`);
         },
       });
     } else if (mounted && notificationCtx.notification?.animation === 'hide') {
@@ -54,27 +54,30 @@ export default function Notification(props) {
 
   // --------------------------------------------
 
-  let statusClasses = '';
-  if (status === 'success') {
-    statusClasses = classes.success;
-  }
-  if (status === 'error') {
-    statusClasses = classes.error;
-  }
-  if (status === 'pending') {
-    statusClasses = classes.pending;
-  }
-
   // --------------------------------------------
 
-  const activeClasses = `${classes.notification} ${statusClasses}`;
+  const [active_classes, setActiveClasses] = useState();
+  useEffect(() => {
+    let statusClasses = '';
+    if (status === 'success') {
+      statusClasses = classes.success;
+    }
+    if (status === 'error') {
+      statusClasses = classes.error;
+    }
+    if (status === 'pending') {
+      statusClasses = classes.pending;
+    }
+
+    setActiveClasses(`${classes.notification} ${statusClasses}`);
+  }, [notificationCtx.notification.status]);
 
   // --------------------------------------------
 
   return (
     <div
       ref={div_ref}
-      className={activeClasses}
+      className={active_classes}
       onClick={notificationCtx.hideNotification}
     >
       <h2>{title}</h2>
