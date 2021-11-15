@@ -190,6 +190,7 @@ export default function CustomerDashboardPage() {
               <CanvasSlider
                 setDurationMinInput={setDurationMinInput}
                 setDurationMaxInput={setDurationMaxInput}
+                duration_input_min={duration_input_min}
               />
               <br />
               <span style={{ marginRight: '260px' }}>

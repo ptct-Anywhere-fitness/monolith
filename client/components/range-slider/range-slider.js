@@ -4,7 +4,11 @@ import { element_geometry } from './geometry.js';
 
 // ==============================================
 
-export default function Canvas({ setDurationMinInput, setDurationMaxInput }) {
+export default function Canvas({
+  setDurationMinInput,
+  setDurationMaxInput,
+  duration_input_min,
+}) {
   // --------------------------------------------
 
   const CANVAS_WIDTH = 400;
@@ -71,9 +75,9 @@ export default function Canvas({ setDurationMinInput, setDurationMaxInput }) {
       ctx.beginPath();
       // ctx.arc(circle.x - x1, circle.y - y1, circle.size, 0, Math.PI * 2);
 
-      const size = 30;
+      const size = 24;
       ctx.arc(circle.x, half_canvas_height, size, 0, Math.PI * 2);
-      // ctx.fillStyle = 'purple';
+      ctx.fillStyle = '#6C757D';
       ctx.fill();
     }
 
@@ -91,9 +95,9 @@ export default function Canvas({ setDurationMinInput, setDurationMaxInput }) {
 
       // debugger;
       setDurationMinInput(left_val);
+      setDurationMaxInput(MAX_VAL);
       setClickNum(2);
-
-      ctx.fillStyle = 'red';
+      drawCircle({ x, y });
     } else {
       const scale_factor = x / CANVAS_WIDTH;
       const right_val = Math.round(MAX_VAL * scale_factor);
@@ -101,17 +105,28 @@ export default function Canvas({ setDurationMinInput, setDurationMaxInput }) {
       // -Fill in area between two clicks:
       const prev_x = prev_canvas_click_coords[0];
       const width = x - prev_x;
+      drawCircle({ x, y });
+      ctx.fillStyle = '#212529';
       ctx.fillRect(prev_x, 0, width, canvas_height);
+
       // void ctx.fillRect(x, y, width, height);
 
-      // debugger;
-      setDurationMaxInput(right_val);
+      if (x > prev_x) {
+        // -Ensure that second click is larger than first click
+        setDurationMaxInput(right_val);
+      } else {
+        // -If second click is smaller than first click
+        //  just swap max and min
+        setDurationMinInput(right_val);
+        setDurationMaxInput(duration_input_min);
+      }
+
       setClickNum(1);
 
       ctx.fillStyle = 'green';
     }
 
-    drawCircle({ x, y });
+    // drawCircle({ x, y });
     setPrevCanvasClickCoords([x, y]);
   };
   // --------------------------------------------
