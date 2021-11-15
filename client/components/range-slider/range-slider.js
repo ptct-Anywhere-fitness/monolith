@@ -4,12 +4,12 @@ import { element_geometry } from './geometry.js';
 
 // ==============================================
 
-export default function Canvas(/*{ setDurationMinInput, setDurationMaxInput } */) {
+export default function Canvas({ setDurationMinInput, setDurationMaxInput }) {
   // --------------------------------------------
 
   const CANVAS_WIDTH = 400;
-  // const MAX_VAL = 120;
-  // const MIN_VAL = 1;
+  const MAX_VAL = 120;
+  const MIN_VAL = 1;
 
   // --------------------------------------------
 
@@ -33,23 +33,27 @@ export default function Canvas(/*{ setDurationMinInput, setDurationMaxInput } */
     // - - - - - - - - - - - - - - - - - - - - -
 
     function get_mouse_coordinates(event) {
+      // TODO: Only calculate this once (on page load)
+      //       -Or when the screen is resized.
+      const { x1, y1 } = element_geometry(canvas_ref.current);
+      // -(x1, y1) is the upper-left corner of the canvaas.
+      // -Since (clientX, clientY) are the viewport coordinates,
+      //  we need to shift them by the upper left corner
+      //  of the canvas to get the coordinates inside
+      //  the canvas.
+
       const [x, y] = [event.clientX, event.clientY];
-      return [x, y];
+      return [x - x1, y - y1];
     }
 
     // - - - - - - - - - - - - - - - - - - - - -
 
-    // console.log('clicked');
-    // const { x0, y0, x1, y1, w, h } = element_geometry(canvas_ref.current);
-    const { x1 } = element_geometry(canvas_ref.current);
-    // console.log('x0: ', x0);
-    // console.log(`(x1, y1)  :  (${x1}, ${y1})`);
-
+    // TODO: Get this outside of this click function
     // Step 0: get context
     const ctx = canvas_ref.current.getContext('2d');
     // console.log(ctx);
 
-    // Step 1: Get mouse coordinates
+    // Step 1: Get mouse coordinates (canvas-coordinates)
     const [x, y] = get_mouse_coordinates(e);
     // console.log(`(x, y)  :  (${x}, ${y})`);
 
@@ -62,7 +66,8 @@ export default function Canvas(/*{ setDurationMinInput, setDurationMaxInput } */
       ctx.beginPath();
       // ctx.arc(circle.x - x1, circle.y - y1, circle.size, 0, Math.PI * 2);
 
-      ctx.arc(circle.x - x1, half_canvas_height, circle.size, 0, Math.PI * 2);
+      const size = 30;
+      ctx.arc(circle.x, half_canvas_height, size, 0, Math.PI * 2);
       // ctx.fillStyle = 'purple';
       ctx.fill();
     }
@@ -75,22 +80,27 @@ export default function Canvas(/*{ setDurationMinInput, setDurationMaxInput } */
       // 3.2: Clear canvas:
 
       ctx.clearRect(0, 0, canvas_ref.current.width, canvas_ref.current.height);
-      // const scale_factor = x / CANVAS_WIDTH;
-      // setDurationMinInput(Math.round(Math.min(MAX_VAL * scale_factor, MAX_VAL)));
+
+      const scale_factor = x / CANVAS_WIDTH;
+      const left_val = Math.round(MAX_VAL * scale_factor);
+
+      // debugger;
+      setDurationMinInput(left_val);
       setClickNum(2);
+
       ctx.fillStyle = 'red';
     } else {
-      // const scale_factor = x / CANVAS_WIDTH;
-      // setDurationMaxInput(Math.min(MAX_VAL * scale_factor, MAX_VAL));
+      const scale_factor = x / CANVAS_WIDTH;
+      const right_val = Math.round(MAX_VAL * scale_factor);
+
+      // debugger;
+      setDurationMaxInput(right_val);
       setClickNum(1);
+
       ctx.fillStyle = 'green';
     }
 
-    drawCircle({
-      x,
-      y,
-      size: 30,
-    });
+    drawCircle({ x, y });
   };
   // --------------------------------------------
 

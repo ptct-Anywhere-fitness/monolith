@@ -47,9 +47,15 @@ export default function CustomerDashboardPage() {
   const [duration_input_min, setDurationMinInput] = useState(30);
   const [duration_input_max, setDurationMaxInput] = useState(120);
   useEffect(() => {
-    console.log('duration_input_min: ', duration_input_min, '\tduration_input_max: ', duration_input_max);
+    console.log(
+      'duration_input_min: ',
+      duration_input_min,
+      '\tduration_input_max: ',
+      duration_input_max
+    );
   }, [duration_input_min, duration_input_max]);
 
+  // --------------------------------------------
 
   const [intensity_input, setIntensityInput] = useState(0);
   const [intensity_str, setIntensityStr] = useState('Intensity Level');
@@ -57,8 +63,7 @@ export default function CustomerDashboardPage() {
     console.log('intensity level: ', intensity_input);
     if (intensity_input === 0) {
       setIntensityStr('Intensity Level');
-    }
-    else if (intensity_input == 1) {
+    } else if (intensity_input == 1) {
       setIntensityStr('Level 1: Easy');
     } else if (intensity_input == 2) {
       setIntensityStr('Level 2: Moderate');
@@ -66,7 +71,6 @@ export default function CustomerDashboardPage() {
       setIntensityStr('Level 3: Extreme');
     }
   }, [intensity_input]);
-
 
   // --------------------------------------------
 
@@ -97,15 +101,20 @@ export default function CustomerDashboardPage() {
   return (
     <>
       <Form onSubmit={submitHandler}>
-        <Row className="justify-content-center" className="mt-5 mb-4">
-          <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <Row className='justify-content-center' className='mt-5 mb-4'>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             <Button variant='outline-dark' type='submit'>
               Apply Filter
             </Button>
           </div>
         </Row>
         <Row>
-
           <Col>
             {/* Intensity Level */}
             <Dropdown>
@@ -117,10 +126,42 @@ export default function CustomerDashboardPage() {
               </Dropdown.Toggle>
 
               <Dropdown.Menu variant='dark'>
-                <Dropdown.Item active={intensity_input == 1} onClick={(e) => { e.preventDefault(); setIntensityInput(1); }}>Level 1: Easy</Dropdown.Item>
-                <Dropdown.Item active={intensity_input == 2} onClick={(e) => { e.preventDefault(); setIntensityInput(2); }}>Level 2: Moderate</Dropdown.Item>
-                <Dropdown.Item active={intensity_input == 3} onClick={(e) => { e.preventDefault(); setIntensityInput(3); }}>Level 3: Extreme</Dropdown.Item>
-                <Dropdown.Item active={intensity_input == 0} onClick={(e) => { e.preventDefault(); setIntensityInput(0); }}>All Intensity Levels</Dropdown.Item>
+                <Dropdown.Item
+                  active={intensity_input == 1}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIntensityInput(1);
+                  }}
+                >
+                  Level 1: Easy
+                </Dropdown.Item>
+                <Dropdown.Item
+                  active={intensity_input == 2}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIntensityInput(2);
+                  }}
+                >
+                  Level 2: Moderate
+                </Dropdown.Item>
+                <Dropdown.Item
+                  active={intensity_input == 3}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIntensityInput(3);
+                  }}
+                >
+                  Level 3: Extreme
+                </Dropdown.Item>
+                <Dropdown.Item
+                  active={intensity_input == 0}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIntensityInput(0);
+                  }}
+                >
+                  All Intensity Levels
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Col>
@@ -140,23 +181,24 @@ export default function CustomerDashboardPage() {
               </Dropdown.Menu>
             </Dropdown>
           </Col>
-          
+
           <Col>
             {/* duration */}
             <Form.Label>
               Duration [minutes]
               <br />
-              <CanvasSlider setDurationMinInput={setDurationMinInput}  setDurationMaxInput={setDurationMaxInput}/>
+              <CanvasSlider
+                setDurationMinInput={setDurationMinInput}
+                setDurationMaxInput={setDurationMaxInput}
+              />
               <br />
-              <span style={{marginRight: '260px'}}>Min: {duration_input_min}</span>
+              <span style={{ marginRight: '260px' }}>
+                Min: {duration_input_min}
+              </span>
               <span>Max: {duration_input_max}</span>
             </Form.Label>
           </Col>
-       
-
         </Row>
-
-        
       </Form>
 
       <hr />

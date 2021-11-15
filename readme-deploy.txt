@@ -48,7 +48,7 @@ API-Keys:
 
 Point Domain to Server:
       ----Heroku -> App: "portfolio----2" -> Settings -> Domains -> "Add domain":
-        x.com
+        www.x.com (do this first)
         x.com
     ---Copy the DNS targets for each custom domain from previous step.
       ----Paste into: NameCheap -> Domain List -> 1on1programming.com -> Manage -> 
