@@ -20,6 +20,7 @@ class MyDocument extends Document {
         <body>
           <Main />
           <div id='backdrop-hook'></div>
+          <div id='notification-hook'></div>
           <NextScript />
         </body>
       </Html>

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useContext } from 'react';
+import { createPortal } from 'react-dom';
 
 import { gsap } from 'gsap';
 
@@ -74,7 +75,7 @@ export default function Notification(props) {
 
   // --------------------------------------------
 
-  return (
+  const notification_div = (
     <div
       ref={div_ref}
       className={active_classes}
@@ -84,4 +85,14 @@ export default function Notification(props) {
       <p>{message}</p>
     </div>
   );
+  // --------------------------------------------
+
+  return mounted
+    ? createPortal(
+        notification_div,
+        document.getElementById('notification-hook')
+      )
+    : null;
+
+  // --------------------------------------------
 }
