@@ -13,7 +13,7 @@ export default function Canvas({
 
   const CANVAS_WIDTH = 400;
   const MAX_VAL = 120;
-  const MIN_VAL = 1;
+  // const MIN_VAL = 1;
 
   // --------------------------------------------
 

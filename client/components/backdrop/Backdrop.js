@@ -10,7 +10,7 @@ import css from './Backdrop.module.scss';
 const Backdrop = ({ show, children }) => {
   // --------------------------------------------
 
-  const duration = 0.25;
+  const duration = 0.275;
 
   // --------------------------------------------
 
@@ -39,7 +39,7 @@ const Backdrop = ({ show, children }) => {
       setCssClassList(css.backdrop);
 
       tl.current = gsap.timeline().to(backdrop_ref.current, {
-        duration: 0.275,
+        duration,
         background: 'rgba(0, 0, 0, 0.75)',
         onReverseComplete: () => {
           setCssClassList(`${css.backdrop} ${css.hide}`);

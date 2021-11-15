@@ -19,7 +19,7 @@ export default function Users() {
 
   const getUsersHandler = async () => {
     setUsers(await getData('/users', authCtx.token));
-    // console.log('users: ', users);
+    console.log('users: ', users);
   };
 
   // --------------------------------------------

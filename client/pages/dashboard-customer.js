@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 import Courses from '../components/courses';
@@ -95,7 +95,7 @@ export default function CustomerDashboardPage() {
   const do_update_courses = () => {
     // -Filter duration
     // -Defaults to [min, max]
-    const filtered_courses = courses.filter((course) => {
+    let filtered_courses = courses.filter((course) => {
       return (
         duration_input_min <= course.duration &&
         course.duration <= duration_input_max
@@ -126,7 +126,9 @@ export default function CustomerDashboardPage() {
   //  --Dropdowns
   //  --Second click of duration range.
   useEffect(() => {
-    do_update_courses();
+    if (courses) {
+      do_update_courses();
+    }
   }, [intensity_input, type_input, duration_input_max]);
 
   // --------------------------------------------
@@ -141,7 +143,7 @@ export default function CustomerDashboardPage() {
   return (
     <>
       <Form onSubmit={submitHandler}>
-        <Row className='justify-content-center' className='mt-5 mb-4'>
+        <Row className='justify-content-center mt-5 mb-4'>
           <div
             style={{
               display: 'flex',
@@ -271,9 +273,8 @@ export default function CustomerDashboardPage() {
             {/* Date */}
             <Dropdown>
               <Dropdown.Toggle
-                id='dropdown-button-dark-example1'
-                variant='secondary'
                 id='dropdown-button-dark-date'
+                variant='secondary'
               >
                 Date
               </Dropdown.Toggle>
