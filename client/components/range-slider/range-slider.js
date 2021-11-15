@@ -15,6 +15,8 @@ export default function Canvas({ setDurationMinInput, setDurationMaxInput }) {
 
   const [click_num, setClickNum] = useState(1);
 
+  const [prev_canvas_click_coords, setPrevCanvasClickCoords] = useState();
+
   // --------------------------------------------
 
   // const [mounted, setMounted] = useState(false);
@@ -35,15 +37,17 @@ export default function Canvas({ setDurationMinInput, setDurationMaxInput }) {
     function get_mouse_coordinates(event) {
       // TODO: Only calculate this once (on page load)
       //       -Or when the screen is resized.
-      const { x1, y1 } = element_geometry(canvas_ref.current);
       // -(x1, y1) is the upper-left corner of the canvaas.
       // -Since (clientX, clientY) are the viewport coordinates,
       //  we need to shift them by the upper left corner
       //  of the canvas to get the coordinates inside
       //  the canvas.
 
+      // const [screenX, screenY] = [event.screenY, event.screenY];
+      const { x1, y1 } = element_geometry(canvas_ref.current);
       const [x, y] = [event.clientX, event.clientY];
       return [x - x1, y - y1];
+      // return [event.screenX, event.screenY];
     }
 
     // - - - - - - - - - - - - - - - - - - - - -
@@ -58,7 +62,8 @@ export default function Canvas({ setDurationMinInput, setDurationMaxInput }) {
     // console.log(`(x, y)  :  (${x}, ${y})`);
 
     // Step 2: Draw circle at location clicked
-    const half_canvas_height = canvas_ref.current.height / 2;
+    const canvas_height = canvas_ref.current.height;
+    const half_canvas_height = canvas_height / 2;
 
     // - - - - - - - - - - - - - - - - - - - - -
 
@@ -93,6 +98,12 @@ export default function Canvas({ setDurationMinInput, setDurationMaxInput }) {
       const scale_factor = x / CANVAS_WIDTH;
       const right_val = Math.round(MAX_VAL * scale_factor);
 
+      // -Fill in area between two clicks:
+      const prev_x = prev_canvas_click_coords[0];
+      const width = x - prev_x;
+      ctx.fillRect(prev_x, 0, width, canvas_height);
+      // void ctx.fillRect(x, y, width, height);
+
       // debugger;
       setDurationMaxInput(right_val);
       setClickNum(1);
@@ -101,6 +112,7 @@ export default function Canvas({ setDurationMinInput, setDurationMaxInput }) {
     }
 
     drawCircle({ x, y });
+    setPrevCanvasClickCoords([x, y]);
   };
   // --------------------------------------------
 
