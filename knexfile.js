@@ -23,8 +23,8 @@ if (process.env.DATABASE_URL) {
 
 const sharedConfig = {
   client: 'pg',
-  migrations: { directory: './data/migrations' },
-  seeds: { directory: './data/seeds' },
+  migrations: { directory: './db/migrations' },
+  seeds: { directory: './db/seeds' },
 };
 
 module.exports = {
