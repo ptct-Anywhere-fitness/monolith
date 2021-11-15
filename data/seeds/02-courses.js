@@ -4,8 +4,8 @@ exports.seed = function (knex, Promise) {
   // const type_map = [
   //   'All Types',
   //   'Type 1:  Yoga',
-  //   'Type 2: Insanity',
-  //   'Level 3: RIPPED',
+  //   'Type 2: Weight Lifting',
+  //   'Level 3: Jogging',
   //   'Level 4: Pilates',
   // ];
   const type_arr = [1, 2, 3, 4];
@@ -24,17 +24,13 @@ exports.seed = function (knex, Promise) {
   const city_arr = ['New York', 'Los Angelas', 'Seattle', 'Dallas'];
   const title_matrix = [
     ['Beginner Yoga', 'Intermediate Yoga', 'Advanced Yoga'],
+    [
+      'Beginner Weight-Lifting',
+      'Intermediate Weight-Lifting',
+      'Advanced Weight-Lifting',
+    ],
     ['Beginner Jogging', 'Intermediate Jogging', 'Advanced Jogging'],
-    [
-      'Beginner Weight Lifting',
-      'Intermediate  Weight Lifting',
-      'Advanced  Weight Lifting',
-    ],
-    [
-      'Beginner Weight Pilates',
-      'Intermediate  Weight Pilates',
-      'Advanced  Weight Pilates',
-    ],
+    ['Beginner Pilates', 'Intermediate Pilates', 'Advanced Pilates'],
   ];
 
   // --------------------------------------------
@@ -57,13 +53,13 @@ exports.seed = function (knex, Promise) {
   const num_rows = title_matrix.length;
   const num_cols = title_matrix[0].length;
   for (let title_idx = 0; title_idx < num_rows; ++title_idx) {
-    const type = type_arr[randInterval(0, type_arr.length - 1)]; //type_arr[title_idx];
+    const type = type_arr[title_idx]; //type_arr[title_idx];
     // const city = city_arr[title_idx];
     for (let title_jdx = 0; title_jdx < num_cols; ++title_jdx) {
       objs.push({
         title: title_matrix[title_idx][title_jdx],
         type,
-        intensity: randElem(intensity_arr),
+        intensity: intensity_arr[title_jdx],
         duration: randElem(duration_arr),
         price: randElem(price_arr),
         date: randElem(date_arr),

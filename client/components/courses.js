@@ -15,6 +15,7 @@ import { CartContext } from '../context/cart-context';
 
 import getData from '../helpers/get-data';
 import { formatDate, formatTime_12hr } from '../helpers/format-date';
+import { course_type_map, course_intensity_map } from '../helpers/data-maps';
 
 // ==============================================
 
@@ -69,8 +70,11 @@ export default function Courses({ courses, setCourses }) {
                   <Card.Title>{course.title}</Card.Title>
                   <Card.Text>{`$${(course.price / 100).toFixed(2)}`}</Card.Text>
 
+                  <Card.Text>Type: {course_type_map[course.type]}</Card.Text>
                   <Card.Text>Duration: {course.duration}-min.</Card.Text>
-                  <Card.Text>Intensity: {course.intensity}</Card.Text>
+                  <Card.Text>
+                    Intensity: {course_intensity_map[course.intensity]}
+                  </Card.Text>
                   <Card.Text>Date: {formatDate(course.date)}</Card.Text>
                   <Card.Text>
                     Start Time: {formatTime_12hr(course.time)}
@@ -95,4 +99,8 @@ export default function Courses({ courses, setCourses }) {
         })}
     </Row>
   );
+
+  // --------------------------------------------
 }
+
+// ==============================================

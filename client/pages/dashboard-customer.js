@@ -17,6 +17,8 @@ import CanvasSlider from '../components/range-slider/range-slider';
 
 // ==============================================
 
+import { course_type_map, course_intensity_map } from '../helpers/data-maps';
+
 export default function CustomerDashboardPage() {
   // --------------------------------------------
 
@@ -44,8 +46,10 @@ export default function CustomerDashboardPage() {
 
   // --------------------------------------------
 
-  const [duration_input_min, setDurationMinInput] = useState(30);
-  const [duration_input_max, setDurationMaxInput] = useState(120);
+  const MIN_DURATION = 30;
+  const MAX_DURATION = 120;
+  const [duration_input_min, setDurationMinInput] = useState(MIN_DURATION);
+  const [duration_input_max, setDurationMaxInput] = useState(MAX_DURATION);
   useEffect(() => {
     console.log(
       'duration_input_min: ',
@@ -59,33 +63,31 @@ export default function CustomerDashboardPage() {
 
   const [intensity_input, setIntensityInput] = useState();
   const [intensity_str, setIntensityStr] = useState();
+  // const intensity_map = [
+  //   'All Levels',
+  //   'Level 1: Easy',
+  //   'Level 2: Moderate',
+  //   'Level 3: Extreme',
+  // ];
   useEffect(() => {
-    console.log('intensity level: ', intensity_input);
-    if (intensity_input === 0) {
-      setIntensityStr('All Levels');
-    } else if (intensity_input == 1) {
-      setIntensityStr('Level 1: Easy');
-    } else if (intensity_input == 2) {
-      setIntensityStr('Level 2: Moderate');
-    } else if (intensity_input == 3) {
-      setIntensityStr('Level 3: Extreme');
-    }
+    // console.log('intensity level: ', intensity_input);
+    setIntensityStr(course_intensity_map[intensity_input]);
   }, [intensity_input]);
 
   // --------------------------------------------
 
   const [type_input, setTypeInput] = useState();
   const [type_str, setTypeStr] = useState();
-  const type_map = [
-    'All Types',
-    'Type 1:  Yoga',
-    'Type 2: Insanity',
-    'Level 3: RIPPED',
-    'Level 4: Pilates',
-  ];
+  // const course_type_map = [
+  //   'All Types',
+  //   'Yoga',
+  //   'Weight Lifting',
+  //   'Jogging',
+  //   'Pilates',
+  // ];
   useEffect(() => {
-    console.log('type: ', type_input);
-    setTypeStr(type_map[type_input]);
+    // console.log('type: ', type_input);
+    setTypeStr(course_type_map[type_input]);
   }, [type_input]);
 
   // --------------------------------------------
@@ -93,11 +95,8 @@ export default function CustomerDashboardPage() {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    alert(
-      'Applying all filters! Need to only apply filters that are selected!'
-    );
-
     // -Filter duration
+    // -Defaults to [min, max]
     const filtered_courses = courses.filter((course) => {
       return (
         duration_input_min <= course.duration &&
@@ -106,14 +105,14 @@ export default function CustomerDashboardPage() {
     });
 
     // -Filter intensity
-    if (intensity_input != 0) {
+    if (intensity_input) {
       filtered_courses = filtered_courses.filter((course) => {
         return course.intensity == intensity_input;
       });
     }
 
     // -Filter type
-    if (type_input != 0) {
+    if (type_input) {
       filtered_courses = filtered_courses.filter((course) => {
         return course.type == type_input;
       });
@@ -160,7 +159,7 @@ export default function CustomerDashboardPage() {
                     setTypeInput(1);
                   }}
                 >
-                  {type_map[1]}
+                  {course_type_map[1]}
                 </Dropdown.Item>
                 <Dropdown.Item
                   active={type_input == 2}
@@ -169,7 +168,7 @@ export default function CustomerDashboardPage() {
                     setTypeInput(2);
                   }}
                 >
-                  {type_map[2]}
+                  {course_type_map[2]}
                 </Dropdown.Item>
                 <Dropdown.Item
                   active={type_input == 3}
@@ -178,7 +177,7 @@ export default function CustomerDashboardPage() {
                     setTypeInput(3);
                   }}
                 >
-                  {type_map[3]}
+                  {course_type_map[3]}
                 </Dropdown.Item>
                 <Dropdown.Item
                   active={type_input == 4}
@@ -187,7 +186,7 @@ export default function CustomerDashboardPage() {
                     setTypeInput(4);
                   }}
                 >
-                  {type_map[4]}
+                  {course_type_map[4]}
                 </Dropdown.Item>
                 <Dropdown.Item
                   active={type_input == 0}
@@ -196,7 +195,7 @@ export default function CustomerDashboardPage() {
                     setTypeInput(0);
                   }}
                 >
-                  {type_map[0]}
+                  {course_type_map[0]}
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
