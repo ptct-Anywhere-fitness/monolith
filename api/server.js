@@ -55,6 +55,9 @@ server.use('/api/auth', authRouter);
 const usersRouter = require('./users/users-router');
 server.use('/api/users', usersRouter);
 
+const ordersRouter = require('./orders/orders-router');
+server.use('/api/orders', ordersRouter);
+
 const coursesRouter = require('./courses/courses-router');
 server.use('/api/courses', coursesRouter);
 

@@ -1,44 +1,44 @@
 exports.up = async (knex) => {
   await knex.schema
-    .createTable('users', (users) => {
-      users.increments('user_id');
-      users.string('username', 200).notNullable();
-      users.string('password', 200).notNullable();
-      users.string('first_name', 200).notNullable();
-      users.string('last_name', 200).notNullable();
-      users.string('role', 200);
-      users.timestamps(false, true);
+    .createTable('users', (tbl) => {
+      tbl.increments('user_id');
+      tbl.string('username', 200).notNullable();
+      tbl.string('password', 200).notNullable();
+      tbl.string('first_name', 200);
+      tbl.string('last_name', 200);
+      tbl.string('role', 200).notNullable();
+      tbl.timestamps(false, true);
     })
-    .createTable('courses', (course) => {
-      course.increments('id');
-      course.string('title', 50).notNullable();
-      // course.string('category', 50);
-      course.string('details', 256);
-      course.integer('price').unsigned();
-      // course.integer('quantity_in_stock').unsigned();
+    .createTable('courses', (tbl) => {
+      tbl.increments('id');
+      tbl.string('title', 50).notNullable();
+      // tbl.string('category', 50);
+      tbl.string('details', 256);
+      tbl.integer('price').unsigned();
+      // tbl.integer('quantity_in_stock').unsigned();
 
       // Name (title)
-      // course.string('name', 50).notNullable();
+      // tbl.string('name', 50).notNullable();
 
       // Type (category)
-      // course.string('category', 50);
+      // tbl.string('category', 50);
 
       // Start time
       // date — table.date(name)
-      // course.date('date');
-      // course.time('time');
-      // course.datetime('datetime');
-      course.date('date');
-      course.time('time');
+      // tbl.date('date');
+      // tbl.time('time');
+      // tbl.datetime('datetime');
+      tbl.date('date');
+      tbl.time('time');
 
       // Duration
-      course.integer('duration').unsigned();
+      tbl.integer('duration').unsigned();
 
       // Intensity level
-      course.integer('intensity').unsigned();
+      tbl.integer('intensity').unsigned();
 
       // Type
-      course.integer('type').unsigned();
+      tbl.integer('type').unsigned();
       // const type_map = [
       //   'All Types',
       //   'Type 1:  Yoga',
@@ -48,18 +48,33 @@ exports.up = async (knex) => {
       // ];
 
       // Location
-      course.string('city', 50);
+      tbl.string('city', 50);
 
       // Current number of registered attendees
-      course.integer('registered_attendees').unsigned();
+      tbl.integer('registered_attendees').unsigned();
 
       // Max class size
-      course.integer('max_class_size').unsigned();
+      tbl.integer('max_class_size').unsigned();
+    })
+    .createTable('orders', (tbl) => {
+      tbl.increments('id');
+      tbl.integer('total').notNullable();
+      tbl
+        .integer('user_id_fk')
+        .unsigned()
+        .references('user_id')
+        .inTable('users')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE');
+      tbl.timestamps(false, true);
     });
 };
 
 // ==============================================
 
 exports.down = async (knex) => {
-  await knex.schema.dropTableIfExists('courses').dropTableIfExists('users');
+  await knex.schema
+    .dropTableIfExists('orders')
+    .dropTableIfExists('courses')
+    .dropTableIfExists('users');
 };

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -18,6 +18,22 @@ import CanvasSlider from '../components/range-slider/range-slider';
 // ==============================================
 
 import { course_type_map, course_intensity_map } from '../helpers/data-maps';
+
+// ==============================================
+
+// import { gsap } from 'gsap/dist/gsap';
+// import { MorphSVGPlugin } from 'gsap/dist/MorphSVGPlugin';
+// gsap.registerPlugin(MorphSVGPlugin);
+
+// import { gsap } from 'gsap';
+// import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin';
+// gsap.registerPlugin(MorphSVGPlugin);
+
+// import { gsap } from 'gsap/dist/gsap';
+// import { Flip } from 'gsap/dist/Flip';
+// gsap.registerPlugin(Flip);
+
+// ==============================================
 
 export default function CustomerDashboardPage() {
   // --------------------------------------------

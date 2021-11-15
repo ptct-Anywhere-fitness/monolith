@@ -47,6 +47,11 @@ export default function AdminDashboarPage() {
 
   // --------------------------------------------
 
+  // -NOTE: Two set of requests are made to the
+  //        endpoints for the tables!!!
+  // -TODO: Fix this!
+
+  // --------------------------------------------
   useEffect(() => {
     const token = authCtx.token;
 
@@ -55,6 +60,7 @@ export default function AdminDashboarPage() {
     // -See auth-hook for retrieval of token
     //  from local storage.
     if (token && authCtx.user.role === 'admin') {
+      // -GET Courses:
       (async () => {
         try {
           const p = await getData('/courses', token);
@@ -73,6 +79,7 @@ export default function AdminDashboarPage() {
         }
       })();
 
+      // -GET Users:
       (async () => {
         try {
           const u = await getData('/users', token);
@@ -81,6 +88,25 @@ export default function AdminDashboarPage() {
         } catch (err) {
           console.log(
             'Error in dashboard-admin --> useEffect() --> getData(/users),  err: ',
+            err
+          );
+          loadingCtx.setIsLoading(false);
+          // setError(
+          //   err.message || // This message comes from the backend!
+          //     'Error in onLoginHandler()'
+          // );
+        }
+      })();
+
+      // -GET Orders:
+      (async () => {
+        try {
+          const o = await getData('/orders', token);
+          console.log('orders: ', o);
+          // setUsers(u);
+        } catch (err) {
+          console.log(
+            'Error in dashboard-admin --> useEffect() --> getData(/orders),  err: ',
             err
           );
           loadingCtx.setIsLoading(false);

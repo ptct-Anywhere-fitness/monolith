@@ -11,7 +11,7 @@
   "dependencies": {
     "bootstrap": "^5.1.3",
     "date-fns": "^2.25.0",
-    "gsap": "^3.8.0",
+    "gsap": "file:gsap-bonus.tgz",
     "jwt-decode": "^3.1.2",
     "next": "12.0.2",
     "node-sass": "^6.0.1",

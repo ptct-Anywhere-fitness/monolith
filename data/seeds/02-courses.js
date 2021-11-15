@@ -16,7 +16,7 @@ exports.seed = function (knex, Promise) {
 
   const date_arr = ['2021-12-01'];
   for (let i = 0; i <= 2; ++i) {
-    for (let j = 0; j <= 9; ++j) {
+    for (let j = 1; j <= 9; ++j) {
       date_arr.push(`2021-12-${i}${j}`);
     }
   }

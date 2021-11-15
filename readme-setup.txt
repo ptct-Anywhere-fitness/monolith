@@ -79,6 +79,12 @@ Step 3.) Set up Postgres DB on heroku
 Step 4.) Production .env file:
 **NOTE: Need to manually place the .env.production file on the repo in /client!!!
 
+
+Step 5.) GSAP Flip:
+	-Copy the gsap-bonus.tgz file from gsap-shockingly-green\npm-install-this
+	 into /client, and run (from /client):
+> npm install ./gsap-bonus.tgz
+
 Troubleshooting) If problem with postbuild related to jest:
 
   Jest Issue with React (client) folder inside the Node main app folder:
