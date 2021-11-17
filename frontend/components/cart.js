@@ -1,24 +1,63 @@
-import { useContext } from 'react';
-// import { useRouter } from 'next/router';
-
 import Button from 'react-bootstrap/Button';
 
-import { CartContext } from '../context/cart-context';
-// import { AuthContext } from '../context/auth-context';
-import { LoadingContext } from '../context/loading-context';
-
+import useStandard from '../hooks/use-standard';
 import { placeOrder } from '../helpers/place-order.js';
+
+import fetchData from '../helpers/fetch-data';
 
 // ==============================================
 
 export default function Cart() {
   // --------------------------------------------
 
-  const cartCtx = useContext(CartContext);
-  // const authCtx = useContext(AuthContext);
-  const loadingCtx = useContext(LoadingContext);
+  const { cartCtx, authCtx, notificationCtx, loadingCtx } = useStandard();
 
-  // const router = useRouter();
+  // --------------------------------------------
+
+  const placeOrderHandler = async () => {
+    try {
+      const cart = cartCtx.cart;
+      console.log('cart: ', cart);
+
+      loadingCtx.setIsLoading(true);
+
+      notificationCtx.begin({ message: 'scheduling course(s)' });
+
+      const token = authCtx.token;
+
+      // -Update the courses table:
+      const response = await fetchData(`/orders`, 'POST', cart, token);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
+      console.log('placed order: ', data);
+
+      // setProductsInOrder(data);
+
+      notificationCtx.endSuccess({ message: 'scheduled course(s)' });
+
+      loadingCtx.setIsLoading(false);
+    } catch (err) {
+      console.log('Error in cart.js --> placeOrderHandler() -- err: ', err);
+      loadingCtx.setIsLoading(false);
+      notificationCtx.endError({ message: err.message });
+    }
+
+    // TODO:
+    // -Only schedule the appointment (above)
+    //  if successful payment processed
+    //  through stripe.
+    //  --Have successful URL for stripe
+    //    be a page with a useEffect(, [])
+    //    that runs the above post request to /orders.
+
+    // -Send customer to Stripe
+    console.log('cartCtx.cart: ', cartCtx.cart);
+    loadingCtx.setIsLoading(true);
+    // placeOrder(cartCtx.cart);
+  };
 
   // --------------------------------------------
 
@@ -76,14 +115,7 @@ export default function Cart() {
         // NOTE: empty arrays are truthy!?!
         variant={cartCtx.cart?.length > 0 ? 'primary' : 'secondary'}
         disabled={cartCtx.cart?.length === 0}
-        onClick={() => {
-          console.log('cart: ', cartCtx.cart);
-          console.log(cartCtx.cart?.length > 0 ? 'primary' : 'secondary');
-
-          console.log('cartCtx.cart: ', cartCtx.cart);
-          loadingCtx.setIsLoading(true);
-          placeOrder(cartCtx.cart);
-        }}
+        onClick={placeOrderHandler}
       >
         Place order
       </Button>

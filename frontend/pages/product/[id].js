@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 import useStandard from '../../hooks/use-standard';
 import getData from '../../helpers/get-data2-non-json-parsed';
@@ -52,5 +53,12 @@ export default function ProductPage() {
 
   // --------------------------------------------
 
-  return <div>{product && product.title}</div>;
+  return (
+    <div>
+      <nav>
+        <Link href='/'>Dashboard</Link>
+      </nav>
+      {product && product.title}
+    </div>
+  );
 }

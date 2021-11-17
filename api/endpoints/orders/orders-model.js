@@ -35,6 +35,23 @@ function findById(id) {
 
 // ==============================================
 
+async function insert({ user_id, total }) {
+  // WITH POSTGRES WE CAN PASS A "RETURNING ARRAY" AS 2ND ARGUMENT TO knex.insert/update
+  // AND OBTAIN WHATEVER COLUMNS WE NEED FROM THE NEWLY CREATED/UPDATED RECORD
+  // UNLIKE SQLITE WHICH FORCES US DO DO A 2ND DB CALL
+
+  console.log('insert - user_id: ', user_id);
+
+  // -Step 1: Add new entry into Orders table (user-id FK)
+  const [new_order_obj] = await db('orders').insert(
+    { user_id: Number(user_id), total },
+    ['id', 'user_id', 'total']
+  );
+  return new_order_obj;
+}
+
+// ==============================================
+
 function getUsersOrders() {
   // select -- Select columns
   // 	o.total as total,
@@ -69,4 +86,5 @@ module.exports = {
   find,
   findById,
   getUsersOrders,
+  insert,
 };

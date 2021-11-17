@@ -6,10 +6,11 @@ const authMiddleware = require('../auth/auth-middleware');
 
 // ==============================================
 
-// | N   | Method | Endpoint                | Description                                                                                                                         |
-// | --- | ------ | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-// | 1   | GET    | /api/orders            | Returns **an array of all the course objects** contained in the database                                                          |
-// | 2   | GET    | /api/orders/:id        | Returns **the order object  with the specified id**
+// | N   | Method | Endpoint                | Description                                                                                                                      |
+// | --- | ------ | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+// | 1   | GET    | /api/orders             | Returns **an array of all the course objects** contained in the database                                                         |
+// | 2   | GET    | /api/orders/:id         | Returns **the order object  with the specified id**                                                                              |
+// | 3   | POST   | /api/orders             | Creates a order using the information sent inside the request body and returns **the newly created order object**                |
 //
 // ==============================================
 // ==============================================
@@ -24,13 +25,18 @@ router.get(
 
 // ==============================================
 
-// (1) [GET]  /api/orders/:id
+// (2) [GET]  /api/orders/:id
 router.get(
   '/:id',
   authMiddleware.restricted,
   authMiddleware.admin_only,
   ordersController.getOrderById
 );
+
+// ==============================================
+
+// (3) [POST]  /api/orders   (customers place orders)
+router.post('/', authMiddleware.restricted, ordersController.postOrder);
 
 // ==============================================
 

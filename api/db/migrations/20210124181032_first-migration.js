@@ -60,7 +60,7 @@ exports.up = async (knex) => {
       tbl.increments('id');
       tbl.integer('total').notNullable();
       tbl
-        .integer('user_id_fk')
+        .integer('user_id')
         .unsigned()
         .references('user_id')
         .inTable('users')
