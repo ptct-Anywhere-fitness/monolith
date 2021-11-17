@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 
 // import { format } from 'date-fns';
 
@@ -10,6 +10,7 @@ import { AuthContext } from '../../context/auth-context';
 import { LoadingContext } from '../../context/loading-context';
 import NotificationContext from '../../context/notification-context';
 
+import useStandard from '../../hooks/use-standard';
 import getData from '../../helpers/get-data2-non-json-parsed';
 
 // ==============================================
@@ -25,9 +26,7 @@ export default function OrderDetailsModal({
 
   // --------------------------------------------
 
-  const loadingCtx = useContext(LoadingContext);
-  const authCtx = useContext(AuthContext);
-  const notificationCtx = useContext(NotificationContext);
+  const { router, authCtx, loadingCtx, notificationCtx } = useStandard();
 
   // --------------------------------------------
 
@@ -109,7 +108,9 @@ export default function OrderDetailsModal({
                   return (
                     <tr key={product.product_id}>
                       <td
-                        // onClick={handleDetailsModalOpen(order?.order_id)}
+                        onClick={() => {
+                          router.push(`/product/${product.product_id}`);
+                        }}
                         style={{ cursor: 'pointer' }}
                       >
                         <svg

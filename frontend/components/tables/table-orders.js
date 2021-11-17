@@ -7,7 +7,7 @@ import OrderDetailsModal from '../modals/order-details-modal';
 
 // ==============================================
 
-import getData from '../../helpers/get-data';
+// import getData from '../../helpers/get-data';
 
 // ==============================================
 
