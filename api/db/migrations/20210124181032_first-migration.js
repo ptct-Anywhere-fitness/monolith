@@ -72,6 +72,8 @@ exports.up = async (knex) => {
       // -Primary-key
       tbl.increments('id');
 
+      tbl.integer('quantity').notNullable();
+
       // -Foriegn-key (Products)
       tbl
         .integer('course_id')

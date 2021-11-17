@@ -26,7 +26,7 @@ function findById(id) {
     .select(
       'order_2_product.order_id',
       'order_2_product.course_id as product_id',
-      // 'order_2_product.product_quantity',
+      'order_2_product.quantity',
       'courses.title as product_name',
       'courses.price as product_price'
     )
@@ -40,7 +40,7 @@ async function insert({ user_id, total, cart }) {
   // AND OBTAIN WHATEVER COLUMNS WE NEED FROM THE NEWLY CREATED/UPDATED RECORD
   // UNLIKE SQLITE WHICH FORCES US DO DO A 2ND DB CALL
 
-  console.log('insert - user_id: ', user_id);
+  console.log('insert - cart: ', cart);
 
   // -Step 1: Add new entry into Orders table (user-id FK)
   const [new_order_obj] = await db('orders').insert({ user_id, total }, [
@@ -48,9 +48,21 @@ async function insert({ user_id, total, cart }) {
     'user_id',
     'total',
   ]);
-  return new_order_obj;
+
+  const order_id = new_order_obj.id;
 
   // -Step 2: Place cart items in order_2_product table
+  for (let i = 0; i < cart.length; ++i) {
+    const [new_order2product_obj] = await db('order_2_product').insert(
+      { order_id, course_id: cart[i].product_id, quantity: cart[i].quantity },
+      ['id', 'order_id', 'course_id', 'quantity']
+    );
+  }
+
+  // -Setp 3: Join the two tables and return the data for this new order
+  const new_order_data_joined = await findById(order_id);
+
+  return new_order_data_joined;
 }
 
 // ==============================================

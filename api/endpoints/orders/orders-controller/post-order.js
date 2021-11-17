@@ -32,7 +32,7 @@ const postOrder = (req, res, next) => {
   })
     .then((order) => {
       console.log('Successful addition of order to DB! - order: ', order);
-      res.status(201).json(order);
+      res.status(201).json({ order_line_items: order, order_total: total });
     })
     .catch((err) => {
       // -There's an error while saving the _order_
