@@ -1,9 +1,12 @@
+import { useState } from 'react';
+
 import Button from 'react-bootstrap/Button';
 
 import useStandard from '../hooks/use-standard';
 import { placeOrder } from '../helpers/place-order.js';
 
 import fetchData from '../helpers/fetch-data';
+import toDollars from '../helpers/money';
 
 // ==============================================
 
@@ -11,6 +14,8 @@ export default function Cart() {
   // --------------------------------------------
 
   const { cartCtx, authCtx, notificationCtx, loadingCtx } = useStandard();
+
+  const [placed_order, setPlacedOrder] = useState();
 
   // --------------------------------------------
 
@@ -37,9 +42,9 @@ export default function Cart() {
       if (!response.ok) {
         throw new Error(data.message);
       }
-      console.log('placed order: ', data);
 
-      // setProductsInOrder(data);
+      console.log('placed order: ', data);
+      setPlacedOrder(data);
 
       notificationCtx.endSuccess({ message: 'scheduled course(s)' });
 
@@ -112,13 +117,29 @@ export default function Cart() {
                   <br />
                   Qty: {cart_item.quantity}
                   <br />
-                  Price: ${(cart_item.product_price / 100).toFixed(2)}
+                  Price: ${toDollars(cart_item.product_price)}
                 </div>
               </li>
             );
           })}
       </ul>
       <h6>Total: ${(cartCtx.cart_total / 100).toFixed(2)}</h6>
+
+      {placed_order && (
+        <div style={{ background: 'red', minHeight: '100px', width: '100%' }}>
+          <p>Total: ${toDollars(placed_order.order_total)}</p>
+
+          {placed_order.order_line_items.map((line_item) => {
+            return (
+              <div style={{ border: 'solid yellow 2px' }}>
+                <div>Product: {line_item.product_name}</div>
+                <div>Price: {line_item.product_price}</div>
+                <div>Quantity: {line_item.quantity}</div>
+              </div>
+            );
+          })}
+        </div>
+      )}
 
       <Button
         // NOTE: empty arrays are truthy!?!
