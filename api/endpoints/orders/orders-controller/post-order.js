@@ -22,10 +22,13 @@ const postOrder = (req, res, next) => {
   const user_id = req.decoded_token.userId;
   console.log('user_id: ', user_id);
 
+  const { cart, total } = req.body;
+
   // if (title) {
   Orders.insert({
-    user_id: user_id,
-    total: 200,
+    user_id,
+    total,
+    cart,
   })
     .then((order) => {
       console.log('Successful addition of order to DB! - order: ', order);

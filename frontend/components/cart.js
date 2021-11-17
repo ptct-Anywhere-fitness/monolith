@@ -26,7 +26,12 @@ export default function Cart() {
       const token = authCtx.token;
 
       // -Update the courses table:
-      const response = await fetchData(`/orders`, 'POST', cart, token);
+      const response = await fetchData(
+        `/orders`,
+        'POST',
+        { cart, total: cartCtx.cart_total },
+        token
+      );
       const data = await response.json();
 
       if (!response.ok) {
@@ -39,6 +44,10 @@ export default function Cart() {
       notificationCtx.endSuccess({ message: 'scheduled course(s)' });
 
       loadingCtx.setIsLoading(false);
+
+      // TODO:
+      //  -Set the cart in context to be empty
+      //   so that the place order button is no longer clickable.
     } catch (err) {
       console.log('Error in cart.js --> placeOrderHandler() -- err: ', err);
       loadingCtx.setIsLoading(false);
