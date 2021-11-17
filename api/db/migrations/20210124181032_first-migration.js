@@ -67,6 +67,30 @@ exports.up = async (knex) => {
         .onUpdate('CASCADE')
         .onDelete('CASCADE');
       tbl.timestamps(false, true);
+    })
+    .createTable('order_2_product', (tbl) => {
+      // -Primary-key
+      tbl.increments('id');
+
+      // -Foriegn-key (Products)
+      tbl
+        .integer('course_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('courses')
+        .onDelete('CASCADE') // vs. RESTRICT
+        .onUpdate('CASCADE');
+
+      // -Foreign-key (Orders)
+      tbl
+        .integer('order_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('orders')
+        .onDelete('CASCADE') // vs. RESTRICT
+        .onUpdate('CASCADE');
     });
 };
 
@@ -74,6 +98,7 @@ exports.up = async (knex) => {
 
 exports.down = async (knex) => {
   await knex.schema
+    .dropTableIfExists('order_2_product')
     .dropTableIfExists('orders')
     .dropTableIfExists('courses')
     .dropTableIfExists('users');
