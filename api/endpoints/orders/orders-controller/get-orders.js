@@ -10,7 +10,7 @@ const Orders = require('../orders-model');
 // ==============================================
 
 // (1) [GET]  /api/orders
-const getOrders = (req, res) => {
+const getOrders = (req, res, next) => {
   console.log('[GET] /api/orders');
 
   Orders.getUsersOrders()

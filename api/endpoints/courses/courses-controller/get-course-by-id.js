@@ -33,7 +33,7 @@ const getCourseById = (req, res, next) => {
           new HttpError('The course with the specified ID does not exist.', 404)
         );
       }
-      res.status(201).json({ course });
+      res.status(201).json(course);
     })
     .catch((e) => {
       // -There's an error in retrieving the _course_ from the database:

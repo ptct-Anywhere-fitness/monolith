@@ -9,9 +9,26 @@ function find() {
 // ==============================================
 
 function findById(id) {
-  return db('orders')
-    .where({ id: Number(id) })
-    .first();
+  // return db('orders')
+  //   .where({ id: Number(id) })
+  //   .first();
+  // return db.raw(`
+  //   select
+  //     Order_2_Product.order_id,
+  //     Courses.title as product_name,
+  //     Courses.price as product_price
+  //   from Courses
+  //   join Order_2_Product on Courses.id = Order_2_Product.course_id
+  //   where Order_2_Product.order_id = ${id};
+  // `);
+  return db('courses')
+    .join('order_2_product', 'courses.id', 'order_2_product.course_id')
+    .select(
+      'order_2_product.order_id',
+      'courses.title as product_name',
+      'courses.price as product_price'
+    )
+    .where('order_2_product.order_id', id);
 }
 
 // ==============================================

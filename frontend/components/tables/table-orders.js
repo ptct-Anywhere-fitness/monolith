@@ -1,14 +1,43 @@
+import { useState, useEffect } from 'react';
+
+// import { format } from 'date-fns';
+
 import Table from 'react-bootstrap/Table';
+import OrderDetailsModal from '../modals/order-details-modal';
+
+// ==============================================
+
+import getData from '../../helpers/get-data';
 
 // ==============================================
 
 export default function TableOrders({ orders }) {
   // --------------------------------------------
 
-  console.log('orders (in TableOrders), orders: ', orders);
+  const [details_modal_order_id, setDetailsModalOrderId] = useState();
+  const [show_details_modal, setShowDetailsModal] = useState();
+  const handleDetailsModalClose = () => {
+    setShowDetailsModal(false);
+    // setActiveModalCourse({});
+  };
+  const handleDetailsModalOpen = (order_id) => () => {
+    setDetailsModalOrderId(order_id);
+    setShowDetailsModal(true);
+  };
+  useEffect(() => {
+    console.log('handleDetailsModalOpen in table-courses.js, course: ');
+  }, [show_details_modal]);
+
+  // --------------------------------------------
 
   return (
-    <>
+    <div style={{ maxHeight: '255px', overflowY: 'scroll' }}>
+      <OrderDetailsModal
+        show_modal={show_details_modal}
+        handleClose={handleDetailsModalClose}
+        order_id={details_modal_order_id}
+      />
+
       <Table
         striped
         bordered
@@ -31,7 +60,10 @@ export default function TableOrders({ orders }) {
             orders.map((order, idx) => {
               return (
                 <tr key={idx}>
-                  <td>
+                  <td
+                    onClick={handleDetailsModalOpen(order?.order_id)}
+                    style={{ cursor: 'pointer' }}
+                  >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
                       width='16'
@@ -52,6 +84,6 @@ export default function TableOrders({ orders }) {
             })}
         </tbody>
       </Table>
-    </>
+    </div>
   );
 }

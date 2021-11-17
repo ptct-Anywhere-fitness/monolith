@@ -10,8 +10,6 @@ import { AuthContext } from '../../context/auth-context';
 import { LoadingContext } from '../../context/loading-context';
 import NotificationContext from '../../context/notification-context';
 
-// ==============================================
-
 import fetchData from '../../helpers/fetch-data';
 import getData from '../../helpers/get-data';
 import {
