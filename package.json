@@ -14,7 +14,7 @@
     "seedh": "heroku run knex seed:run -a anywhere-fitness--app",
     "databaseh": "heroku pg:psql -a anywhere-fitness--app",
     "deploy": "git push heroku main",
-    "heroku-postbuild": "cd client && npm i && npm run build && npm run export",
+    "heroku-postbuild": "cd frontend && npm i && npm run build && npm run export",
     "test": "cross-env NODE_ENV=testing jest --watchAll --verbose --runInBand"
   },
   "engines": {

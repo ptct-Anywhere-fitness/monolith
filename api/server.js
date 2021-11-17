@@ -28,8 +28,8 @@ if (server.get('env') === 'production') {
 // -Root route serves the React app:
 //  (react router routes also need
 //   the catch-all endpoint!!!)
-// server.use(express.static(path.join(__dirname, '..', 'client', 'build')));
-server.use(express.static(path.join(__dirname, '..', 'client', 'out')));
+// server.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
+server.use(express.static(path.join(__dirname, '..', 'frontend', 'out')));
 
 console.log('process.env.NODE_ENV: ', process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'development') {
@@ -73,8 +73,8 @@ server.use('/api/checkout', checkoutRouter);
 //  works without the catch-all endpoint below.
 server.get('*', (req, res) => {
   // res.send('<h1>success</h1>');
-  // res.sendFile(path.join(__dirname, '..', 'client/build', 'index.html'));
-  res.sendFile(path.join(__dirname, '..', 'client/out', 'index.html'));
+  // res.sendFile(path.join(__dirname, '..', 'frontend/build', 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'frontend/out', 'index.html'));
 });
 
 // ==============================================
