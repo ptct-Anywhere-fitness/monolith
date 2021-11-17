@@ -91,7 +91,13 @@ export const useCart = () => {
 
   // --------------------------------------------
 
-  return { cart, cart_total, addToCart, deleteFromCart };
+  const resetCart = () => {
+    setCart([]);
+  };
+
+  // --------------------------------------------
+
+  return { cart, cart_total, addToCart, deleteFromCart, resetCart };
 
   // --------------------------------------------
 };

@@ -22,7 +22,7 @@ export default function App({ Component, pageProps }) {
   // --------------------------------------------
 
   const { token, login, logout, user } = useAuth();
-  const { cart, cart_total, addToCart, deleteFromCart } = useCart();
+  const { cart, cart_total, addToCart, deleteFromCart, resetCart } = useCart();
   const { is_loading, setIsLoading } = useLoading();
 
   // --------------------------------------------
@@ -34,7 +34,7 @@ export default function App({ Component, pageProps }) {
       value={{ isLoggedIn: !!token, token, login, logout, user }}
     >
       <CartContext.Provider
-        value={{ cart, cart_total, addToCart, deleteFromCart }}
+        value={{ cart, cart_total, addToCart, deleteFromCart, resetCart }}
       >
         <LoadingContext.Provider value={{ is_loading, setIsLoading }}>
           <NotificationContextProvider>

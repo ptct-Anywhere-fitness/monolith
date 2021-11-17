@@ -6,10 +6,6 @@ import Table from 'react-bootstrap/Table';
 import Modal from 'react-bootstrap/Modal';
 // import Button from 'react-bootstrap/Button';
 
-import { AuthContext } from '../../context/auth-context';
-import { LoadingContext } from '../../context/loading-context';
-import NotificationContext from '../../context/notification-context';
-
 import useStandard from '../../hooks/use-standard';
 import getData from '../../helpers/get-data2-non-json-parsed';
 
