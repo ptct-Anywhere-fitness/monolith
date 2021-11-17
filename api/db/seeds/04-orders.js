@@ -3,6 +3,5 @@ exports.seed = function (knex, Promise) {
     { user_id_fk: 1, total: 100 },
     { user_id_fk: 1, total: 200 },
     { user_id_fk: 2, total: 300 },
-    { user_id_fk: 2, total: 400 },
   ]);
 };

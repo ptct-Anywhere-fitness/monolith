@@ -25,6 +25,8 @@ function findById(id) {
     .join('order_2_product', 'courses.id', 'order_2_product.course_id')
     .select(
       'order_2_product.order_id',
+      'order_2_product.course_id as product_id',
+      // 'order_2_product.product_quantity',
       'courses.title as product_name',
       'courses.price as product_price'
     )

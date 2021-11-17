@@ -17,7 +17,7 @@ const getOrderById = (req, res, next) => {
 
   Orders.findById(id)
     .then((products) => {
-      console.log('products in oder: ', products);
+      console.log('products in order: ', products);
 
       if (products.length === 0) {
         console.log('products.length === 0');

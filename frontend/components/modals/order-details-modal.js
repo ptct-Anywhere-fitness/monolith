@@ -21,6 +21,10 @@ export default function OrderDetailsModal({
 }) {
   // --------------------------------------------
 
+  const [products_in_order, setProductsInOrder] = useState();
+
+  // --------------------------------------------
+
   const loadingCtx = useContext(LoadingContext);
   const authCtx = useContext(AuthContext);
   const notificationCtx = useContext(NotificationContext);
@@ -58,6 +62,8 @@ export default function OrderDetailsModal({
           }
           console.log('products in order: ', data);
 
+          setProductsInOrder(data);
+
           notificationCtx.endSuccess({ message: 'fetched course' });
 
           loadingCtx.setIsLoading(false);
@@ -68,6 +74,7 @@ export default function OrderDetailsModal({
           );
           loadingCtx.setIsLoading(false);
           notificationCtx.endError({ message: err.message });
+          handleClose();
         }
       })();
     }
@@ -84,49 +91,44 @@ export default function OrderDetailsModal({
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Order Details</Modal.Title>
+          <Modal.Title>Order Details for Order #{order_id}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Table striped bordered hover variant='dark'>
             <thead>
               <tr>
-                <th>Order ID</th>
-                <th>Product</th>
+                <th></th>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Product Price</th>
               </tr>
             </thead>
             <tbody>
-              {/* <tr>
-                <td>ID</td>
-                <td>{course?.id}</td>
-              </tr> */}
-              <tr>
-                <td>Title</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Registered Attendees</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Date</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Time</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Duration</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>City</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Max Class Size</td>
-                <td></td>
-              </tr>
+              {products_in_order &&
+                products_in_order.map((product) => {
+                  return (
+                    <tr key={product.product_id}>
+                      <td
+                        // onClick={handleDetailsModalOpen(order?.order_id)}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        <svg
+                          xmlns='http://www.w3.org/2000/svg'
+                          width='16'
+                          height='16'
+                          fill='currentColor'
+                          viewBox='0 0 16 16'
+                        >
+                          <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z' />
+                          <path d='M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z' />
+                        </svg>
+                      </td>
+                      <td>{product.product_id}</td>
+                      <td>{product.product_name}</td>
+                      <td>{product.product_price}</td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </Table>
         </Modal.Body>
