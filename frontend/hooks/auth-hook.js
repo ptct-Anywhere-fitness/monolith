@@ -13,14 +13,15 @@ export const useAuth = () => {
 
   const router = useRouter();
 
-  // -token is local state to App.
-  // -But it is tied to context's token.
+  const [tokenExpirationDate, setTokenExpirationDate] = useState();
+
+  // -token & user are are used in context.
   // -Hence, when this token state updates
   //  it sets its value to the context token.
   const [token, setToken] = useState(null);
   const [user, setUser] = useState({});
 
-  const [tokenExpirationDate, setTokenExpirationDate] = useState();
+  // --------------------------------------------
 
   // -These f()'s are stored in context.
   const login = useCallback((token, expirationDate) => {
@@ -38,8 +39,8 @@ export const useAuth = () => {
     const currentDate = new Date().getTime(); // # of ms since beginning of time
 
     // -Shadowed variable
-    // -Does not overwrite out actual state
-    // -state variable with same name!
+    // -Does not overwrite our actual state
+    // -NOTE: State variable with same name!
     const tokenExpirationDate =
       expirationDate || // if expirationDate is NOT retreived from local-storage, then calculate it from the current time + delta
       new Date( // now + 1d
@@ -55,8 +56,7 @@ export const useAuth = () => {
     // -In the next re-render cycle we will have the correct
     //  token expiration date.
 
-    // -We will go in here upon new login.
-    // localStorage.setItem('token', token);
+    // -Set local storage
     localStorage.setItem(
       'userData',
       JSON.stringify({
@@ -84,7 +84,9 @@ export const useAuth = () => {
     }
   }, []);
 
-  const logout = useCallback((token) => {
+  // --------------------------------------------
+
+  const logout = useCallback(() => {
     if (localStorage.getItem('userData')) {
       localStorage.removeItem('userData');
       localStorage.removeItem('cart'); // ensures the user doesn't load stale course data (e.g. if admin deletes or modifies a course)

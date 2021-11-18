@@ -13,7 +13,7 @@ import { useLoading } from '../hooks/loading-hook';
 
 import { NotificationContextProvider } from '../context/notification-context';
 
-// import '../styles/bs-mod.scss';
+import '../styles/bs-mod.scss';
 import '../styles/styles.css';
 
 // ==============================================

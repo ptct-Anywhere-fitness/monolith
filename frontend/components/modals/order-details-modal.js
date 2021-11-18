@@ -8,6 +8,7 @@ import Modal from 'react-bootstrap/Modal';
 
 import useStandard from '../../hooks/use-standard';
 import getData from '../../helpers/get-data2-non-json-parsed';
+import toDollars from '../../helpers/money';
 
 // ==============================================
 
@@ -122,7 +123,7 @@ export default function OrderDetailsModal({
                       </td>
                       <td>{product.product_id}</td>
                       <td>{product.product_name}</td>
-                      <td>{product.product_price}</td>
+                      <td>${toDollars(product.product_price)}</td>
                     </tr>
                   );
                 })}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 
 // import { format } from 'date-fns';
 
@@ -18,8 +18,7 @@ import { placeOrder } from '../../helpers/place-order.js';
 export default function PlacedOrderModal({ show_modal, handleClose, order }) {
   // --------------------------------------------
 
-  const { router, authCtx, loadingCtx, notificationCtx, cartCtx } =
-    useStandard();
+  const { loadingCtx, cartCtx } = useStandard();
 
   // --------------------------------------------
 

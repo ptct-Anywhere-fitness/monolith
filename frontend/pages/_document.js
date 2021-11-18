@@ -10,12 +10,12 @@ class MyDocument extends Document {
             href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap'
           /> */}
 
-          <link
+          {/* <link
             rel='stylesheet'
             href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'
             integrity='sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3'
             crossOrigin='anonymous'
-          />
+          /> */}
 
           {/* <script type='text/javascript' src='/hello.js' defer></script> */}
         </Head>

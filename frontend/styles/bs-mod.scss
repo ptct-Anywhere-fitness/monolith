@@ -1,32 +1,14 @@
 // Overwrite theme here
 
 // override variables
-// $primary: red;
-// $secondary: green;
-// $dark: #300;
-// $light: #ffd;
+$primary: #bb86fc;
+$secondary: #03dac5;
+$dark: #121212;
+$light: rgb(214, 214, 214);
 // $success: #0fa;
-// $info: #555;
+$info: #3700b3;
 // $warning: yellow;
-// $danger: red;
-
-// -Can also do it like this:
-$theme-colors: (
-  // 'primary': orange,
-  // 'danger': hotpink,
-);
-
-// create new variables
-// -add a map to the ~/bootstrap/scss/_variables -> theme-colors map
-
-// -step 1) Create your own map
-$custom-colors: (
-  'x': #900,
-  // className="bg-x"
-);
-
-// -step 2) Merge the maps
-$theme-colors: map-merge($theme-colors, $custom-colors);
+$danger: #cf6679;
 
 // Import bootstrap styles at the bottom!
 // @import 'node_modules/bootstrap/scss/bootstrap.scss';

@@ -15,7 +15,8 @@
     "databaseh": "heroku pg:psql -a anywhere-fitness--app",
     "deploy": "git push heroku main",
     "heroku-postbuild": "cd frontend && npm i && npm run build && npm run export",
-    "test": "cross-env NODE_ENV=testing jest --watchAll --verbose --runInBand"
+    "test": "cross-env NODE_ENV=testing jest --watchAll --verbose --runInBand",
+    "reset-db": "npm run rollback && npm run migrate && npm run seed && npm run server"
   },
   "engines": {
     "node": "14.12.0",
