@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import OrderDetailsModal from '../modals/order-details-modal';
 
+import toDollars from '../../helpers/money';
+
 // ==============================================
 
 // import getData from '../../helpers/get-data';
@@ -76,7 +78,7 @@ export default function TableOrders({ orders }) {
                     </svg>
                   </td>
                   <td>{order?.order_id}</td>
-                  <td>{order?.total}</td>
+                  <td>${toDollars(order?.total)}</td>
                   <td>{order?.username}</td>
                   <td></td>
                 </tr>

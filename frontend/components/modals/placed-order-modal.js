@@ -11,12 +11,15 @@ import useStandard from '../../hooks/use-standard';
 
 import toDollars from '../../helpers/money';
 
+import { placeOrder } from '../../helpers/place-order.js';
+
 // ==============================================
 
 export default function PlacedOrderModal({ show_modal, handleClose, order }) {
   // --------------------------------------------
 
-  const { router, authCtx, loadingCtx, notificationCtx } = useStandard();
+  const { router, authCtx, loadingCtx, notificationCtx, cartCtx } =
+    useStandard();
 
   // --------------------------------------------
 
@@ -47,7 +50,7 @@ export default function PlacedOrderModal({ show_modal, handleClose, order }) {
               {order &&
                 order.order_line_items.map((line_item) => {
                   return (
-                    <tr>
+                    <tr key={line_item.product_id}>
                       <td
                         onClick={() => {
                           // router.push(`/product/${line_item.product_id}`);
@@ -76,8 +79,17 @@ export default function PlacedOrderModal({ show_modal, handleClose, order }) {
         </Modal.Body>
         <Modal.Footer className='justify-content-around'>
           {/* {modal_footer} */}
-          <Button>Close</Button>
-          <Button>Pay</Button>
+          <Button onClick={handleClose} variant='secondary'>
+            Close
+          </Button>
+          <Button
+            onClick={() => {
+              loadingCtx.setIsLoading(true);
+              placeOrder(cartCtx.cart);
+            }}
+          >
+            Pay
+          </Button>
         </Modal.Footer>
       </Modal>
     </>

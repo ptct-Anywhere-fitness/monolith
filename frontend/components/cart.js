@@ -5,7 +5,6 @@ import Button from 'react-bootstrap/Button';
 import PlacedOrderModal from './modals/placed-order-modal';
 
 import useStandard from '../hooks/use-standard';
-import { placeOrder } from '../helpers/place-order.js';
 
 import fetchData from '../helpers/fetch-data';
 import toDollars from '../helpers/money';
@@ -60,14 +59,14 @@ export default function Cart() {
       //    that runs the above post request to /orders.
 
       // -Send customer to Stripe
-      console.log('cartCtx.cart: ', cartCtx.cart);
+      // console.log('cartCtx.cart: ', cartCtx.cart);
 
       // placeOrder(cartCtx.cart);
       loadingCtx.setIsLoading(false);
 
       // -Set the cart in context to be empty so that
       //   the place order button is no longer clickable.
-      cartCtx.resetCart();
+      // cartCtx.resetCart();
     } catch (err) {
       console.log('Error in cart.js --> placeOrderHandler() -- err: ', err);
       loadingCtx.setIsLoading(false);

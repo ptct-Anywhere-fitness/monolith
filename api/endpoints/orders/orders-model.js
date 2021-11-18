@@ -83,7 +83,7 @@ function getUsersOrders() {
   // `);
   //
   return db('users as u')
-    .join('orders as o', 'u.user_id', 'o.user_id_fk')
+    .join('orders as o', 'u.user_id', 'o.user_id')
     .select(
       'o.id as order_id',
       'o.total',
